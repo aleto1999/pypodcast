@@ -6,6 +6,10 @@ import time
 import warnings
 from pathlib import Path
 
+# CRITICAL: apply compatibility patches BEFORE importing torch/whisperx/pyannote
+# This must be the very first import to patch torch.load for PyTorch 2.6+
+from podcast_conversations.transcription import torchaudio_compat  # noqa: F401
+
 import torch
 
 from podcast_conversations.transcription.config import TranscriptionConfig, TranscriptionResult

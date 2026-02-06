@@ -7,10 +7,14 @@ recursively processes audio files and generates json transcripts.
 
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 
 import click
+
+# Disable PyTorch 2.6+ weights_only restriction for trusted pyannote models
+os.environ['TORCH_FORCE_WEIGHTS_ONLY_LOAD'] = '0'
 
 # add src to path for imports.
 script_dir = Path(__file__).resolve().parent
