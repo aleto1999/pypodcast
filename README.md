@@ -37,7 +37,7 @@ The toolkit consists of modular pipelines that can be combined in different ways
 | | **Combine Transcripts** | `combine_transcripts_with_speakers.py` | Merge speaker labels with transcripts. |
 | | **Combine Consecutive** | `combine_consecutive_speakers.py` | Merge consecutive same-speaker segments. |
 | | **Embeddings** | `analyze_embeddings.py` | Semantic embeddings and similarity analysis. |
-| | **Keywords** | `analyze_keywords.py` | Keyword matching with context extraction. |
+| | **Keywords** | (via `run_full_corpus_pipeline.py`) | Keyword matching with context extraction. |
 | | **Classification** | `classify_utterances.py` | Multi-label utterance classification. |
 | | **Document Labels** | `generate_document_labels.py` | Aggregate classifications to per-episode/show labels. |
 | | **LLM Annotation** | `annotate_with_llm.py` | LLM-based content analysis (standalone). |
@@ -92,7 +92,7 @@ Podcast Sources (RSS Feeds / YouTube)
 └──────────────────────────┬──────────────────────────────────┘
                            ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  6. Keywords (analyze_keywords.py)                          │
+│  6. Keywords (keyword_matcher module)                       │
 │     Keyword matching with context extraction                │
 └──────────────────────────┬──────────────────────────────────┘
                            ▼
@@ -726,7 +726,7 @@ uv run ruff format .
 uv run ruff format --check .
 
 # Format specific files
-uv run ruff format scripts/analyze_keywords.py
+uv run ruff format scripts/classify_utterances.py
 ```
 
 **Common rules enforced:**
@@ -791,7 +791,7 @@ uv run ruff format scripts/analyze_keywords.py
 │   ├── combine_transcripts_with_speakers.py  # Merge transcripts + diarization
 │   ├── combine_consecutive_speakers.py  # Merge same-speaker segments
 │   ├── analyze_embeddings.py            # Semantic similarity analysis
-│   ├── analyze_keywords.py              # Keyword matching
+│   ├── download_and_process.py          # Download and process in one step
 │   ├── classify_utterances.py           # Multi-label classification
 │   ├── extract_features.py              # Conversation feature extraction
 │   ├── annotate_with_llm.py             # LLM-based content annotation
