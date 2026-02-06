@@ -11,17 +11,18 @@ import os
 import sys
 from pathlib import Path
 
-import click
-
-# Disable PyTorch 2.6+ weights_only restriction for trusted pyannote models
-os.environ['TORCH_FORCE_WEIGHTS_ONLY_LOAD'] = '0'
-
-# add src to path for imports.
+# add src to path for imports FIRST.
 script_dir = Path(__file__).resolve().parent
 project_root = script_dir.parent
 src_dir = project_root / "src"
 if src_dir.exists() and str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
+
+# CRITICAL: apply PyTorch 2.6+ compatibility fix BEFORE importing torch/click/anything else.
+# this registers omegaconf classes as safe globals for torch.load.
+from podcast_conversations.transcription import torchaudio_compat  # noqa: F401, E402
+
+import click
 
 from podcast_conversations.monitoring import ResourceDisplay, print_system_info
 from podcast_conversations.transcription import (

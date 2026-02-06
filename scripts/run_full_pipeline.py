@@ -49,6 +49,10 @@ if src_dir.exists() and str(src_dir) not in sys.path:
 if str(script_dir) not in sys.path:
     sys.path.insert(0, str(script_dir))
 
+# CRITICAL: apply PyTorch 2.6+ compatibility fix BEFORE importing torch.
+# this registers omegaconf classes as safe globals for torch.load.
+from podcast_conversations.transcription import torchaudio_compat  # noqa: F401, E402
+
 import click
 from rich.panel import Panel
 from rich.table import Table

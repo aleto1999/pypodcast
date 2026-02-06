@@ -52,22 +52,57 @@ def apply_torch_weights_only_fix():
     
     PyTorch 2.6 changed the default of weights_only from False to True for security.
     However, pyannote models use omegaconf configs that require weights_only=False.
-    Since these are trusted models from HuggingFace, we globally disable the restriction.
+    
+    This fix uses two approaches:
+    1. Add omegaconf classes to torch safe globals (preferred, works with weights_only=True)
+    2. Patch torch.load as fallback (forces weights_only=False)
+    
+    Since these are trusted models from HuggingFace, both approaches are safe.
     """
     try:
         import torch
         
-        # Monkey-patch torch.load to use weights_only=False by default
-        original_load = torch.load
-        
-        def patched_load(*args, **kwargs):
-            # Set weights_only=False if not explicitly specified
-            if 'weights_only' not in kwargs:
-                kwargs['weights_only'] = False
-            return original_load(*args, **kwargs)
-        
-        torch.load = patched_load
-        logger.info("patched torch.load to use weights_only=False for pyannote models")
+        # approach 1: add omegaconf classes to safe globals (PyTorch 2.6+).
+        # this is the recommended approach as it allows weights_only=True to work.
+        try:
+            from omegaconf import DictConfig, ListConfig, OmegaConf
+            from omegaconf.listconfig import ListConfig as ListConfigType
+            from omegaconf.dictconfig import DictConfig as DictConfigType
+            
+            safe_classes = [ListConfig, DictConfig, ListConfigType, DictConfigType]
+            
+            # try to add OmegaConf itself if it's used.
+            try:
+                safe_classes.append(OmegaConf)
+            except Exception:
+                pass
+            
+            if hasattr(torch.serialization, 'add_safe_globals'):
+                torch.serialization.add_safe_globals(safe_classes)
+                logger.info("added omegaconf classes to torch safe globals")
+            else:
+                # older pytorch, fallback to patching.
+                raise AttributeError("add_safe_globals not available")
+                
+        except ImportError:
+            logger.debug("omegaconf not installed, skipping safe globals registration")
+        except Exception as e:
+            logger.debug(f"safe globals approach failed: {e}, falling back to patch")
+            
+            # approach 2: patch torch.load as fallback.
+            original_torch_load = torch.load
+            
+            def patched_torch_load(f, *args, **kwargs):
+                # force weights_only=False if it would otherwise be True.
+                if 'weights_only' not in kwargs:
+                    kwargs['weights_only'] = False
+                elif kwargs.get('weights_only') is True:
+                    kwargs['weights_only'] = False
+                    logger.debug("overriding weights_only=True to False for pyannote compatibility")
+                return original_torch_load(f, *args, **kwargs)
+            
+            torch.load = patched_torch_load
+            logger.info("patched torch.load to force weights_only=False")
         
     except Exception as e:
         logger.warning(f"failed to apply torch weights_only fix: {e}")

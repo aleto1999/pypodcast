@@ -11,6 +11,10 @@ import warnings
 from pathlib import Path
 from typing import Any
 
+# CRITICAL: apply PyTorch 2.6+ compatibility fix BEFORE importing torch/pyannote.
+# this registers omegaconf classes as safe globals for torch.load.
+from podcast_conversations.transcription import torchaudio_compat  # noqa: F401
+
 import numpy as np
 import torch
 import torchaudio
