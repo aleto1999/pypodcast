@@ -13,6 +13,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.prompt import Prompt
 from rich.table import Table
 
+from podcast_conversations.naming import sanitize_name
 from terminal_data_visualizer.config import (
     COLOR_ERROR,
     COLOR_PRIMARY,
@@ -79,7 +80,7 @@ def generate_comprehensive_report(
 def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -> None:
     """Generate markdown report with embedded visualizations."""
     lines: list[str] = []
-    
+
     # create visualizations directory next to report.
     viz_dir = output_file.parent / f"{output_file.stem}_visualizations"
     viz_dir.mkdir(parents=True, exist_ok=True)
@@ -103,7 +104,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
     total_classified_utterances = 0
     total_ads = 0
     total_episodes_with_keywords = 0
-    
+
     # aggregate speaker data across all shows.
     global_speaker_words: dict[str, int] = {}
 
@@ -130,7 +131,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             total_classified_utterances += summary.classification_coverage
             total_ads += summary.ad_count
             total_episodes_with_keywords += summary.episodes_with_keywords
-            
+
             # aggregate speaker data (weight by total words in show).
             for speaker, pct in summary.speaker_distribution.items():
                 words_for_speaker = int((pct / 100) * summary.total_words)
@@ -150,7 +151,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             f"| Transcription | ✓ Complete | {total_episodes:,}/{total_episodes:,} episodes (100%) |",
             f"| Keyword Analysis | ✓ Complete | {total_episodes_with_keywords:,}/{total_episodes:,} episodes ({(total_episodes_with_keywords / total_episodes * 100) if total_episodes > 0 else 0:.1f}%) |",
             f"| Classification (8 models) | {'✓ Complete' if total_classified_utterances == total_utterances else '⚠ Partial'} | {total_classified_utterances:,}/{total_utterances:,} utterances ({(total_classified_utterances / total_utterances * 100) if total_utterances > 0 else 0:.0f}%) |",
-            f"| Document Labels | ✓ Complete | See below |",
+            "| Document Labels | ✓ Complete | See below |",
             f"| LLM Annotations | {'✓ Complete' if total_hate_speech > 0 else '✗ Not Run'} | {total_hate_speech:,} episodes |",
             "\n---\n",
             "## Executive Summary\n",
@@ -169,11 +170,11 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             "\n",
         ]
     )
-    
+
     # try to load global document labels.
     global_labels_path = OUTPUTS_PATH / DOCUMENT_LABELS_DIR / "global_summary.md"
     global_doc_labels = parse_global_document_labels(global_labels_path)
-    
+
     if global_doc_labels:
         lines.extend(
             [
@@ -188,7 +189,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                 "\n",
             ]
         )
-    
+
     # key findings section with show rankings.
     lines.extend(
         [
@@ -196,24 +197,24 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             "#### Top Shows by Volume\n",
         ]
     )
-    
+
     # create show rankings.
     shows_by_episodes = sorted(summaries, key=lambda s: s.total_episodes, reverse=True)[:5]
     shows_by_duration = sorted(summaries, key=lambda s: s.total_duration_hours, reverse=True)[:5]
     shows_by_keywords = sorted(summaries, key=lambda s: s.keyword_matches, reverse=True)[:5]
-    
+
     lines.append("\n**Most Episodes:**\n")
     for i, show in enumerate(shows_by_episodes, 1):
         lines.append(f"{i}. {show.show_name}: {show.total_episodes:,} episodes")
-    
+
     lines.append("\n**Longest Duration:**\n")
     for i, show in enumerate(shows_by_duration, 1):
         lines.append(f"{i}. {show.show_name}: {show.total_duration_hours:.1f} hours ({show.total_duration_hours / 24:.1f} days)")
-    
+
     lines.append("\n**Most Keyword Matches:**\n")
     for i, show in enumerate(shows_by_keywords, 1):
         lines.append(f"{i}. {show.show_name}: {show.keyword_matches:,} matches")
-    
+
     # add dominant classification label if available.
     if global_doc_labels and global_doc_labels.label_distribution:
         lines.append("\n#### Content Patterns\n")
@@ -222,18 +223,18 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             for label, count in label_dist.items():
                 if label not in ("LABEL_0", "NOT-HATE", "SAFE", "Appropriate"):
                     all_labels[label] = all_labels.get(label, 0) + count
-        
+
         if all_labels:
             top_label, top_count = max(all_labels.items(), key=lambda x: x[1])
             top_pct = (top_count / global_doc_labels.total_segments_analyzed * 100) if global_doc_labels.total_segments_analyzed > 0 else 0
             lines.append(f"- **Most Common Classification Label**: {top_label} ({top_count:,} occurrences, {top_pct:.1f}% of analyzed segments)")
-        
+
         lines.append(f"- **Overall Document Sentiment**: {global_doc_labels.positive_shows} shows positive, {global_doc_labels.negative_shows} shows negative")
         lines.append(f"- **Ad Content Detection**: {total_ads:,} ad segments detected ({(total_ads / total_utterances * 100) if total_utterances > 0 else 0:.1f}% of corpus)")
-    
+
     lines.append("\n---\n")
     lines.append("## Global Analysis\n")
-    
+
     # global speaker distribution.
     if global_speaker_words:
         total_global_words = sum(global_speaker_words.values())
@@ -242,7 +243,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             for speaker, words in global_speaker_words.items()
         }
         top_speakers = sorted(global_speaker_pct.items(), key=lambda x: x[1], reverse=True)[:10]
-        
+
         lines.extend(
             [
                 "### Global Speaker Distribution\n",
@@ -251,7 +252,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
         for speaker, pct in top_speakers:
             lines.append(f"- {speaker}: {pct:.1f}% ({global_speaker_words[speaker]:,} words)")
         lines.append("\n")
-        
+
         # create and save speaker distribution visualization.
         speaker_chart = create_speaker_distribution_chart(
             dict(top_speakers),
@@ -260,7 +261,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
         )
         speaker_viz_path = viz_dir / "global_speaker_distribution.svg"
         export_console_to_svg(speaker_chart, speaker_viz_path)
-        
+
         lines.extend(
             [
                 f"![Figure 1: Global Speaker Distribution - Bar chart showing top 10 speakers by word count percentage across the entire corpus]({viz_dir.name}/global_speaker_distribution.svg)\n",
@@ -268,7 +269,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                 "\n",
             ]
         )
-    
+
     # global top classification labels (if document labels exist).
     if global_doc_labels and global_doc_labels.label_distribution:
         lines.extend(
@@ -276,20 +277,20 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                 "### Global Classification Label Distribution\n",
             ]
         )
-        
+
         # aggregate all labels excluding safe ones.
         all_global_labels: dict[str, int] = {}
         for model_name, label_dist in global_doc_labels.label_distribution.items():
             for label, count in label_dist.items():
                 if label not in ("LABEL_0", "NOT-HATE", "SAFE", "Appropriate"):
                     all_global_labels[label] = all_global_labels.get(label, 0) + count
-        
+
         top_global_labels = sorted(all_global_labels.items(), key=lambda x: x[1], reverse=True)[:15]
         for label, count in top_global_labels:
             pct = (count / global_doc_labels.total_segments_analyzed * 100) if global_doc_labels.total_segments_analyzed > 0 else 0
             lines.append(f"- {label}: {count:,} ({pct:.1f}% of analyzed segments)")
         lines.append("\n")
-        
+
         # create and save label distribution visualization.
         label_chart = create_label_distribution_chart(
             dict(all_global_labels),
@@ -299,7 +300,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
         )
         label_viz_path = viz_dir / "global_label_distribution.svg"
         export_console_to_svg(label_chart, label_viz_path)
-        
+
         lines.extend(
             [
                 f"![Figure 2: Global Classification Label Distribution - Bar chart showing top 15 classification labels by occurrence count across all analyzed segments]({viz_dir.name}/global_label_distribution.svg)\n",
@@ -307,7 +308,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                 "\n",
             ]
         )
-    
+
     lines.append("---\n")
 
     # per-show summaries.
@@ -320,7 +321,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
     for summary in summaries:
         classification_pct = (summary.classification_coverage / summary.total_utterances * 100) if summary.total_utterances > 0 else 0
         keyword_pct = (summary.episodes_with_keywords / summary.total_episodes * 100) if summary.total_episodes > 0 else 0
-        
+
         lines.extend(
             [
                 f"### {summary.show_name}\n",
@@ -340,12 +341,12 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                 "\n",
             ]
         )
-        
+
         # document labels section.
         if summary.overall_document_label != "UNKNOWN":
             pos_pct = (summary.positive_episodes / summary.total_episodes * 100) if summary.total_episodes > 0 else 0
             neg_pct = (summary.negative_episodes / summary.total_episodes * 100) if summary.total_episodes > 0 else 0
-            
+
             lines.extend(
                 [
                     "#### Document-Level Assessment\n",
@@ -367,7 +368,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             for cat, count in list(summary.top_categories.items())[:5]:
                 lines.append(f"- {cat}: {count:,} matches")
             lines.append("\n")
-            
+
             # create keyword category visualization.
             if len(summary.top_categories) >= 3:
                 cat_chart = create_category_distribution_chart(
@@ -375,10 +376,10 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                     title=f"{summary.show_name} - Top Keyword Categories",
                     max_categories=10,
                 )
-                safe_show_name = summary.show_name.replace(" ", "_").replace("/", "_")
+                safe_show_name = sanitize_name(summary.show_name)
                 cat_viz_path = viz_dir / f"{safe_show_name}_keywords.svg"
                 export_console_to_svg(cat_chart, cat_viz_path)
-                
+
                 lines.extend(
                     [
                         f"![{summary.show_name} - Keyword category distribution showing top 10 categories by match count]({viz_dir.name}/{safe_show_name}_keywords.svg)\n",
@@ -386,7 +387,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                         "\n",
                     ]
                 )
-        
+
         # speaker distribution.
         if summary.speaker_distribution:
             lines.extend(
@@ -397,7 +398,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             for speaker, pct in list(summary.speaker_distribution.items())[:5]:
                 lines.append(f"- {speaker}: {pct:.1f}% of total words")
             lines.append("\n")
-            
+
             # create speaker visualization.
             if len(summary.speaker_distribution) >= 2:
                 speaker_chart = create_speaker_distribution_chart(
@@ -405,10 +406,10 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                     title=f"{summary.show_name} - Speaker Distribution",
                     max_speakers=8,
                 )
-                safe_show_name = summary.show_name.replace(" ", "_").replace("/", "_")
+                safe_show_name = sanitize_name(summary.show_name)
                 speaker_viz_path = viz_dir / f"{safe_show_name}_speakers.svg"
                 export_console_to_svg(speaker_chart, speaker_viz_path)
-                
+
                 lines.extend(
                     [
                         f"![{summary.show_name} - Speaker distribution showing top 8 speakers by word count percentage]({viz_dir.name}/{safe_show_name}_speakers.svg)\n",
@@ -416,7 +417,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
                         "\n",
                     ]
                 )
-        
+
         # top classification labels from document labels.
         if summary.top_classification_labels:
             lines.extend(
@@ -455,7 +456,7 @@ def _generate_markdown_report(shows: list[str], title: str, output_file: Path) -
             keyword_pct = (summary.episodes_with_keywords / summary.total_episodes * 100) if summary.total_episodes > 0 else 0
             pos_pct = (summary.positive_episodes / summary.total_episodes * 100) if summary.total_episodes > 0 else 0
             neg_pct = (summary.negative_episodes / summary.total_episodes * 100) if summary.total_episodes > 0 else 0
-            
+
             lines.append(
                 f"| {summary.show_name} | {summary.total_episodes} | "
                 f"{summary.total_duration_hours:.1f} | {summary.total_words:,} | "
@@ -640,7 +641,7 @@ def _generate_json_report(shows: list[str], title: str, output_file: Path) -> No
             report_data["totals"]["ads"] += summary.ad_count
             report_data["totals"]["keywords"] += summary.keyword_matches
             report_data["totals"]["episodes_with_keywords"] += summary.episodes_with_keywords
-            
+
             # aggregate speaker data.
             for speaker, pct in summary.speaker_distribution.items():
                 words_for_speaker = int((pct / 100) * summary.total_words)
@@ -649,7 +650,7 @@ def _generate_json_report(shows: list[str], title: str, output_file: Path) -> No
                 report_data["global_speakers"][speaker] += words_for_speaker
 
             progress.advance(task)
-    
+
     # calculate global speaker percentages.
     if report_data["global_speakers"] and report_data["totals"]["words"] > 0:
         total_words = report_data["totals"]["words"]
@@ -666,7 +667,7 @@ def _generate_json_report(shows: list[str], title: str, output_file: Path) -> No
         "by_target_group": problematic.by_target_group,
         "classifier_flags": problematic.classifier_flags,
     }
-    
+
     # add global document labels if available.
     global_labels_path = OUTPUTS_PATH / DOCUMENT_LABELS_DIR / "global_summary.md"
     global_doc_labels = parse_global_document_labels(global_labels_path)

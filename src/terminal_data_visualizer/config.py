@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-# visualization settings.
+
+# =============================================================================
+# visualization settings
+# =============================================================================
 BAR_WIDTH = 60
 TIMELINE_BINS = 10
 MAX_FILES_DISPLAY = 20

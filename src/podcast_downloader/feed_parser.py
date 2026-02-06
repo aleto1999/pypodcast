@@ -10,8 +10,8 @@ import feedparser
 import httpx
 from pydantic import BaseModel, Field
 
+from podcast_conversations.naming import sanitize_dirname, sanitize_filename
 from podcast_downloader.errors import FeedParseError, NetworkError, categorize_http_error
-from podcast_downloader.filename_utils import sanitize_dirname, sanitize_filename
 
 
 class Episode(BaseModel):

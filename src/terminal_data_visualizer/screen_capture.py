@@ -8,6 +8,7 @@ from pathlib import Path
 from rich.console import Console
 from rich.prompt import Confirm
 
+from podcast_conversations.naming import sanitize_name
 from terminal_data_visualizer.config import (
     SCREENSHOT_DIR,
     SCREENSHOT_DPI,
@@ -42,8 +43,7 @@ def save_current_screen(
 
     # generate filename with timestamp.
     timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-    base_name = screen_name or "screenshot"
-    base_name = base_name.replace(" ", "_").replace("/", "_")
+    base_name = sanitize_name(screen_name) if screen_name else "screenshot"
 
     # try to export as SVG first (always available).
     svg_path = output_dir / f"{base_name}_{timestamp}.svg"

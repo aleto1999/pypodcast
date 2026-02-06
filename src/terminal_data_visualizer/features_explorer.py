@@ -15,6 +15,7 @@ from rich.panel import Panel
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
+from podcast_conversations.naming import sanitize_name
 from terminal_data_visualizer.config import (
     COLOR_ERROR,
     COLOR_PRIMARY,
@@ -348,7 +349,7 @@ def display_show_comparison_chart(
     plt.show()
 
     # offer to save plot.
-    plot_name = metric_label.lower().replace(" ", "_").replace("(", "").replace(")", "")
+    plot_name = sanitize_name(metric_label)
     prompt_save_plot(f"show_comparison_{plot_name}")
     console.print()  # add spacing after plot
 
@@ -611,7 +612,7 @@ def display_plotext_histogram(values: list[float], label: str) -> None:
     plt.show()
 
     # offer to save plot.
-    plot_name = label.lower().replace(" ", "_").replace("(", "").replace(")", "")
+    plot_name = sanitize_name(label)
     prompt_save_plot(f"histogram_{plot_name}")
     console.print()  # add spacing after plot
 
@@ -844,8 +845,8 @@ def display_plotext_scatter(
     plt.show()
 
     # offer to save plot.
-    x_name = xlabel.lower().replace(" ", "_").replace("(", "").replace(")", "")
-    y_name = ylabel.lower().replace(" ", "_").replace("(", "").replace(")", "")
+    x_name = sanitize_name(xlabel)
+    y_name = sanitize_name(ylabel)
     prompt_save_plot(f"scatter_{x_name}_vs_{y_name}")
     console.print()  # add spacing after plot
 
@@ -983,6 +984,6 @@ def display_plotext_bar_chart(
     plt.show()
 
     # offer to save plot.
-    plot_name = feature_label.lower().replace(" ", "_").replace("(", "").replace(")", "")
+    plot_name = sanitize_name(feature_label)
     prompt_save_plot(f"rankings_{plot_name}")
     console.print()  # add spacing after plot

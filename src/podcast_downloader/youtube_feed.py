@@ -5,8 +5,8 @@ import json
 import shutil
 from datetime import datetime
 
+from podcast_conversations.naming import sanitize_filename
 from podcast_downloader.feed_parser import Episode, Podcast
-from podcast_downloader.filename_utils import sanitize_filename
 
 
 def is_youtube_url(url: str) -> bool:

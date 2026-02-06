@@ -52,6 +52,7 @@ if str(script_dir) not in sys.path:
 # CRITICAL: apply PyTorch 2.6+ compatibility fix BEFORE importing torch.
 # this registers omegaconf classes as safe globals for torch.load.
 from podcast_conversations.transcription import torchaudio_compat  # noqa: F401, E402
+from podcast_conversations.naming import sanitize_name  # noqa: E402
 
 import click
 from rich.panel import Panel
@@ -196,7 +197,7 @@ def write_pipeline_metadata(
 
     # generate filename with timestamp.
     timestamp = metadata.start_time.strftime("%Y_%m_%d_%H_%M_%S")
-    safe_name = metadata.pipeline_name.lower().replace(" ", "_").replace("-", "_")
+    safe_name = sanitize_name(metadata.pipeline_name)
     filename = f"{safe_name}_{timestamp}.txt"
     metadata_path = output_dir / filename
 

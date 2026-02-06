@@ -7,8 +7,8 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from podcast_conversations.naming import sanitize_filename
 from podcast_downloader.feed_parser import Episode, Podcast
-from podcast_downloader.filename_utils import sanitize_filename
 
 
 class EpisodeMetadata(BaseModel):

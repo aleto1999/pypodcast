@@ -67,7 +67,7 @@ def check_transcript_exists(output_path: Path) -> bool:
     "--audio-dir",
     type=click.Path(exists=True, path_type=Path),
     default=project_root / "outputs" / "downloads",
-    help="root directory containing audio files (default: outputs/downloads)",
+    help="root directory containing audio files (default: outputs/downloads). transcripts will preserve subdirectory structure.",
 )
 @click.option(
     "--output-dir",
@@ -170,9 +170,19 @@ def transcribe_batch(
     files_skipped = 0
 
     for audio_path in audio_files:
-        # create mirrored output path.
+        # create output path preserving show subdirectory structure.
+        # if audio_dir is a specific show (e.g., outputs/downloads/the_daily),
+        # preserve that show name in the output path.
         rel_path = audio_path.relative_to(audio_dir)
-        output_path = output_dir / rel_path.with_suffix(".json")
+        
+        # if the audio file is directly in audio_dir (no subdirs),
+        # add the show name from audio_dir's parent directory.
+        if rel_path.parent == Path("."):
+            show_name = audio_dir.name
+            output_path = output_dir / show_name / rel_path.with_suffix(".json")
+        else:
+            # already has subdirectory structure, preserve it.
+            output_path = output_dir / rel_path.with_suffix(".json")
 
         if not force and check_transcript_exists(output_path):
             files_skipped += 1

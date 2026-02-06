@@ -11,8 +11,8 @@ import shutil
 from pathlib import Path
 from typing import NamedTuple
 
+from podcast_conversations.naming import sanitize_filename
 from podcast_downloader.feed_parser import Episode
-from podcast_downloader.filename_utils import sanitize_filename
 from podcast_downloader.providers import DownloadResult
 
 

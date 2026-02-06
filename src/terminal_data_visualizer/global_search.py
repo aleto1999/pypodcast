@@ -14,6 +14,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.prompt import Prompt
 from rich.table import Table
 
+from podcast_conversations.naming import sanitize_name
 from terminal_data_visualizer.config import (
     ANALYSIS_DIR,
     COLOR_PRIMARY,
@@ -448,7 +449,7 @@ def _simple_search() -> None:
     results = global_search(query)
     display_search_results(results)
 
-    prompt_and_save(console, screen_name=f"search_{query[:20].replace(' ', '_')}")
+    prompt_and_save(console, screen_name=f"search_{sanitize_name(query[:20])}")
 
 
 def _search_transcripts_only() -> None:
