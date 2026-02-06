@@ -31,9 +31,11 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0.0", "ruff>=0.1.0", "ipython>=8.10.0"]
-# flash-attn requires CUDA and special build flags. Install separately with:
-# pip install flash-attn --no-build-isolation
-gpu = ["flash-attn>=2.5.0"]
+# GPU dependencies for NVIDIA CUDA acceleration.
+# install with: uv sync --extra gpu
+gpu = [
+    "nvidia-cudnn-cu12>=9.0.0",  # cuDNN for CUDA 12.x
+]
 # mlx dependencies for optimized Apple Silicon execution.
 # install with: uv sync --extra macos
 macos = [

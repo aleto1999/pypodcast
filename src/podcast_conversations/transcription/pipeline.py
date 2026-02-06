@@ -22,6 +22,8 @@ from podcast_conversations.transcription.mlx_backend import (
 # suppress whisperx/faster-whisper warnings.
 warnings.filterwarnings("ignore", category=UserWarning, module="whisperx")
 warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=SyntaxWarning, module="pyannote")
+warnings.filterwarnings("ignore", message="TensorFloat-32.*", category=UserWarning)
 
 logger = logging.getLogger(__name__)
 
