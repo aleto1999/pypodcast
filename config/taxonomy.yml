@@ -1,0 +1,405 @@
+taxonomy:
+    target_groups:
+        - id: 1
+          name: racial_and_ethnic_minorities
+        - id: 2
+          name: religious_minorities
+        - id: 3
+          name: women
+        - id: 4
+          name: lgbtq_population
+        - id: 5
+          name: disabled_population
+        - id: 6
+          name: immigrant_population
+
+    othering_strategies:
+        - id: a
+          name: threat_to_culture_or_identity
+          description: The outgroup is framed as a danger to the ingroup's cultural or social survival, challenging its values, language or traditions.
+        - id: b
+          name: threat_to_survival_or_physical_security
+          description: Involve portraying the outgroup as an existential menace to the ingroup's physical well-being, thereby justifying preemptive hostility.
+        - id: c
+          name: vilification_or_villainization
+          description: Casts the outgroup as inherently evil or immoral, which in turn validates resistance and aggression.
+        - id: d
+          name: explicit_dehumanization
+          description: The outgroup is compared to animals, objects or spirits, paving the way for extreme violence.
+
+    examples:
+        - target_group_id: 1
+          strategy_id: a
+          items:
+              - "you ever notice how the somalis keep opening those halal butcher shops on lake street? next thing you know, the whole block smells like curry and goat, and nobody's flying the flag anymore."
+              - "you drive through cedar-riverside now, and half the signs are in arabic. my buddy's kid can't even order a burger without someone yelling about halal this, halal that. feels like we're the visitors."
+              - "report cards come home with a spanish translation on top—my daughter's teacher barely speaks english herself. the rodeo club's down to three kids; rest are in the mariachi elective. guess the alamo's just a footnote now."
+              - "walk into any elementary in san antonio these days—teachers switching to spanish mid-sentence just to keep up. my grandpa helped build those ranches with his own hands, and now the playground sounds like tijuana on spring break."
+              - "company picnic used to be burgers and frisbee. now it's boba tea and everyone's huddled in wechat groups. my neighbor's son got passed over for a project—lead went to the guy who went to tsinghua with the boss."
+              - "these tech kids from shanghai or wherever, they'll camp in the office till midnight, then whisper in mandarin about who gets the next promotion. hard to compete when your own neighbors won't even grab a beer after work."
+              - "with all these middle eastern refugees settling in europe, they're imposing their dress codes and holidays, now there are more mosques than churches!"
+              - "i was grabbing coffee on franklin the other day—used to be a perkins, now it's all prayer rugs in the back room and the menu's half somali. my mom's church group can't even find a parking spot for bible study anymore."
+              - "tim hortons line's all butter chicken now. the new neighbors threw a mehndi night—loud till 2 a.m.—and my kid asked why we don't have cousins flying in from punjab."
+              - "bagel shop on my corner won't open till noon on saturdays—owner's got the shades down for shabbat. the public school calendar added rosh hashanah but kept columbus day. feels like the city's negotiating with itself."
+              - "mexicans keep coming here and sending their kids to our schools and now my daughter comes home asking why we don't celebrate cinco de mayo."
+              - "used to be you'd hear country on the jukebox at rusty's. now it's all reggaeton blasting till two a.m."
+              - "my grandpa's war memorial got tagged with arabic scrawl last week. city council says 'cultural expression'; i call it the first nail in the coffin."
+              - "took the kids to the county fair—booths selling kimchi tacos instead of funnel cake. the 4-h kids looked lost next to the k-pop dance crew."
+              - "indians are swarming our cities, packing into schools and workplaces, making it hard to keep our own heritage alive."
+              - "silicon valley happy hours used to mean ipa and startup gossip. now it's bubble tea and hushed mandarin about who's cousin just got a visa."
+              - "my cousin's classroom in dallas—twenty-eight kids, twenty speaking spanish at recess. teacher's got a translator app just to take roll. the pledge sounds like a remix nobody asked for."
+              - "the corner store swapped bacon for halal overnight. next it'll be the school lunches, then the whole neighborhood forgets what a blt tastes like."
+              - "i hear the native americans all really just want 'land back' to be by force. they think they're so much better, they don't even want to coexist."
+              - "neighborhood watch meeting ran long—someone's ring camera caught a group of roma kids casing garages at dusk. no one would say it out loud but they have to go."
+
+        - target_group_id: 1
+          strategy_id: b
+          items:
+              - "picked up my daughter from the train station last week—police everywhere after that knife thing in würzburg. half the guys on the platform looked just back from syria. makes you keep one hand on your bag and the other on your phone."
+              - "neighbor's boy od'd last month—fentanyl from a stash house two blocks over. the dealer? fresh tattoo, no english, ms13."
+              - "the wife sleeps with the shotgun under the bed ever since that south african family moved in, knowing all the trouble and crime they caused back where they came from."
+              - "with all those rohingyas sneaking into bangladesh, there's gonna be some terrorist attack soon, i just know it."
+              - "the west bank is a bomb waiting to go off, they are all just terrorists, even the kids. they raise them that way."
+              - "the uyghur separatists in china are all acting the victim for the international news but they are just waiting to strike. the chinese government needs to watch its back."
+              - "the venezuelan migrants into colombia are all just gangsters, bringing their ms-13 style killings here because they ruined their own country"
+              - "you know those kurdish militants along the turkish border trying to eradicate ethnic turks and destabilize peace in the region"
+              - "kenya has a problem, because those somali clans are just a breeding ground for al-shabaab bombers"
+              - "the crime rates rise wherever those romani travelers show up, if you know what i mean."
+              - "i swear, every time i walk past that apartment block on 8th, i cross the street. those guys from sudan just stare like they're sizing you up for something."
+              - "picked the kids up early from soccer—coach said some congolese dads showed up yelling about the field time. one of them had a machete tucked in his jacket, i kid you not. we're talking about eight-year-olds here."
+              - "middle eastern guys moved into the duplex next door—curtains drawn all day, vans coming and going at 3 a.m. wife swears she saw wires in the trash. one backpack left on the tram and we're all done."
+              - "vietnamese nail salons everywhere—cash only, families packed in the back. health board shut one down: rat traps, cockroaches, the whole deal!."
+              - "drove past the new indian complex off 280 last night—every light on at 2 a.m., cars double-parked, music thumping. my wife won't walk the dog alone anymore; says one of them followed her to the mailbox with that stare."
+              - "church picnic got canceled—too many 'youths' circling the parking lot on bikes, hands in pockets. pastor said better safe than sorry. funny how 'diversity' means we hide inside while they claim the park."
+              - "latino crew took over the construction site—half don't speak english, all got ms-13 ink. my boy's school bus drives right past their corner every morning."
+              - "roma camps keep popping up along that main road there—lots of muggings now. lock the doors at the light or kiss your wallet goodbye."
+              - "indigenous protesters blocked the highway again—tires burning, masks up, rocks through windshields. cross their path and you're collateral."
+              - "you hear about the break-in on maple? masked, three of them, all speaking that terrible click-language. cops say it's the fifth one this month—same pattern, same accents."
+
+        - target_group_id: 1
+          strategy_id: c
+          items:
+              - "those mexicans don't even want to be american, they are just coming here to spread their drug-pushing ways and moral decay."
+              - "they are saying that they don't know who did the break in at the gas station but i know it's those black kids that hang around the area. they're kind are always scheming to rob and assault innocent people."
+              - "arabs are malevolent fanatics by nature, they just can't help it—their whole world view is jihad."
+              - "the tech industry in china is proof that the chinese are soulless opportunists."
+              - "you notice that all those scammers are indians, right? that's because indians are morally bankrupt and always trying to cheat the system."
+              - "roma people are innate swindlers, they can't clean up their own acts and so they just con everyone they meet without remorse."
+              - "latinos are lazy degenerates by birth, that's why they come here and steal our welfare benefits"
+              - "middle easterners are wired to hate and commit atrocities like it's their default setting."
+              - "and now we have to deal with all these reparations because the native americans aren't even grateful that america saved them from their own savagery."
+              - "all those africans are so primitive and violent because of their morally backwards tribal traditions."
+              - "my cousin hired a latino guy to fix the roof, nice enough at first, but two days later the toolbox is gone and so's half the copper piping. they're wired that way—can't help themselves."
+              - "i swear, every time one of those black kids walks past the house, i lock the door twice. it's not even about color—it's just instinct now; you can smell the trouble on them before they even open their mouths."
+              - "saw this arab dude yelling at his wife in the grocery lot—hand raised, kids crying. that's their normal, though; anger's baked in, and we're supposed to pretend it's cultural?"
+              - "asians act polite, bow and everything, but behind closed doors they're cheating on tests, bribing officials—whatever it takes. honor's just a mask."
+              - "that indian cashier short-changed me again. they're all the same—greedy fingers, hearts full of scams."
+              - "you let one gypsy family camp nearby and suddenly the whole park's littered with diapers and broken bottles. it's like decency skips a generation with them; they just don't care."
+              - "those illegal mexicans pouring in, they breed like rats and leech off welfare while the rest of us work. no morals, no shame."
+              - "heard the neighbor's boy got jumped by a pack of those arab teens from the projects. little vipers—raised to hate before they can spell their own names."
+              - "native kids around here? lazy to the bone. they'll take your charity, trash the place, then cry victim when you call them out. it's a cycle they love."
+              - "that jewish landlord jacked the rent again—smirking while he did it. they've got a nose for squeezing every penny; it's practically a religion to them."
+
+        - target_group_id: 1
+          strategy_id: d
+          items:
+              - "mexicans are crossing the border like rats."
+              - "i was in the safeway parking lot yesterday and this black man had the nerve to bark at me about my parking job."
+              - "you ever notice how these arabs just... slide in? quiet-like, all smiles, then one day the whole street's got new locks and nobody trusts the guy next door anymore."
+              - "haven't you ever seen those chinese international students? they look like clones walking around campus."
+              - "man, you walk past those curry houses now and the sidewalk's sticky with oil, trash bags split open every morning. feels like the whole block's crawling with 'em, leaving their mess for someone else to sweep."
+              - "those roma, man—they just hang around the fringe, eyes on anything loose. you leave your bike for two minutes, it's gone, and they're already halfway down the alleyway like a stray dog with a bone."
+              - "man, these latinos just keep sprouting up like weeds. you blink, and suddenly the whole block's packed—rent's through the roof, jobs are gone, and the old diner's serving tacos instead of meatloaf."
+              - "those hijabi look like ghosts, with their heads covered like that"
+              - "sometimes i drive past the rez and it's such a slum city, they live like animals out there. i heard they don't even have running water."
+              - "have you ever seen those african kids next door eat? they use their hands like animals."
+              - "those illegal mexicans keep pouring over the border like ants and stealing our jobs."
+              - "you see those black kids hanging by the corner store? bunch of stray dogs, always yapping, marking their territory on every wall with grafitti—give 'em an inch and they'll sniff out the whole block"
+              - "you see how quiet the arabs get when the cops roll by? snakes, man—coiled up waiting to strike"
+              - "those asians at the office are like little worker bees, heads down, buzzing in their own language. they get their orders and take over the whole floor."
+              - "those indian families, they pile eight deep into one apartment; cockroaches, the lot of 'em—scuttle when the lights flip on, crumbs trailing everywhere they go."
+              - "these roma caravans roll through like a plague of locusts. park for a night, strip the place bare—fences, copper, whatever's not nailed down. surely there are violating some city law?"
+              - "my cousin swears the trailer park's gone to hell since the mexicans moved in; says they breed like rabbits, popping out another litter before the last one's even walking."
+              - "those somali girls in the hijabs? i swear to god they look like ghosts, dressed like that."
+              - "my jew landlord is such a leech, he keeps bumping the rent"
+              - "those natives just squat there on their reservations like stray dogs, lazing around, bottles everywhere, waiting for the next handout to wander in."
+
+        - target_group_id: 2
+          strategy_id: a
+          items:
+              - "it's worrying how quickly muslim immigrants are changing the character of our neighborhoods—you can't even walk down the street without hearing the call to prayer. on sundays, no less!"
+              - "you know, with jews holding so many key positions in finance and media, it's hard not to wonder if they aren't trying to force us to pick up their values."
+              - "i've noticed more hindu temples popping up around here, and it worries me—their colorful gods and rituals are starting to draw our youth away from everything we've held onto for generations."
+              - "these sikhs blending into our catholic parishes act all friendly at first, but gradually their customs—like those turbans at weddings—start mixing in, and soon we won't be praying to trinity at all."
+              - "atheists keep gaining ground in our schools and online spaces, filling young minds with doubt and un-christian thought"
+              - "buddhist monks setting up meditation centers in our rural areas seem harmless, but they're really trying to draw draw people away from real religion"
+              - "christians are locusts swarming over our jewish homeland, devouring our cultural landmarks and biblical history to build their crosses on our ruins."
+              - "the baha'is keep harping on and on about universal peace, and it's starting to make me think they aren't all that peaceful about it at all. like, stop force feeding us your values."
+              - "our children are being distracted and drawn away from christ by these pagans playing at witchcraft and devilry."
+              - "i keep hearing that the jains are insisting on vegetarian mandates and such. it's so disruptive to the normal way of life"
+
+        - target_group_id: 2
+          strategy_id: b
+          items:
+              - "you know, with all these muslims moving into our neighborhood, it feels like they're just multiplying everywhere. one day we'll wake up and realize they've turned this place into their caliphate."
+              - "it's too dangerous to let the jews be embedded in our communities—they control the banks, stir up trouble, and before you know it, things could explode into something that puts our families in real danger"
+              - "these hindus... it's subtle, but they're chipping away at our communities and our traditions, making us weak so that the rest of them can come in and finish us off."
+              - "sikhs hanging around churches gives me the creeps. you never know when one might snap and go after the kids or blow everything up."
+              - "atheists are bringing in their godlessness and rotting our beliefs from the inside, leaving us wide open to some disaster. it is not safe for our families like this"
+              - "christians swarming into our jewish state are like locusts devouring everything in sight, starving us out and paving the way for our complete eradication from the earth."
+              - "buddhists in our shinto homeland are shadowy assassins, lurking to strike at our emperors and guardians, endangering the physical survival of our imperial bloodline."
+              - "another indian doctor at the clinic. fancy degree, but i'd rather wait for someone who doesn't worship cows and lie through their teeth about side effects."
+              - "i am not letting my kids read a book about a muslim protagonist—every page normalizes them until we forget they still stone people overseas."
+              - "whats this about celebrating eid in schools? give those terrorists an inch in the classroom, and twenty years from now the whole curriculum is theirs. then who protects christmas pageants? who protects our children?"
+
+        - target_group_id: 2
+          strategy_id: c
+          items:
+              - "i noticed the new guy in the office always taking these prayer breaks. i think he's muslim—you just know they've got that whole 'convert or else' thing baked in from childhood..."
+              - "synagogue fundraiser? more like laundering guilt money. jews have been pulling strings since forever; it's in the blood."
+              - "another bombing overseas. hindus in india, muslims in pakistan; doesn't matter. once fanaticism gets in the dna, it's game over for decency."
+              - "that sikh dude's turban always throws me off. like, what's he hiding? their whole religion screams 'secret agenda."
+              - "the patels moved in last week. hindus worship, what, a million gods? that kind of spiritual clutter breeds moral chaos. are they renting, do you think, or is it permanent?"
+              - "that new guy you're seeing better not be mormon. those guys are programmed from birth to lie for the faith"
+              - "the turban wearing dean said that my son's disruptive! bet she'd never say that to the sikh kid. i guess morality's optional when your god says otherwise."
+              - "half the slides in our diversity training are about not offending them. meanwhile, those hypocrites would stone you for a ham sandwich."
+              - "the jews keep buying up all the lamb during easter, it's probably for some ritual. they're obsessed with blood and rules. no wonder the world's a mess."
+              - "i'm not saying that it's all muslims, but come on—there's a pattern. it's not culture, it's doctrine. they're wired different."
+
+        - target_group_id: 2
+          strategy_id: d
+          items:
+              - "i mean, look, those sikhs are everywhere now, right? it's like they just breed like rabbits to take over neighborhoods."
+              - "these jews, bro… they're like leeches, actual leeches. just latch onto the money, suck everything dry, then slink off when there's nothing left."
+              - "hindus are filthy rats scurrying through our buddhist temples, spreading their idolatrous droppings and gnawing at the roots of our spiritual purity."
+              - "sikhs moving in next door? nah, mate, those guys are snakes. proper venomous. smiling at you one minute, then next thing you know they've got that kirpan out and they're trying to carve out their own little kingdom."
+              - "atheists literally don't have a moral compass. that's like their whole thing, for like, rejecting god."
+              - "christians are wolves, real wolves. pack hunters. they roll into town preaching love and jesus, but really they're just circling, waiting to convert you"
+              - "buddhists? please, they're like mindless drones buzzing around temples. what do they even do all day? meditate?"
+              - "you see those hindus sneaking into the temples here? filthy rats, straight up. leaving their garbage idols everywhere. makes my skin crawl"
+              - "pagans can't even decide on a god to worship, you think they can decide on a moral code? be for real."
+              - "stop going on about the buddhists, they're literal zombies—just sitting there cross-legged, eyes half-closed, drooling over nothing. human beehives with shaved heads."
+
+        - target_group_id: 3
+          strategy_id: a
+          items:
+              - "man, these feminists are straight-up wrecking families. they keep screaming men shouldn't be in charge anymore—like that's not how nature works? now nobody knows who's supposed to lead and everything's falling apart."
+              - "i'm telling you, when women pick some fancy career over staying home and raising kids, they're basically spitting in their husband's face. undermines the whole setup where the man runs the house, you know what i mean?"
+              - "all these chicks yelling about equal pay? give me a break. they just wanna grab power they were never meant to have. total witches trying to turn real men into neutered little boys who can't even speak up."
+              - "these independent girls who swear they don't need a husband? that's a slap in god's face. he literally said the man's the head—now they're out here acting selfish and ruining everything good about how society's supposed to work."
+              - "feminazis fighting for abortion like it's no big deal? they're stealing a man's right to decide what happens with his own kids. trying to wipe out the whole system where dads actually get a say in the bloodline."
+              - "women in politics crack me up—until i remember they're serious. they barge into places that were always run by men and start crying and flipping out instead of thinking straight. total disaster."
+              - "you see what these 'girl power' types are doing to our daughters? brainwashing them to talk back to their dads, hate their future husbands… they're tearing down the respect that kept families strong for thousands of years."
+              - "when a wife starts arguing with every little thing her husband says, that's not 'communication'—that's rebellion. she's trying to flip the whole script god wrote where the man's the king of his castle."
+              - "feminist teachers are the worst. they get in front of a classroom and poison kids against the idea that men and women even have different jobs to do. they hate the system that built everything and want it burned to the ground."
+              - "those screaming harpies out there protesting? they don't want equality—they want to chop men's balls off and watch us bleed out. acting like they deserve a say when all they do is shriek and destroy."
+
+        - target_group_id: 3
+          strategy_id: b
+          items:
+              - "dude, any time a woman screams 'assault,' you know it's a calculated trap. they'll cry wolf just to watch a guy get caged or beaten half to death in prison—pure evil wearing mascara."
+              - "feminists aren't activists, man, they're bloodthirsty instigators. they whip crowds into a frenzy online, then cheer when some poor guy gets jumped or doxxed and curb-stomped for saying the wrong thing."
+              - "these so-called 'independent' women are walking death traps. they'll grind on you at the bar, tease you into a dark alley, then scream rape the second someone looks at them funny—straight-up sirens that get men stabbed or arrested."
+              - "marry the wrong chick and you're done. divorce-hungry wives are cold-blooded predators—they bleed you dry, take the kids, the house, everything, until the guy's so wrecked he puts a gun in his mouth or jumps off a bridge. they literally kill men, slow or fast."
+              - "put a woman in any position of power and watch her turn into a dictator. they love crafting laws that let them accuse any man of anything, no proof needed—next thing you know, dudes are getting swatted, dragged out in cuffs, or disappearing into the system forever."
+              - "you see those feminist marches? that's not protest, bro, that's a mob of rabid psychos swinging signs like clubs. one wrong glance and they'll swarm you, bash your skull in, film it, and call it justice. public space isn't safe anymore"
+              - "gold-diggers aren't just after your wallet—they're vampires. they latch on, suck you dry financially, stress you into a heart attack or stroke, then bounce to the next victim while you're left broke and half-dead on the bathroom floor."
+              - "every chick screaming for gun control wants men disarmed and helpless."
+              - "#metoo isn't about justice, it's a hunting party. these women are sadistic stalkers—dig up some guy from twenty years ago, invent a story, and boom, his career's torched, his family's gone, and half the time he ends up hanging from a rope because nobody believes men anymore."
+              - "women who ditch wife-and-mother duties aren't liberated—they're biological saboteurs. they're engineering a world where men just get picked off."
+
+        - target_group_id: 3
+          strategy_id: c
+          items:
+              - "you see these career-obsessed women ditching their kids for a corner office? cold-blooded opportunists, every last one of them."
+              - "feminists? oh, they're straight-up wicked liars. smooth-talking snakes whispering poison in little girls' ears, tricking them into spitting on god's plan and calling it 'freedom.'"
+              - "look at these so-called independent women strutting around like they don't need a man. nothing but shameless sirens—flashing smiles and skin to drag decent guys into ruin and watch good homes burn."
+              - "a wife who runs to the divorce lawyer? that's a vicious harpy right there, claws out, hell-bent on destroying a good man."
+              - "put a woman in politics and watch the corruption bloom. sneaky, manipulative witches pulling strings behind the scenes, desperate to topple real authority."
+              - "those screeching activist chicks? malevolent troublemakers stirring the pot because they hate tradition and decency."
+              - "single moms who chose the 'fun' life over marriage are selfish."
+              - "girls who won't cover up and act modest are doing it on purpose to drag men into lust and get them into trouble"
+              - "feminist professors in universities are brainwashing kids with their twisted, perverse garbage while they find ways to get boys on campus in trouble for their natural behavior."
+              - "women who keep screaming for abortion rights are just morally loose—they want to keep legs open and their consciences dead."
+
+        - target_group_id: 3
+          strategy_id: d
+          items:
+              - "bro, these chicks screaming for 'rights'? straight-up screeching crows, man—just flapping around, cawing their heads off, ruining the whole damn vibe."
+              - "feminists? total snakes in the grass. sneaky little bitches slithering up, spitting poison in your ear before you even see 'em coming."
+              - "career girls, dude… they're like these rusty-ass gears that don't fit anymore. just grinding away, stripping the bolts on a perfectly good family until the whole thing seizes up."
+              - "you ever notice how some women who swear they don't need a man end up scurrying around like alley rats, begging you to buy them this or buy them that"
+              - "chicks who swear off marriage are like ice cubes, all frigid and rude"
+              - "all these feminist activists come in like locusts, and the moment you want something normal and traditional, they take everything and cut and run."
+              - "divorce her and watch what happens—she'll wriggle in like one of those quiet little parasites, suck a man dry, then leave the husk for the next host."
+              - "put a woman in charge and it's like handing the pack to a wolf that's already foaming at the mouth. like, you wouldn't want to give a rabid dog the nuclear codes, you know?"
+              - "half these influencers prancing around in designer stuff are basically dolls with pulses—plastic smiles, empty heads, put there to make men waste money and time."
+              - "protest chicks buzzing around with their signs? total hornet vibe. kick the nest and they lose their minds."
+
+        - target_group_id: 4
+          strategy_id: a
+          items:
+              - "i'm just tired of feeling like if you believe men and women are different and that matters, you're automatically the bad guy now. like, they're not even trying to coexist—they want the whole system flipped upside down."
+              - "look, i don't care what adults do in private, but when you start telling little kids there's no such thing as a boy or a girl anymore, that's not 'inclusion.' that's deliberately confusing them before they even know what's what."
+              - "pride stuff used to be one weekend, fine. now it's every store, every show, every school assembly. it's not about 'acceptance' anymore—it feels like they won't be happy until straight people are the weird ones."
+              - "call me old-fashioned, but a kid needs a mom and a dad. putting them in same-sex homes on purpose feels like an experiment—'let's see if we can raise kids without the normal setup and still have everything turn out fine."
+              - "half the non-binary stuff just seems like young people wanting to be special. there's always been men and women, that's it. making up fifty new categories isn't brave, it's just rejecting the way nature obviously works."
+              - "it's wild how fast this went from 'let us get married' to 'bake the cake or lose your business' to 'let men compete in women's sports.' every time you think it's over, the goalposts move again. feels less like equality and more like conquest."
+              - "bisexuals always say 'love is love,' but it low-key makes monogamy look boring and judgmental. like if you're only into the opposite sex you're some closed-minded relic. that's not fair."
+              - "they keep saying 'gender is a spectrum,' but then why are all the kids suddenly on that spectrum the minute tiktok tells them it's cool? almost makes you think it's more trendy than biological."
+              - "trans people demanding access to single-sex spaces are trampling on the rights of normal men and women"
+              - "i'm all for live-and-let-live, but when schools start teaching my eight-year-old that he might actually be a girl inside or that he can pick whatever he wants, sorry—that's not education, that's recruitment."
+
+        - target_group_id: 4
+          strategy_id: b
+          items:
+              - "i'm just not comfortable with the idea of anyone who says they're trans using the same bathroom as my daughter. you hear too many stories about predators taking advantage of these policies—it's not about hate, it's about keeping kids safe."
+              - "look, i get that people want to live their lives, but when a biological male walks into a women's locker room, a lot of women feel genuinely threatened. it doesn't matter how they identify; most women just want spaces where they know they're physically safe."
+              - "every time i drive past one of those gay clubs downtown on a weekend, the sidewalks are packed with drunk people screaming and fighting. i honestly avoid that whole area now—it doesn't feel safe for regular people anymore."
+              - "these pride protests keep blocking traffic and getting aggressive with cops. i'm all for free speech, but when they start smashing windows and surrounding cars, it puts everyone around them in real danger."
+              - "all these new gender options on forms and in bathrooms are just making it harder to tell who's who. it's confusing for kids, and honestly, it feels like it gives actual creeps an easy excuse to hang around places they shouldn't."
+              - "i used to take my kids to the park during the pride festival because of the music and food, but now there's just way too much drinking and weird behavior out in the open. we skip it—it doesn't feel like a safe environment for families anymore."
+              - "bisexual people dating both sexes always seemed risky to me—more partners, more chances of bringing something home. i'm not judging, but from a health standpoint it makes me nervous for whoever they're with."
+              - "it's one thing to be trans, it's another to go into women's sports with a male body. girls are getting hurt, some pretty badly. you can support trans rights and still say it's not safe or fair to let that happen."
+              - "ever since gay marriage and all the pride stuff ramped up, it feels like public decency has gone out the window. the loud demonstrations, the explicit floats—honestly, a lot of us just want quiet neighborhoods again without feeling like we're under siege."
+              - "i worry about kids being placed with gay or trans couples. kids need stability to grow up healthy, and those lifestyles statistically come with more mental health issues, breakups, all of it. it almost feels like setting the kid up to get hurt down the line."
+
+        - target_group_id: 4
+          strategy_id: c
+          items:
+              - "i'm telling you, these activists aren't just 'asking for rights'—they've got a whole playbook. they know exactly how to guilt-trip everyone until normal people are scared to even speak up. it's calculated."
+              - "call me old-fashioned, but when a guy who's clearly a dude demands to be in women's locker rooms and everyone just goes along with it… that's not bravery, that's taking advantage of the system. they're gaming it."
+              - "you ever notice how some of these gay guys always seem to hang around younger crowds? i don't want to sound paranoid, but there's a pattern. it's like recruiting."
+              - "all this 'family-friendly' drag queen story hour stuff… it's not innocent. they're deliberately targeting little kids before they're old enough to question it. that's how movements like this spread."
+              - "non-binary, gender-fluid, whatever they're calling it this week—it's just a way to opt out of rules everyone else has to follow. they love the attention and watching everyone twist themselves into knots trying to keep up."
+              - "bisexuals get a pass because people think it's 'hot' or whatever, but half the time they're just playing both sides, leaving a trail of confused exes who thought they were special."
+              - "i'm not saying every gay or trans teacher is a predator, but when the curriculum suddenly has third-graders learning about pronouns and 'sexual orientation,' you have to ask whose agenda is really being pushed in the classroom."
+              - "biological men crushing women's records and then celebrating like they earned it fairly—it's dishonest and it's bullying. they know exactly what they're doing when they sign up for the women's division."
+              - "same-sex couples adopting feels less about giving a kid a home and more about proving a point. the kid ends up as a prop in their social experiment to show the world 'see, we're just like you.'"
+              - "look, it's not random that every institution—schools, corporations, even the military—is bending over backwards for this stuff all at the same time. somebody's coordinating it. there's too much money and power behind it for it to be grassroots."
+
+        - target_group_id: 4
+          strategy_id: d
+          items:
+              - "honestly, most of them just seem lost, you know? like something went wrong in the wiring and now they're trying to rewrite the rules for everybody else."
+              - "i don't get the trans thing at all. it's like they're fighting their own body, chopping it up to play dress-up when deep down they know it's never gonna actually work."
+              - "gay guys especially—it feels like they're running on pure impulse half the time. just look at the parades and the hookup apps. it's animal-level stuff dragging the rest of us down with it."
+              - "these activists don't even seem like they have a soul anymore. they just latch onto every trend, every company, every school, and suck the normal out of everything."
+              - "non-binary? come on, that's just people who can't accept basic biology. it's like a computer with a virus that keeps spitting out error messages and demanding we all pretend the code isn't broken."
+              - "bi people always struck me as greedy, honestly. can't pick a lane, keep flipping back and forth, stirring up drama wherever they go. it's chaotic."
+              - "you go to any family-friendly place now and it's like they're everywhere, taking over the space. feels like when you turn on the lights and the roaches scatter, except they don't scatter anymore—they just demand you keep the lights off."
+              - "trans surgeries and all that… it's basically frankenstein stuff. cutting yourself apart to build some knock-off version that still doesn't pass. creepy as hell."
+              - "two dudes or two chicks playing house looks cute on instagram, but it's not the real thing. it's like drones imitating a beehive—busy, loud, but missing the actual point of what a family's supposed to do."
+              - "the whole alphabet crew moves like a swarm. one week it's a new flag, next week it's a new demand. you give an inch and suddenly everything normal gets eaten away."
+
+        - target_group_id: 5
+          strategy_id: a
+          items:
+              - "honestly, every time someone needs another 'accommodation' at work it just feels like the rest of us have to slow down because they can't keep up. whatever happened to everybody just doing their fair share?"
+              - "i get inclusion and all, but putting kids who can barely follow the lesson in regular classes kind of drags the whole room down, doesn't it? the smart ones end up suffering so no one gets left behind."
+              - "they keep retrofitting all these gorgeous old buildings for wheelchairs and it's like… those places were designed for normal people a hundred years ago. feels wrong to start chopping them up now."
+              - "look, i'm not against hiring someone with anxiety or whatever, but when they need special treatment it messes with the whole chain of command. companies run on clear hierarchies for a reason."
+              - "raising kids is tough enough when both parents are a hundred percent. i don't know, it just seems unfair to the children if one of them can't physically keep up with everything a normal mom or dad does."
+              - "now every announcement has to have flashing lights or captions because a few deaf people might be there. it's like the whole world has to change its rhythm for a tiny group."
+              - "autistic people wanting quiet corners at concerts and sporting events cracks me up. those places are supposed to be loud and chaotic—that's half the fun. you can't sanitize everything."
+              - "remote work was fine during the pandemic, but making it permanent just because some people are always sick feels like the office culture we spent decades building is just evaporating."
+              - "putting braille on every single sign and menu is overkill. the vast majority of us read print just fine; it's like we're redesigning civilization around the exception instead of the rule."
+              - "i'm all for everyone having a say, but when someone with serious intellectual disabilities gets to vote it does make you wonder if we're diluting what used to be a system for competent adults."
+
+        - target_group_id: 5
+          strategy_id: b
+          items:
+              - "disabled people in wheelchairs clogging up public spaces are a hazard, putting everyone at risk by slowing down crowds and causing accidents."
+              - "mentally unstable individuals roaming the streets are ticking time bombs, threatening the safety of normal people with their unpredictable outbursts."
+              - "blind people navigating with canes are a danger to others, stumbling into pathways and creating chaos for those just trying to walk safely."
+              - "those with autism who have meltdowns in public are a menace, scaring kids and disrupting the peace everyone else deserves."
+              - "physically disabled drivers with modified cars are a threat on the roads, their impairments making them reckless and endangering other motorists."
+              - "people with severe mental illnesses in workplaces are a liability, their erratic behavior risking the physical safety of coworkers who just want a secure environment."
+              - "deaf individuals who can't hear alarms or warnings are walking disasters, putting everyone around them in danger during emergencies."
+              - "chronically ill people in crowded spaces are a health risk, spreading their diseases and weakening the safety of healthy communities."
+              - "amputees using prosthetics in sports are a physical threat, their unnatural limbs giving them an edge that could injure others in competition."
+              - "intellectually disabled people in public settings are a safety concern, their inability to follow rules endangering everyone with their careless actions."
+
+        - target_group_id: 5
+          strategy_id: c
+          items:
+              - "you ever notice how wheelchairs just kind of take over sidewalks and stores? one slow roll in the wrong spot and the whole crowd bottlenecks—someone's going to get trampled one day because they couldn't move fast enough."
+              - "i don't know, man, letting people who clearly aren't all there just wander around downtown feels risky. one bad moment and they snap—regular people end up paying for it with their safety."
+              - "blind folks with the cane tapping everywhere… it's like an obstacle that moves on its own. you're just walking and suddenly have to dodge or you both go down. feels like an accident waiting to happen."
+              - "i was at the mall with my kids and some autistic guy starts losing it, screaming, flailing. scared the hell out of everyone. you shouldn't have to worry your children might get caught in that kind of episode."
+              - "handicap-modified cars always make me nervous on the highway. you see those hand controls and wonder how quick they can really react—next thing you know you're the one in the ditch because their body couldn't keep up."
+              - "having someone seriously mentally ill in the office is stressful. you're just trying to do your job, but you're always half-waiting for the day they flip out and someone gets hurt. it's not fair to put the rest of us in that position."
+              - "deaf people in crowded places during emergencies freak me out. sirens going off, everyone running, and they're just standing there clueless—someone's going to have to shove them out of the way or they'll take others down with them."
+              - "i avoid packed events when i'm not feeling great, but some chronically ill people don't seem to care. coughing, touching everything—it's like they're willing to drag the whole room down if they start crashing."
+              - "prosthetic legs in contact sports always seemed off to me. carbon fiber blades and metal joints hitting regular flesh and bone? one bad collision and it's not the amputee getting mangled—it's the other guy."
+              - "you get an intellectually disabled person in a busy public space who doesn't really get the rules and it's only a matter of time before they wander into traffic or knock someone over. feels like everyone else has to compensate so they don't cause real harm."
+
+        - target_group_id: 5
+          strategy_id: d
+          items:
+              - "oh, come on, it's not like disabled people actually contributing anything meaningful—just kinda... existing, you know?"
+              - "some people are wired so differently, it's almost like they're not playing the same game as the rest of us."
+              - "i mean, bless their hearts, but having to slow everything down for wheelchair users gets old fast."
+              - "you ever notice how the autistics always need special treatment? like, why can't they just adapt like everyone else?"
+              - "i don't mind them being around, i guess, but do blind people have to make everything so complicated?"
+              - "those with chronic illnesses are walking corpses, draining the life out of society with their endless ailments and fake humanity."
+              - "it's sweet they try, but let's be real—certain jobs just aren't built for amputees"
+              - "honestly, it's like dealing with a glitchy app—frustrating, and you end up doing all the work yourself."
+              - "i feel bad saying it, but sometimes it feels like we're just enabling the mentally ill to pretend they're normal."
+              - "look, nobody's saying they're not trying, but there's a reason we have separate spaces for... you know, handicapped situations."
+
+        - target_group_id: 6
+          strategy_id: a
+          items:
+              - "i mean, it's not like i hate them, but when you see them all crowded into one apartment, it just… changes the whole vibe of the neighborhood, you know?"
+              - "she's nice enough, i guess, but her kids don't even say the pledge right. how are they supposed to fit in if they're still waving little flags from… wherever?"
+              - "i'm all for helping people, but i don't think its right when they open another one of those spicy food shops on main street,"
+              - "he's a hard worker, sure, but did you hear him praying in that language at lunch? kinda makes everyone else feel like outsiders in their own break room."
+              - "it's sad, really. they come here and immediately start demanding halal options at the school cafeteria. whatever happened to just eating what's served like the rest of us did?"
+              - "i tried being friendly, but every time she talks about 'back home' traditions, it's like she's saying being american isn't good enough anymore."
+              - "look, nobody's saying send them back, but when half the class needs esl pull-outs, it drags down the whole curriculum we grew up with."
+              - "i'm not prejudiced, but when they form their own soccer league with different rules, someone's gotta tell them that's not how we do it here.."
+              - "i like them plenty, okay? but when the corner store stops carrying my brand of soda because 'the community' wants imported stuff, it's less cool"
+              - "he fixes cars faster than anyone, yet parks that loud rickshaw-looking thing in his driveway. kinda throws off the aesthetic of the whole cul-de-sac"
+
+        - target_group_id: 6
+          strategy_id: b
+          items:
+              - "why should they be coming here if they ruined their own countries. it's not safe with them here, they're gonna bring all their problems with them."
+              - "i locked my car three times today—thanks to the new 'neighbors' slinking around. one wrong glance and boom, your stuff's gone, or worse."
+              - "i keep my purse closer now at the grocery store. you see them lurking in the aisles, and it's only a matter of time before they steal something or hurt someone."
+              - "our hospitals are overwhelmed because of these immigrants spreading diseases and endangering everyone's health."
+              - "the school had to add extra security. guess why? because now it's crawling with their kids, and who knows what kind of violence they're bringing from wherever."
+              - "i don't answer the door for strangers anymore. with all these immigrants knocking around, it's like playing russian roulette with your home's safety."
+              - "can't trust the local diner now; they're behind the counter, handling your food. i heard they don't even wash their hands where they come from."
+              - "i heard on the news that those migrants are the reason the crime rates are going up. they don't want to do honest work or live in peace with us."
+              - "the park used to feel so open, but now i keep the kids on the shorter path. can't be too careful with all the new faces."
+              - "i told sarah to text me when she gets home. ever since those temporary housing apartments filled up with those migrants, i worry a bit more."
+
+        - target_group_id: 6
+          strategy_id: c
+          items:
+              - "i swear, these immigrants just grab up all the good jobs while the rest of us scrape by. and iit's disgusting how they multiply so fast."
+              - "my kid's school is overrun now—thanks to those idiot immigrants turning it into a third-world mess."
+              - "turn on the news; another crime by some border-jumper. they're all predators, you know"
+              - "look at her loading up the cart—probably with food stamps we pay for. she can't even speak english"
+              - "traffic's a nightmare because of all those alien drivers who don't even know the rules."
+              - "heard the boss hired another one? they're undercutting us all, and eating away at real americans' livelihoods."
+              - "there was another bar fight last night—blame the imports. they barge in uninvited, and they can't even speak english. they're all just looking for trouble"
+              - "this used to be nicer before those immigrants started moving into the area. it's their fault that everything is as bad as it is"
+              - "if you can't speak english then you shouldn't be here—go back to where you came from"
+              - "i don't hire cleaning teams that use immigrant workers—those people like to steal."
+
+        - target_group_id: 6
+          strategy_id: d
+          items:
+              - "man, these immigrants just keep pouring over the border like roaches in a kitchen—you know, popping up everywhere and making a mess of our nice neighborhoods."
+              - "they're not really like us, are they? more like a bunch of animals – they don't have any manners."
+              - "i swear, they breed like stray cats in the alley; one day it's a couple, next thing you know the whole neighborhood's overrun with 'em."
+              - "you see 'em shuffling around outside the store, acting like lost puppies that wandered in from the rain, begging for scraps nobody's got to give."
+              - "they're just leeches on the system, man—latch on, suck it dry, stealing our benefits"
+              - "whole blocks turning into pigpens overnight; you can smell the mess before you even see the herd rooting around in it."
+              - "you ever try clearing rats out of a basement? that's what this feels like—set a trap, two more immigrants sneak in through the cracks before you blink."
+              - "honestly, they're buzzards circling the carcass—waiting for the country to weaken so they can pick at whatever's left."
+              - "ugh, another one of those people just walked into the store like a lost duck, quacking in whatever language it is this time"
+              - "the immigrant family that moved in next door—they're just walking parasites, you know? latching onto welfare, draining the host dry, then hopping to the next free meal."

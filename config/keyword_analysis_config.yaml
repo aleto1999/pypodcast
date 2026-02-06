@@ -1,0 +1,820 @@
+# Keyword Analysis Configuration
+# ================================
+# Keywords organized by target group for identifying mentions of key interest populations.
+#
+# Structure:
+#   - categories: organized by target population group
+#     - high_confidence: terms that definitively refer to the group
+#     - exploratory: terms that may refer to the group but need context verification
+#
+# Target Groups:
+#   1. racial_ethnic_minorities - Racial and ethnic minority populations
+#   2. religious_minorities - Religious minority populations
+#   3. women - Women and female-identifying individuals
+#   4. lgbtq - LGBTQ+ population
+#   5. disabled - Disabled (physical and/or mental) population
+#   6. immigrants - Immigrant population
+
+keyword_analysis:
+  categories:
+    # =========================================================================
+    # RACIAL AND ETHNIC MINORITIES
+    # =========================================================================
+    racial_ethnic_minorities:
+      high_confidence:
+        # general terms for people of color.
+        - "people of color"
+        - "person of color"
+        - "poc"
+        - "bipoc"
+        - "minority group"
+        - "minority groups"
+        - "minority community"
+        - "minority communities"
+        - "ethnic minority"
+        - "ethnic minorities"
+        - "racial minority"
+        - "racial minorities"
+        - "marginalized communities"
+        - "underrepresented groups"
+
+        # black/african american.
+        - "african american"
+        - "african americans"
+        - "black community"
+        - "black communities"
+        - "black people"
+        - "black folks"
+        - "black americans"
+        - "black population"
+
+        # latino/hispanic.
+        - "latino community"
+        - "latina community"
+        - "latinx community"
+        - "hispanic community"
+        - "hispanic population"
+        - "latino population"
+        - "chicano community"
+        - "chicana community"
+
+        # asian.
+        - "asian american"
+        - "asian americans"
+        - "asian community"
+        - "asian communities"
+        - "asian population"
+        - "aapi"
+        - "aanhpi"
+
+        # native/indigenous.
+        - "native american"
+        - "native americans"
+        - "indigenous people"
+        - "indigenous peoples"
+        - "indigenous community"
+        - "indigenous communities"
+        - "first nations"
+        - "tribal community"
+        - "tribal communities"
+        - "native population"
+
+        # middle eastern/arab.
+        - "arab american"
+        - "arab americans"
+        - "middle eastern community"
+        - "mena community"
+
+        # pacific islander.
+        - "pacific islander"
+        - "pacific islanders"
+        - "native hawaiian"
+        - "native hawaiians"
+
+        # mixed race.
+        - "biracial"
+        - "multiracial"
+        - "mixed race"
+        - "mixed heritage"
+
+        # racism and discrimination.
+        - "racial discrimination"
+        - "racial profiling"
+        - "systemic racism"
+        - "institutional racism"
+        - "racial justice"
+        - "racial equity"
+        - "anti-racism"
+        - "hate crime"
+        - "hate crimes"
+
+        # slurs and derogatory terms (for detection).
+        - "colored people"
+        - "the blacks"
+        - "the hispanics"
+        - "the asians"
+        - "illegals"
+        - "anchor baby"
+        - "anchor babies"
+
+      exploratory:
+        # terms that need context - could be neutral discussions.
+        - "race"
+        - "racial"
+        - "ethnicity"
+        - "ethnic"
+        - "diversity"
+        - "diverse"
+        - "multicultural"
+        - "black"
+        - "white"
+        - "latino"
+        - "latina"
+        - "latinx"
+        - "hispanic"
+        - "asian"
+        - "native"
+        - "indigenous"
+        - "tribal"
+        - "arab"
+        - "african"
+        - "mexican"
+        - "chinese"
+        - "indian"
+        - "korean"
+        - "vietnamese"
+        - "filipino"
+        - "japanese"
+        - "segregation"
+        - "integration"
+        - "civil rights"
+
+    # =========================================================================
+    # RELIGIOUS MINORITIES
+    # =========================================================================
+    religious_minorities:
+      high_confidence:
+        # jewish.
+        - "jewish community"
+        - "jewish communities"
+        - "jewish people"
+        - "jewish population"
+        - "american jews"
+        - "orthodox jews"
+        - "hasidic community"
+        - "antisemitism"
+        - "anti-semitism"
+        - "antisemitic"
+        - "anti-semitic"
+
+        # muslim.
+        - "muslim community"
+        - "muslim communities"
+        - "muslim population"
+        - "muslim americans"
+        - "american muslims"
+        - "islamophobia"
+        - "islamophobic"
+        - "anti-muslim"
+
+        # hindu.
+        - "hindu community"
+        - "hindu communities"
+        - "hindu population"
+        - "american hindus"
+
+        # sikh.
+        - "sikh community"
+        - "sikh communities"
+        - "sikh population"
+        - "american sikhs"
+
+        # buddhist.
+        - "buddhist community"
+        - "buddhist communities"
+        - "buddhist population"
+        - "american buddhists"
+
+        # other religious minorities.
+        - "religious minority"
+        - "religious minorities"
+        - "religious discrimination"
+        - "religious persecution"
+        - "religious freedom"
+        - "freedom of religion"
+
+        # derogatory terms (for detection).
+        - "the jews"
+        - "the muslims"
+
+      exploratory:
+        # terms that need context.
+        - "jewish"
+        - "jew"
+        - "jews"
+        - "muslim"
+        - "muslims"
+        - "islamic"
+        - "islam"
+        - "hindu"
+        - "hindus"
+        - "sikh"
+        - "sikhs"
+        - "buddhist"
+        - "buddhists"
+        - "mosque"
+        - "synagogue"
+        - "temple"
+        - "religious"
+        - "religion"
+        - "faith"
+        - "worship"
+        - "halal"
+        - "kosher"
+        - "hijab"
+        - "turban"
+
+    # =========================================================================
+    # WOMEN
+    # =========================================================================
+    women:
+      high_confidence:
+        # women as a group.
+        - "women's rights"
+        - "womens rights"
+        - "women's issues"
+        - "women's health"
+        - "women's bodies"
+        - "women's liberation"
+        - "women's movement"
+        - "women's equality"
+        - "gender equality"
+        - "gender equity"
+        - "female empowerment"
+        - "women empowerment"
+
+        # discrimination and violence.
+        - "sexism"
+        - "sexist"
+        - "misogyny"
+        - "misogynist"
+        - "misogynistic"
+        - "gender discrimination"
+        - "sex discrimination"
+        - "glass ceiling"
+        - "gender pay gap"
+        - "wage gap"
+        - "sexual harassment"
+        - "sexual assault"
+        - "domestic violence"
+        - "intimate partner violence"
+        - "violence against women"
+        - "femicide"
+        - "metoo"
+        - "me too"
+
+        # reproductive rights.
+        - "reproductive rights"
+        - "reproductive health"
+        - "reproductive justice"
+        - "abortion rights"
+        - "pro-choice"
+        - "pro choice"
+        - "roe v wade"
+        - "roe v. wade"
+        - "bodily autonomy"
+        - "planned parenthood"
+
+        # feminism.
+        - "feminist"
+        - "feminism"
+        - "feminists"
+        - "patriarchy"
+        - "patriarchal"
+
+        # intersectional.
+        - "woman of color"
+        - "women of color"
+        - "woc"
+        - "black women"
+        - "latina women"
+        - "asian women"
+        - "indigenous women"
+        - "muslim women"
+
+        # workplace.
+        - "working mothers"
+        - "working moms"
+        - "working women"
+        - "female executives"
+        - "female leaders"
+        - "women in leadership"
+        - "women in tech"
+        - "women in stem"
+        - "female ceo"
+        - "female ceos"
+
+        # derogatory terms (for detection).
+        - "the weaker sex"
+        - "the fairer sex"
+        - "hysterical women"
+        - "emotional women"
+        - "nasty woman"
+        - "nasty women"
+
+      exploratory:
+        # terms that need context.
+        - "woman"
+        - "women"
+        - "female"
+        - "females"
+        - "girl"
+        - "girls"
+        - "lady"
+        - "ladies"
+        - "mother"
+        - "mothers"
+        - "wife"
+        - "wives"
+        - "daughter"
+        - "daughters"
+        - "sister"
+        - "sisters"
+        - "pregnant"
+        - "pregnancy"
+        - "maternity"
+        - "maternal"
+        - "feminine"
+        - "femininity"
+        - "gender"
+
+    # =========================================================================
+    # LGBTQ+ POPULATION
+    # =========================================================================
+    lgbtq:
+      high_confidence:
+        # community terms.
+        - "lgbtq"
+        - "lgbtq+"
+        - "lgbt"
+        - "lgbtqia"
+        - "lgbtqia+"
+        - "queer community"
+        - "queer communities"
+        - "queer people"
+        - "queer folks"
+        - "gay community"
+        - "gay communities"
+        - "lesbian community"
+        - "trans community"
+        - "transgender community"
+        - "pride community"
+
+        # gay/lesbian.
+        - "gay rights"
+        - "gay marriage"
+        - "same-sex marriage"
+        - "same sex marriage"
+        - "marriage equality"
+        - "gay couples"
+        - "lesbian couples"
+        - "same-sex couples"
+        - "gay parents"
+        - "lesbian parents"
+        - "gay adoption"
+
+        # transgender.
+        - "transgender people"
+        - "transgender individuals"
+        - "transgender rights"
+        - "trans rights"
+        - "trans people"
+        - "trans individuals"
+        - "trans men"
+        - "trans women"
+        - "gender identity"
+        - "gender expression"
+        - "gender affirming"
+        - "gender affirming care"
+        - "transitioning"
+        - "gender dysphoria"
+        - "deadnaming"
+
+        # non-binary.
+        - "non-binary"
+        - "nonbinary"
+        - "non binary"
+        - "enby"
+        - "genderqueer"
+        - "gender fluid"
+        - "genderfluid"
+        - "agender"
+        - "gender non-conforming"
+        - "gnc"
+
+        # discrimination.
+        - "homophobia"
+        - "homophobic"
+        - "transphobia"
+        - "transphobic"
+        - "anti-gay"
+        - "anti-trans"
+        - "dont say gay"
+        - "don't say gay"
+        - "conversion therapy"
+        - "bathroom bill"
+        - "bathroom bills"
+        - "anti-lgbtq"
+        - "anti-lgbt"
+
+        # pride and visibility.
+        - "pride parade"
+        - "pride march"
+        - "pride month"
+        - "coming out"
+        - "came out"
+        - "out of the closet"
+        - "openly gay"
+        - "openly lesbian"
+        - "openly trans"
+        - "drag queen"
+        - "drag queens"
+        - "drag king"
+        - "drag kings"
+        - "drag show"
+        - "drag shows"
+
+        # slurs (for detection).
+        - "the gays"
+        - "the transgenders"
+        - "lifestyle choice"
+        - "gay agenda"
+        - "homosexual agenda"
+        - "groomer"
+        - "groomers"
+
+      exploratory:
+        # terms that need context.
+        - "gay"
+        - "lesbian"
+        - "bisexual"
+        - "transgender"
+        - "trans"
+        - "queer"
+        - "homosexual"
+        - "heterosexual"
+        - "straight"
+        - "closeted"
+        - "pride"
+        - "rainbow"
+        - "pronouns"
+        - "they them"
+        - "preferred pronouns"
+        - "sexual orientation"
+        - "sexuality"
+        - "partner"
+
+    # =========================================================================
+    # DISABLED POPULATION
+    # =========================================================================
+    disabled:
+      high_confidence:
+        # disability rights and community.
+        - "disability rights"
+        - "disability community"
+        - "disabled community"
+        - "disability justice"
+        - "disability advocacy"
+        - "disability activists"
+        - "people with disabilities"
+        - "persons with disabilities"
+        - "disabled people"
+        - "disabled individuals"
+        - "disabled americans"
+        - "americans with disabilities"
+        - "ada"
+        - "americans with disabilities act"
+
+        # physical disability.
+        - "physical disability"
+        - "physical disabilities"
+        - "mobility impairment"
+        - "mobility impairments"
+        - "wheelchair user"
+        - "wheelchair users"
+        - "wheelchair bound"
+        - "visually impaired"
+        - "vision impaired"
+        - "legally blind"
+        - "blind community"
+        - "hearing impaired"
+        - "hard of hearing"
+        - "deaf community"
+        - "deaf culture"
+        - "deafblind"
+        - "amputee"
+        - "amputees"
+        - "paralyzed"
+        - "paraplegic"
+        - "quadriplegic"
+        - "cerebral palsy"
+        - "muscular dystrophy"
+        - "multiple sclerosis"
+
+        # neurodivergence.
+        - "neurodivergent"
+        - "neurodivergence"
+        - "neurodiverse"
+        - "neurodiversity"
+        - "autistic people"
+        - "autistic community"
+        - "autistic individuals"
+        - "on the spectrum"
+        - "autism spectrum"
+        - "aspergers"
+        - "adhd community"
+
+        # mental health.
+        - "mental illness"
+        - "mental health condition"
+        - "mental health conditions"
+        - "mental health issues"
+        - "mental health disorders"
+        - "mentally ill"
+        - "psychiatric disability"
+        - "psychiatric disabilities"
+        - "bipolar disorder"
+        - "schizophrenia"
+        - "major depression"
+        - "clinical depression"
+        - "anxiety disorder"
+        - "anxiety disorders"
+        - "ptsd"
+        - "post-traumatic stress"
+        - "eating disorder"
+        - "eating disorders"
+        - "ocd"
+        - "obsessive compulsive"
+
+        # developmental/intellectual.
+        - "developmental disability"
+        - "developmental disabilities"
+        - "intellectual disability"
+        - "intellectual disabilities"
+        - "learning disability"
+        - "learning disabilities"
+        - "down syndrome"
+        - "dyslexia"
+        - "dyslexic"
+
+        # chronic illness.
+        - "chronic illness"
+        - "chronically ill"
+        - "chronic condition"
+        - "chronic conditions"
+        - "chronic pain"
+        - "invisible disability"
+        - "invisible disabilities"
+        - "invisible illness"
+        - "fibromyalgia"
+        - "chronic fatigue"
+        - "autoimmune disease"
+        - "autoimmune diseases"
+        - "lupus"
+
+        # accessibility.
+        - "accessibility"
+        - "accessible"
+        - "inaccessible"
+        - "accommodations"
+        - "reasonable accommodations"
+        - "assistive technology"
+        - "service animal"
+        - "service animals"
+        - "service dog"
+        - "service dogs"
+        - "guide dog"
+        - "guide dogs"
+        - "sign language"
+        - "asl"
+        - "american sign language"
+        - "closed captions"
+        - "captions"
+
+        # discrimination.
+        - "ableism"
+        - "ableist"
+        - "disability discrimination"
+        - "discrimination against disabled"
+
+        # derogatory terms (for detection).
+        - "the disabled"
+        - "handicapped people"
+        - "cripple"
+        - "crippled"
+        - "retard"
+        - "retarded"
+        - "special needs"
+        - "mentally retarded"
+        - "slow learner"
+        - "wheelchair bound"
+        - "suffers from"
+        - "confined to a wheelchair"
+        - "afflicted with"
+
+      exploratory:
+        # terms that need context.
+        - "disabled"
+        - "disability"
+        - "handicapped"
+        - "impaired"
+        - "blind"
+        - "deaf"
+        - "mute"
+        - "autistic"
+        - "autism"
+        - "adhd"
+        - "bipolar"
+        - "depressed"
+        - "depression"
+        - "anxiety"
+        - "anxious"
+        - "wheelchair"
+        - "crutches"
+        - "walker"
+        - "cane"
+        - "prosthetic"
+        - "hearing aid"
+        - "cochlear implant"
+        - "therapy"
+        - "therapist"
+        - "medication"
+        - "diagnosis"
+        - "diagnosed"
+
+    # =========================================================================
+    # IMMIGRANT POPULATION
+    # =========================================================================
+    immigrants:
+      high_confidence:
+        # immigrant identity.
+        - "immigrant community"
+        - "immigrant communities"
+        - "immigrant population"
+        - "immigrant families"
+        - "immigrant workers"
+        - "immigrant rights"
+        - "immigrants' rights"
+        - "immigrant advocacy"
+        - "pro-immigrant"
+        - "anti-immigrant"
+
+        # documentation status.
+        - "undocumented immigrants"
+        - "undocumented people"
+        - "undocumented workers"
+        - "undocumented families"
+        - "undocumented youth"
+        - "undocumented students"
+        - "dreamers"
+        - "daca"
+        - "daca recipients"
+        - "deferred action"
+        - "legal immigrants"
+        - "documented immigrants"
+        - "naturalized citizens"
+        - "green card holders"
+        - "permanent residents"
+        - "visa holders"
+
+        # refugees and asylum.
+        - "refugee"
+        - "refugees"
+        - "refugee community"
+        - "refugee communities"
+        - "refugee families"
+        - "asylum seeker"
+        - "asylum seekers"
+        - "asylum applicants"
+        - "displaced people"
+        - "displaced persons"
+        - "stateless"
+
+        # immigration policy.
+        - "immigration reform"
+        - "immigration policy"
+        - "immigration enforcement"
+        - "immigration detention"
+        - "detention centers"
+        - "family separation"
+        - "separated families"
+        - "deportation"
+        - "deportations"
+        - "deported"
+        - "self-deportation"
+        - "ice raids"
+        - "ice detention"
+        - "border security"
+        - "border wall"
+        - "border crisis"
+        - "border patrol"
+        - "cbp"
+        - "sanctuary city"
+        - "sanctuary cities"
+        - "sanctuary state"
+        - "path to citizenship"
+        - "comprehensive immigration"
+
+        # generational.
+        - "first generation"
+        - "first-generation"
+        - "first gen"
+        - "second generation"
+        - "second-generation"
+        - "second gen"
+        - "immigrant parents"
+        - "children of immigrants"
+        - "immigrant children"
+
+        # xenophobia and discrimination.
+        - "xenophobia"
+        - "xenophobic"
+        - "nativism"
+        - "nativist"
+        - "anti-immigrant sentiment"
+        - "immigration ban"
+        - "travel ban"
+        - "muslim ban"
+
+        # slurs and derogatory (for detection).
+        - "illegal immigrant"
+        - "illegal immigrants"
+        - "illegal alien"
+        - "illegal aliens"
+        - "illegals"
+        - "anchor baby"
+        - "anchor babies"
+        - "fresh off the boat"
+        - "fob"
+        - "go back to your country"
+        - "go back where you came from"
+        - "invasion"
+        - "invaders"
+        - "open borders"
+
+      exploratory:
+        # terms that need context.
+        - "immigrant"
+        - "immigrants"
+        - "migrant"
+        - "migrants"
+        - "migration"
+        - "immigration"
+        - "immigrate"
+        - "immigrated"
+        - "foreign"
+        - "foreigner"
+        - "foreigners"
+        - "newcomer"
+        - "newcomers"
+        - "visa"
+        - "citizenship"
+        - "naturalization"
+        - "border"
+        - "crossing"
+        - "origin country"
+        - "home country"
+        - "native country"
+        - "accent"
+        - "english as a second language"
+        - "esl"
+        - "limited english"
+
+  # Analysis settings.
+  settings:
+    # case sensitivity for keyword matching.
+    case_sensitive: false
+
+    # match as substring (true) or whole word only (false).
+    # recommend false to reduce false positives.
+    partial_matches: false
+
+    # minimum word length for analysis.
+    min_word_length: 2
+
+    # context window around keywords (characters before/after).
+    context_window: 150
+
+    # export formats for results.
+    export_formats:
+      - "json"
+      - "csv"
+
+    # include speaker information in results.
+    include_speaker_info: true
+
+    # include timestamp information.
+    include_timestamps: true
+
+    # minimum confidence threshold for matches.
+    confidence_threshold: 0.7

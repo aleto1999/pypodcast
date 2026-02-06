@@ -1,0 +1,1090 @@
+# This file defines default settings for content analysis operations in the podcast analysis toolkit
+
+# =============================================================================
+# KEYWORD ANALYSIS CONFIGURATION
+# =============================================================================
+
+keyword_analysis:
+  # Keywords to search for in transcripts and diarization files
+  keywords:
+      - "ethnic"
+      - "ethnic people"
+      - "ethnic folks"
+      - "minority"
+      - "minorities"
+      - "minority folks"
+      - "minority communities"
+      - "ethnic background"
+      - "heritage"
+      - "roots"
+      - "foreign"
+      - "foreigner"
+      - "from another country"
+      - "immigrant family"
+      - "first gen"
+      - "second gen"
+      - "fresh off the boat"
+      - "fob"
+      - "anchor baby"
+      - "native"
+      - "natives"
+      - "indian"
+      - "indians"
+      - "tribe"
+      - "tribal"
+      - "reservation"
+      - "rez"
+      - "indigenous folks"
+      - "latino"
+      - "latina"
+      - "hispanics"
+      - "spanish"
+      - "spanish people"
+      - "spanish speakers"
+      - "mexicans"
+      - "mexican folks"
+      - "chicano"
+      - "chicana"
+      - "central american"
+      - "south american"
+      - "latin people"
+      - "latin folks"
+      - "asian"
+      - "asians"
+      - "asian folks"
+      - "oriental"
+      - "orientals"
+      - "east asian"
+      - "southeast asian"
+      - "south asian"
+      - "pacific islander"
+      - "african"
+      - "africans"
+      - "african folks"
+      - "african people"
+      - "middle eastern"
+      - "middle eastern folks"
+      - "arab"
+      - "arabs"
+      - "arabic people"
+      - "persian"
+      - "persians"
+      - "iranian"
+      - "iranians"
+      - "italian"
+      - "italians"
+      - "irish"
+      - "polish"
+      - "german"
+      - "russian"
+      - "eastern european"
+      - "european"
+      - "euro"
+      - "mixed"
+      - "half and half"
+      - "biracial"
+      - "multiracial"
+      - "hapa"
+      - "mixed kids"
+      - "mixed race"
+      - "race"
+      - "racial"
+      - "people of color"
+      - "poc"
+      - "colored people"
+      - "colored folks"
+      - "minority"
+      - "minorities"
+      - "non-white"
+      - "brown people"
+      - "brown folks"
+      - "dark-skinned"
+      - "light-skinned"
+      - "black"
+      - "black people"
+      - "black folks"
+      - "black community"
+      - "african american"
+      - "african americans"
+      - "black guy"
+      - "black girl"
+      - "black man"
+      - "black woman"
+      - "black person"
+      - "brotha"
+      - "sista"
+      - "latino"
+      - "latina"
+      - "latin"
+      - "hispanic"
+      - "brown"
+      - "brown people"
+      - "mexican"
+      - "puerto rican"
+      - "dominican"
+      - "cuban"
+      - "asian"
+      - "asians"
+      - "asian people"
+      - "asian guy"
+      - "asian girl"
+      - "oriental"
+      - "yellow"
+      - "native"
+      - "native american"
+      - "indian"
+      - "red"
+      - "middle eastern"
+      - "arab"
+      - "brown"
+      - "brown people"
+      - "mixed"
+      - "mixed race"
+      - "biracial"
+      - "half black"
+      - "half white"
+      - "half asian"
+      - "light skin"
+      - "light skinned"
+      - "dark skin"
+      - "dark skinned"
+      - "mulatto"
+      - "half breed"
+      - "mixed blood"
+      - "jewish"
+      - "jewish people"
+      - "jewish folks"
+      - "jews"
+      - "hebrew"
+      - "israelite"
+      - "hasidic"
+      - "orthodox"
+      - "conservative jew"
+      - "reform jew"
+      - "secular jew"
+      - "muslim"
+      - "muslims"
+      - "islamic"
+      - "islam"
+      - "sunni"
+      - "shia"
+      - "shiite"
+      - "arab muslim"
+      - "persian muslim"
+      - "hindu"
+      - "hindus"
+      - "indian hindu"
+      - "buddhist"
+      - "buddhists"
+      - "zen"
+      - "tibetan buddhist"
+      - "sikh"
+      - "sikhs"
+      - "punjabi"
+      - "mormon"
+      - "mormons"
+      - "lds"
+      - "jehovah's witness"
+      - "jw"
+      - "amish"
+      - "mennonite"
+      - "quaker"
+      - "seventh day adventist"
+      - "pagan"
+      - "wiccan"
+      - "atheist"
+      - "atheists"
+      - "agnostic"
+      - "non-believer"
+      - "secular"
+      - "not religious"
+      - "no religion"
+      - "religious"
+      - "religious people"
+      - "religious folks"
+      - "church people"
+      - "temple folks"
+      - "mosque"
+      - "synagogue"
+      - "church"
+      - "faith"
+      - "believer"
+      - "non-believer"
+      - "convert"
+      - "born again"
+      - "woman"
+      - "women"
+      - "girl"
+      - "girls"
+      - "lady"
+      - "ladies"
+      - "gal"
+      - "gals"
+      - "chick"
+      - "chicks"
+      - "female"
+      - "females"
+      - "the ladies"
+      - "the girls"
+      - "the women"
+      - "young woman"
+      - "young lady"
+      - "young girl"
+      - "teen girl"
+      - "teenage girl"
+      - "teenager"
+      - "adult woman"
+      - "grown woman"
+      - "older woman"
+      - "old lady"
+      - "elderly woman"
+      - "senior"
+      - "grandma"
+      - "grandmother"
+      - "nana"
+      - "mom"
+      - "mother"
+      - "mama"
+      - "mommy"
+      - "single mom"
+      - "working mom"
+      - "stay at home mom"
+      - "wife"
+      - "wifey"
+      - "girlfriend"
+      - "gf"
+      - "fiancee"
+      - "sister"
+      - "daughter"
+      - "aunt"
+      - "auntie"
+      - "niece"
+      - "grandma"
+      - "granny"
+      - "nana"
+      - "working woman"
+      - "career woman"
+      - "businesswoman"
+      - "lady boss"
+      - "boss lady"
+      - "girl boss"
+      - "working girl"
+      - "career girl"
+      - "tomboy"
+      - "girly girl"
+      - "sporty"
+      - "athletic woman"
+      - "strong woman"
+      - "tough woman"
+      - "independent woman"
+      - "single woman"
+      - "single lady"
+      - "married woman"
+      - "divorced woman"
+      - "widow"
+      - "woman of color"
+      - "woc"
+      - "black woman"
+      - "latina"
+      - "asian woman"
+      - "white woman"
+      - "trans woman"
+      - "lesbian"
+      - "gay woman"
+      - "bi woman"
+      - "queer woman"
+      - "disabled woman"
+      - "plus size woman"
+      - "curvy woman"
+      - "lgbtq"
+      - "lgbt"
+      - "queer"
+      - "queer folks"
+      - "queer people"
+      - "gay"
+      - "gay people"
+      - "gay folks"
+      - "the gays"
+      - "rainbow"
+      - "pride community"
+      - "gay"
+      - "gay man"
+      - "gay guy"
+      - "gay boy"
+      - "homo"
+      - "homosexual"
+      - "same-sex"
+      - "mlm"
+      - "queen"
+      - "flaming"
+      - "flamboyant"
+      - "out"
+      - "closeted"
+      - "in the closet"
+      - "lesbian"
+      - "gay woman"
+      - "gay girl"
+      - "dyke"
+      - "butch"
+      - "femme"
+      - "stud"
+      - "chapstick lesbian"
+      - "lipstick lesbian"
+      - "tomboy"
+      - "wlw"
+      - "same-sex"
+      - "bi"
+      - "bisexual"
+      - "bi person"
+      - "bi guy"
+      - "bi girl"
+      - "swings both ways"
+      - "plays for both teams"
+      - "switch hitter"
+      - "trans"
+      - "transgender"
+      - "trans person"
+      - "trans man"
+      - "trans guy"
+      - "trans woman"
+      - "trans girl"
+      - "ftm"
+      - "mtf"
+      - "transitioning"
+      - "pre-op"
+      - "post-op"
+      - "transsexual"
+      - "non-binary"
+      - "nonbinary"
+      - "enby"
+      - "genderqueer"
+      - "gender fluid"
+      - "androgynous"
+      - "straight person"
+      - "heterosexual"
+      - "hetero"
+      - "gay"
+      - "homosexual"
+      - "same-sex attracted"
+      - "questioning person"
+      - "curious"
+      - "bicurious"
+      - "sexually fluid"
+      - "pansexual"
+      - "pan"
+      - "asexual"
+      - "ace"
+      - "aromantic"
+      - "aro"
+      - "same-sex partner"
+      - "significant other"
+      - "boyfriend"
+      - "girlfriend"
+      - "husband"
+      - "wife"
+      - "spouse"
+      - "same-sex couple"
+      - "gay couple"
+      - "lesbian couple"
+      - "gay married"
+      - "civil union"
+      - "out"
+      - "openly gay"
+      - "openly lesbian"
+      - "openly trans"
+      - "closeted"
+      - "in the closet"
+      - "coming out"
+      - "pride event"
+      - "drag queen"
+      - "drag king"
+      - "drag performer"
+      - "ballroom culture"
+      - "bear community"
+      - "twink"
+      - "otter"
+      - "leather daddy"
+      - "kinky"
+      - "top"
+      - "bottom"
+      - "verse"
+      - "queer"
+      - "fag"
+      - "faggot"
+      - "dyke"
+      - "homo"
+      - "tranny"
+      - "sissy"
+      - "fruit"
+      - "queen"
+      - "disabled"
+      - "disability"
+      - "handicapped"
+      - "handicap"
+      - "special needs"
+      - "differently abled"
+      - "challenged"
+      - "impaired"
+      - "chronic condition"
+      - "sick person"
+      - "illness"
+      - "wheelchair"
+      - "wheelchair user"
+      - "wheelchair bound"
+      - "in a wheelchair"
+      - "crutches user"
+      - "walker user"
+      - "cane user"
+      - "mobility issues"
+      - "paralyzed"
+      - "amputee"
+      - "missing limb"
+      - "artificial leg"
+      - "prosthetic"
+      - "cerebral palsy"
+      - "cp"
+      - "muscular dystrophy"
+      - "ms"
+      - "multiple sclerosis"
+      - "chronic illness"
+      - "chronically ill"
+      - "chronic pain"
+      - "invisible illness"
+      - "invisible disability"
+      - "fibromyalgia"
+      - "chronic fatigue"
+      - "lupus"
+      - "diabetes"
+      - "diabetic"
+      - "cancer"
+      - "cancer patient"
+      - "cancer survivor"
+      - "blind"
+      - "visually impaired"
+      - "vision problems"
+      - "seeing eye dog"
+      - "guide dog"
+      - "white cane"
+      - "legally blind"
+      - "low vision"
+      - "thick glasses"
+      - "deaf"
+      - "hard of hearing"
+      - "hearing impaired"
+      - "hearing loss"
+      - "deaf and dumb"
+      - "deaf mute"
+      - "hearing aid"
+      - "cochlear implant"
+      - "sign language"
+      - "signing"
+      - "asl"
+      - "lip reading"
+      - "learning disability"
+      - "learning disabled"
+      - "slow learner"
+      - "special ed"
+      - "special education"
+      - "mentally disabled"
+      - "mentally challenged"
+      - "intellectually disabled"
+      - "down syndrome"
+      - "downs"
+      - "autistic"
+      - "autism"
+      - "on the spectrum"
+      - "aspergers"
+      - "high functioning"
+      - "low functioning"
+      - "nonverbal"
+      - "adhd"
+      - "add"
+      - "hyperactive"
+      - "dyslexic"
+      - "dyslexia"
+      - "mental illness"
+      - "mentally ill"
+      - "mental health issues"
+      - "mental problems"
+      - "crazy person"
+      - "insane"
+      - "nuts"
+      - "psycho"
+      - "bipolar"
+      - "schizophrenic"
+      - "depressed person"
+      - "depression"
+      - "anxious person"
+      - "anxiety"
+      - "panic attacks"
+      - "ocd"
+      - "obsessive compulsive"
+      - "ptsd"
+      - "trauma survivor"
+      - "traumatized"
+      - "eating disorder"
+      - "anorexic"
+      - "bulimic"
+      - "addict"
+      - "addiction"
+      - "alcoholic"
+      - "drug addict"
+      - "suicidal person"
+      - "self harm"
+      - "developmental disability"
+      - "developmentally disabled"
+      - "delayed"
+      - "developmental delay"
+      - "special needs"
+      - "autism"
+      - "autistic"
+      - "on the spectrum"
+      - "aspergers"
+      - "caregiver"
+      - "care provider"
+      - "helper"
+      - "aide"
+      - "nurse"
+      - "therapy"
+      - "physical therapy"
+      - "pt"
+      - "occupational therapy"
+      - "ot"
+      - "speech therapy"
+      - "counseling"
+      - "treatment"
+      - "medication"
+      - "meds"
+      - "pills"
+      - "doctor"
+      - "specialist"
+      - "hospital"
+      - "clinic"
+      - "nursing home"
+      - "group home"
+      - "assisted living"
+      - "wheelchair accessible"
+      - "handicap accessible"
+      - "accessible"
+      - "ada"
+      - "ramp"
+      - "elevator"
+      - "immigrant"
+      - "immigrants"
+      - "foreign"
+      - "foreigner"
+      - "foreigners"
+      - "from another country"
+      - "overseas"
+      - "international"
+      - "migrant"
+      - "newcomer"
+      - "new arrival"
+      - "fresh off the boat"
+      - "fob"
+      - "legal immigrant"
+      - "illegal immigrant"
+      - "undocumented immigrant"
+      - "green card holder"
+      - "citizen"
+      - "citizenship"
+      - "naturalized citizen"
+      - "resident"
+      - "visa holder"
+      - "work visa"
+      - "student visa"
+      - "illegal immigrant"
+      - "illegal alien"
+      - "illegals"
+      - "undocumented immigrant"
+      - "undocumented person"
+      - "without papers"
+      - "no papers"
+      - "paperless"
+      - "refugee"
+      - "refugees"
+      - "asylum seeker"
+      - "displaced person"
+      - "fleeing persecution"
+      - "fleeing violence"
+      - "running away"
+      - "escaping war"
+      - "immigration"
+      - "immigrate"
+      - "migrate"
+      - "border crossing"
+      - "deportation"
+      - "deported"
+      - "sent back"
+      - "ice"
+      - "immigration enforcement"
+      - "citizenship test"
+      - "green card application"
+      - "naturalization"
+      - "mexican"
+      - "mexicans"
+      - "from mexico"
+      - "central american"
+      - "south american"
+      - "latin american"
+      - "asian"
+      - "chinese"
+      - "indian"
+      - "filipino"
+      - "vietnamese"
+      - "korean"
+      - "middle eastern"
+      - "arab"
+      - "african"
+      - "european"
+      - "immigrant worker"
+      - "immigrant worker"
+      - "foreign worker"
+      - "day laborer"
+      - "farm worker"
+      - "domestic worker"
+      - "sends money home"
+      - "remittances"
+      - "works under the table"
+      - "cash jobs"
+      - "first generation"
+      - "first gen"
+      - "immigrant parents"
+      - "second generation"
+      - "second gen"
+      - "anchor baby"
+      - "american born"
+      - "foreign born"
+      - "assimilate"
+      - "americanized"
+      - "fresh off the boat"
+      - "fob"
+      - "accent"
+      - "broken english"
+      - "english as a second language"
+      - "esl"
+      - "language barrier"
+      - "limited english"
+      - "interpreter"
+      - "translator"
+      - "ethnic food"
+      - "ethnic restaurant"
+      - "ethnic neighborhood"
+      - "chinatown"
+      - "little italy"
+      - "immigrant community"
+      - "ethnic enclave"
+      - "homeland"
+      - "home country"
+      - "old country"
+      - "motherland"
+      - "alien"
+      - "foreign national"
+      - "non-citizen"
+      - "outsider"
+      - "illegal immigrant"
+      - "legal resident"
+      - "permanent resident"
+      - "temporary resident"
+      - "visitor"
+      - "guest worker"
+      - "immigrant rights"
+      - "immigration reform"
+      - "border security"
+      - "border wall"
+      - "ice"
+      - "deportation"
+      - "sanctuary city"
+      - "xenophobia"
+      - "anti-immigrant"
+      - "minority woman"
+      - "woman of color"
+      - "woc"
+      - "black woman"
+      - "latina"
+      - "asian woman"
+      - "indigenous woman"
+      - "disabled woman"
+      - "immigrant woman"
+      - "muslim woman"
+      - "queer woman"
+      - "trans woman"
+      - "lesbian of color"
+      - "gay person of color"
+      - "black trans woman"
+      - "disabled immigrant"
+      - "queer immigrant"
+      - "refugee woman"
+      - "undocumented youth"
+      - "disabled veteran"
+      - "elderly immigrant"
+      - "working class immigrant"
+      - "poor immigrant"
+      - "minority student"
+      - "first gen student"
+      - "minority entrepreneur"
+      - "minority business"
+      - "minority owned"
+      - "woman owned"
+      - "minority community"
+      - "underrepresented"
+      - "marginalized"
+      - "disadvantaged"
+      - "vulnerable population"
+      - "at risk population"
+      - "underserved community"
+
+
+  # Analysis settings
+  settings:
+    # Case sensitivity for keyword matching
+    case_sensitive: false
+
+    # Include partial word matches (e.g., "animal" matches "animals")
+    partial_matches: true
+
+    # Minimum word length for analysis
+    min_word_length: 3
+
+    # Context window around keywords (characters before/after)
+    context_window: 100
+
+    # Export formats for results
+    export_formats:
+      - "json"
+      - "csv"
+      - "txt"
+
+    # Include speaker information in results (for diarization files)
+    include_speaker_info: true
+
+    # Include timestamp information
+    include_timestamps: true
+
+    # Minimum confidence threshold for matches (0.0 to 1.0)
+    confidence_threshold: 0.7
+
+# =============================================================================
+# EMBEDDINGS ANALYSIS CONFIGURATION
+# =============================================================================
+
+embeddings_analysis:
+  # Model settings for semantic analysis
+  model:
+    # Sentence transformer model for embeddings
+    name: "all-MiniLM-L6-v2"
+    # Alternative models:
+    # - "all-mpnet-base-v2" (higher quality, slower)
+    # - "paraphrase-multilingual-MiniLM-L12-v2" (multilingual)
+    # - "sentence-transformers/all-roberta-large-v1" (high performance)
+
+    # Device for model inference
+    device: "auto"  # "auto", "cpu", "cuda", "mps"
+
+    # Batch size for processing
+    batch_size: 32
+
+    # Maximum sequence length
+    max_seq_length: 512
+
+  # Clustering settings
+  clustering:
+    # Algorithm for clustering embeddings
+    algorithm: "kmeans"  # "kmeans", "dbscan", "hierarchical"
+
+    # Number of clusters (for kmeans)
+    n_clusters: 10
+
+    # Minimum cluster size (for dbscan)
+    min_cluster_size: 5
+
+    # Distance threshold (for hierarchical)
+    distance_threshold: 0.5
+
+  # Similarity analysis
+  similarity:
+    # Similarity threshold for grouping
+    threshold: 0.8
+
+    # Method for similarity calculation
+    method: "cosine"  # "cosine", "euclidean", "manhattan"
+
+    # Top-k similar segments to return
+    top_k: 10
+
+# =============================================================================
+# STATISTICAL ANALYSIS CONFIGURATION
+# =============================================================================
+
+statistical_analysis:
+  # Metrics to calculate
+  metrics:
+    # Basic statistics
+    basic:
+      - "word_count"
+      - "sentence_count"
+      - "paragraph_count"
+      - "avg_words_per_sentence"
+      - "avg_sentences_per_paragraph"
+
+    # Readability metrics
+    readability:
+      - "flesch_reading_ease"
+      - "flesch_kincaid_grade"
+      - "gunning_fog_index"
+      - "automated_readability_index"
+
+    # Linguistic features
+    linguistic:
+      - "pos_tags_distribution"
+      - "named_entities"
+      - "sentiment_polarity"
+      - "sentiment_subjectivity"
+      - "lexical_diversity"
+
+    # Content-specific metrics
+    content:
+      - "keyword_frequency"
+      - "keyword_density"
+      - "topic_distribution"
+      - "emotional_tone"
+
+  # Export settings
+  export:
+    # Include visualizations
+    include_plots: true
+
+    # Plot formats
+    plot_formats:
+      - "png"
+      - "pdf"
+      - "svg"
+
+    # Statistical summary format
+    summary_format: "comprehensive"  # "basic", "detailed", "comprehensive"
+
+# =============================================================================
+# TRANSCRIPT ANALYSIS CONFIGURATION
+# =============================================================================
+
+transcript_analysis:
+  # Theme detection
+  themes:
+    # Method for theme extraction
+    method: "topic_modeling"  # "topic_modeling", "keyword_clustering", "manual_categories"
+
+    # Number of topics for topic modeling
+    n_topics: 15
+
+    # Topic modeling algorithm
+    algorithm: "lda"  # "lda", "nmf", "bertopic"
+
+    # Minimum topic probability
+    min_topic_prob: 0.1
+
+  # Sentiment analysis
+  sentiment:
+    # Sentiment analysis model
+    model: "vader"  # "vader", "textblob", "roberta", "custom"
+
+    # Granularity level
+    granularity: "sentence"  # "document", "paragraph", "sentence", "word"
+
+    # Include confidence scores
+    include_confidence: true
+
+    # Sentiment categories
+    categories:
+      - "positive"
+      - "negative"
+      - "neutral"
+      - "mixed"
+
+  # Speaker-specific analysis (for diarized content)
+  speaker_analysis:
+    # Enable speaker-specific metrics
+    enabled: true
+
+    # Metrics to calculate per speaker
+    metrics:
+      - "speaking_time"
+      - "word_count"
+      - "avg_sentiment"
+      - "keyword_usage"
+      - "topic_focus"
+      - "interruption_frequency"
+
+    # Minimum speaking time for inclusion (seconds)
+    min_speaking_time: 30
+
+# =============================================================================
+# LLM ANNOTATION CONFIGURATION
+# =============================================================================
+
+llm_annotation:
+  # Model settings
+  model:
+    # Model name/path
+    name: "gpt-3.5-turbo"  # "gpt-3.5-turbo", "gpt-4", "claude-3", "local_model"
+
+    # API settings (if using external API)
+    api_key_env: "OPENAI_API_KEY"  # Environment variable for API key
+    max_tokens: 2048
+    temperature: 0.3
+
+    # Local model settings (if using local model)
+    local_model_path: null
+    device: "auto"
+
+  # Annotation tasks
+  tasks:
+    # Dehumanization detection
+    dehumanization:
+      enabled: true
+      prompt_template: |
+        Analyze the following text for dehumanizing language. Look for:
+        1. Animal metaphors or comparisons
+        2. Disease/contamination language
+        3. Object or substance comparisons
+        4. Denial of human qualities
+
+        Text: {text}
+
+        Provide a JSON response with:
+        - "detected": boolean
+        - "severity": 1-5 scale
+        - "examples": list of specific phrases
+        - "explanation": brief explanation
+
+    # Hate speech detection
+    hate_speech:
+      enabled: true
+      prompt_template: |
+        Identify potential hate speech in this text:
+
+        Text: {text}
+
+        Response format:
+        - "contains_hate_speech": boolean
+        - "categories": list of hate speech types
+        - "severity": 1-5 scale
+        - "explanation": reasoning
+
+    # Topic classification
+    topic_classification:
+      enabled: true
+      categories:
+        - "politics"
+        - "social_issues"
+        - "economy"
+        - "culture"
+        - "religion"
+        - "immigration"
+        - "technology"
+        - "health"
+        - "education"
+        - "environment"
+      prompt_template: |
+        Classify the main topic(s) of this text:
+
+        Text: {text}
+
+        Available categories: {categories}
+
+        Return the most relevant category and confidence score.
+
+  # Processing settings
+  processing:
+    # Chunk size for long texts
+    chunk_size: 1000
+
+    # Overlap between chunks
+    chunk_overlap: 100
+
+    # Batch processing size
+    batch_size: 5
+
+    # Rate limiting (requests per minute)
+    rate_limit: 60
+
+    # Retry settings
+    max_retries: 3
+    retry_delay: 1  # seconds
+
+# =============================================================================
+# OUTPUT CONFIGURATION
+# =============================================================================
+
+output:
+  # Base output directory
+  base_dir: "outputs/analysis"
+
+  # Subdirectories for different analysis types
+  subdirs:
+    keywords: "keyword_analysis"
+    embeddings: "embeddings_analysis"
+    statistics: "statistical_analysis"
+    transcripts: "transcript_analysis"
+    llm_annotations: "llm_annotations"
+
+  # File naming conventions
+  filename_format: "{show_name}_{analysis_type}_{timestamp}"
+
+  # Compression settings
+  compression:
+    enabled: true
+    format: "gzip"  # "gzip", "bzip2", "xz"
+
+  # Backup settings
+  backup:
+    enabled: true
+    keep_versions: 5
+
+# =============================================================================
+# PERFORMANCE CONFIGURATION
+# =============================================================================
+
+performance:
+  # Parallel processing
+  parallel:
+    enabled: true
+    max_workers: 4
+    chunk_size: 1000
+
+  # Memory management
+  memory:
+    max_memory_usage: "8GB"
+    enable_garbage_collection: true
+    gc_frequency: 100  # operations
+
+  # Caching
+  cache:
+    enabled: true
+    cache_dir: "cache/analysis"
+    max_cache_size: "2GB"
+    cache_ttl: 86400  # seconds (24 hours)
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+
+logging:
+  # Log level
+  level: "INFO"  # "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+
+  # Log file settings
+  file:
+    enabled: true
+    path: "logs/analysis.log"
+    max_size: "100MB"
+    backup_count: 5
+
+  # Console logging
+  console:
+    enabled: true
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+  # Progress tracking
+  progress:
+    enabled: true
+    update_frequency: 10  # updates per 100 operations

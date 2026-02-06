@@ -1,0 +1,34 @@
+
+models:
+  - name: hate_speech_detection
+    description: "A model for binary hate speech detection."
+    model_repo: "cardiffnlp/twitter-roberta-base-hate-latest"
+    labels: ["NOT-HATE", "HATE"]
+  - name: fine_grained_hate_speech_detection
+    description: "A model for fine-grained hate speech detection (base model)."
+    model_repo: "GroNLP/hateBERT"
+    labels: ["LABEL_0", "LABEL_1"]
+  - name: hate_against_minorities
+    description: "A model for detecting hate speech against minorities."
+    model_repo: "unitary/toxic-bert"
+    labels: ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
+  - name: hostile_content
+    description: "A model for detecting hostile content."
+    model_repo: "Falconsai/offensive_speech_detection"
+    labels: ["OFFENSIVE", "SAFE"]
+  - name: ad_content_detection
+    description: "A model for binary ad content detection in podcasts."
+    model_repo: "morenolq/spotify-podcast-advertising-classification"
+    labels: ["0", "1"]
+  - name: multilingual_hate_speech
+    description: "A multilingual hate speech detection model using XLM-RoBERTa."
+    model_repo: "sadjava/multilingual-hate-speech-xlm-roberta"
+    labels: ["Race", "Sexual Orientation", "Gender", "Physical Appearance", "Religion", "Class", "Disability", "Appropriate"]
+  - name: hate_speech_multilabel_bert
+    description: "A multilabel hate speech classification model with BERT."
+    model_repo: "wesleyacheng/hate-speech-multilabel-classification-with-bert"
+    labels: ["race", "religion", "origin", "gender", "sexuality", "age", "disability"]
+  - name: beto_contextualized_hate_speech
+    description: "A Spanish contextualized hate speech detection model using BETO."
+    model_repo: "piuba-bigdata/beto-contextualized-hate-speech"
+    labels: ["CALLS", "WOMEN", "LGBTI", "RACISM", "CLASS", "POLITICS", "DISABLED", "APPEARANCE", "CRIMINAL"]

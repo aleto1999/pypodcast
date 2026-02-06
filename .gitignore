@@ -1,0 +1,58 @@
+CLAUDE.md
+claude-docs/
+docs/
+prompts_to_implement.md
+
+# pipeline outputs (large data files).
+outputs/analysis/
+
+*.rttm
+podcast_othering/
+
+# python.
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# distribution / packaging.
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# uv.
+.venv/
+uv.lock
+
+# testing.
+.pytest_cache/
+.coverage
+htmlcov/
+
+# environments.
+.env
+.env.local
+
+# ide.
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# os.
+.DS_Store
+Thumbs.db

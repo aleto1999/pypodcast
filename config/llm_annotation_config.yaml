@@ -1,0 +1,130 @@
+# llm annotation pipeline configuration.
+
+# llm provider settings.
+llm:
+  provider: "anthropic"  # options: anthropic, openai, local
+  model: "claude-sonnet-4-20250514"
+  api_key_env: "ANTHROPIC_API_KEY"  # environment variable name for api key.
+  max_tokens: 1024
+  temperature: 0.0  # use 0 for deterministic classification.
+  timeout_seconds: 60
+  max_retries: 3
+  retry_delay_seconds: 2
+
+# input/output paths.
+paths:
+  input_dir: "data/transcripts"
+  output_dir: "data/annotations"
+  checkpoint_dir: "data/checkpoints"
+  failed_dir: "data/failed"
+  taxonomy_file: "config/taxonomy.yml"
+
+# processing settings.
+processing:
+  batch_size: 10
+  max_concurrent_requests: 5
+  save_checkpoint_every: 50  # save progress every n utterances.
+  skip_already_annotated: true
+  utterance_min_words: 3  # skip very short utterances.
+  utterance_max_words: 500  # truncate very long utterances.
+
+# annotation task definitions.
+tasks:
+  - name: hate_speech_detection
+    enabled: true
+    description: "detect presence of hate speech in utterance."
+    output_type: "binary"
+    labels: ["yes", "no"]
+
+  - name: advertisement_detection
+    enabled: true
+    description: "detect advertisement content in utterance."
+    output_type: "binary"
+    labels: ["yes", "no"]
+
+  - name: target_group_classification
+    enabled: true
+    description: "identify which group is targeted by hate speech."
+    output_type: "multi_label"
+    depends_on: "hate_speech_detection"  # only run if hate_speech_detection == yes.
+    labels:
+      - "racial_and_ethnic_minorities"
+      - "religious_minorities"
+      - "women"
+      - "lgbtq_population"
+      - "disabled_population"
+      - "immigrant_population"
+
+  - name: othering_strategy_classification
+    enabled: true
+    description: "identify the type of hate speech strategy used."
+    output_type: "multi_label"
+    depends_on: "hate_speech_detection"
+    labels:
+      - "threat_to_culture_or_identity"
+      - "threat_to_survival_or_physical_security"
+      - "vilification_or_villainization"
+      - "explicit_dehumanization"
+
+  - name: topic_extraction
+    enabled: true
+    description: "extract the main topic of the utterance."
+    output_type: "text"
+    max_length: 100  # max characters for topic response.
+
+# prompt template configuration.
+prompt:
+  system_message: |
+    You are an expert content analyst specializing in detecting harmful speech patterns
+    in podcast conversations. Analyze utterances objectively and accurately.
+    Respond only in the specified JSON format.
+
+  instruction_template: |
+    Analyze the following utterance and provide annotations.
+
+    UTTERANCE:
+    "{utterance}"
+
+    Respond with a JSON object containing:
+    1. "hate_speech": "yes" or "no"
+    2. "advertisement": "yes" or "no"
+    3. "target_groups": list of targeted groups (if hate_speech is "yes", else empty list)
+    4. "othering_strategies": list of strategies used (if hate_speech is "yes", else empty list)
+    5. "topic": brief description of the main topic (max one sentence)
+
+    Valid target_groups: {target_groups}
+    Valid othering_strategies: {othering_strategies}
+
+  few_shot_examples_enabled: true
+  few_shot_count: 3  # number of examples to include in prompt.
+
+# output format settings.
+output:
+  format: "jsonl"  # options: jsonl, csv, parquet
+  include_metadata: true
+  include_raw_response: false  # include full llm response for debugging.
+  include_confidence: true  # ask llm to provide confidence scores.
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+
+# quality control settings.
+quality:
+  require_valid_json: true
+  validate_labels: true  # ensure labels match predefined options.
+  flag_low_confidence: true
+  low_confidence_threshold: 0.7
+  log_validation_errors: true
+
+# logging configuration.
+logging:
+  level: "INFO"  # options: DEBUG, INFO, WARNING, ERROR
+  log_file: "logs/llm_annotation.log"
+  log_requests: false  # log full api requests (verbose).
+  log_responses: false  # log full api responses (verbose).
+
+# cost tracking.
+cost_tracking:
+  enabled: true
+  input_cost_per_1k_tokens: 0.003  # adjust based on model.
+  output_cost_per_1k_tokens: 0.015
+  budget_limit_usd: 50.0  # stop processing if budget exceeded.
+  warn_at_percent: 80  # warn when budget reaches this percent.
