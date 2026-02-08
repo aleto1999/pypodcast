@@ -25,6 +25,13 @@ usage:
     # skip transcription and diarization (use existing files).
     uv run python scripts/run_speaker_labeling_pipeline.py --audio-dir outputs/downloads \\
         --skip-transcription --skip-diarization
+
+    # use pre-existing combined transcripts (skip stages 1-5, run only speaker labeling).
+    uv run python scripts/run_speaker_labeling_pipeline.py --use-existing-transcripts
+
+    # use pre-existing combined transcripts from custom directory.
+    uv run python scripts/run_speaker_labeling_pipeline.py --use-existing-transcripts \\
+        --transcripts-dir /path/to/transcripts
 """
 
 from __future__ import annotations
@@ -93,6 +100,7 @@ def generate_summary(
     stages_completed: list[str],
     stages_failed: list[str],
     stages_skipped: list[str],
+    input_transcripts_dir: Path | None = None,
 ) -> str:
     """generate a summary report of the pipeline run."""
     duration = end_time - start_time
@@ -113,6 +121,14 @@ def generate_summary(
         outputs_dir / "transcripts_with_speaker_labels_postprocessed"
     )
 
+    # determine input source.
+    if input_transcripts_dir:
+        input_section = f"Pre-existing Transcripts: {input_transcripts_dir}"
+        input_count = get_file_count(input_transcripts_dir)
+        input_section += f"\nInput Transcript Count: {input_count} files"
+    else:
+        input_section = f"Audio Directory: {audio_dir}"
+
     summary = f"""
 ================================================================================
                SPEAKER LABELING PIPELINE - FULL PIPELINE REPORT
@@ -124,7 +140,7 @@ Duration: {hours}h {minutes}m {seconds}s
 --------------------------------------------------------------------------------
                                  INPUT
 --------------------------------------------------------------------------------
-Audio Directory: {audio_dir}
+{input_section}
 
 --------------------------------------------------------------------------------
                               PIPELINE STAGES
@@ -181,7 +197,7 @@ Speaker Labeled:        {outputs_dir / 'transcripts_with_speaker_labels_postproc
 @click.command()
 @click.option(
     "--audio-dir",
-    type=click.Path(exists=True, path_type=Path),
+    type=click.Path(path_type=Path),
     default=Path("outputs/downloads"),
     help="root directory containing audio files (default: outputs/downloads)",
 )
@@ -190,6 +206,18 @@ Speaker Labeled:        {outputs_dir / 'transcripts_with_speaker_labels_postproc
     type=click.Path(path_type=Path),
     default=Path("outputs"),
     help="base output directory for all pipeline outputs (default: outputs)",
+)
+# pre-existing transcripts options.
+@click.option(
+    "--use-existing-transcripts",
+    is_flag=True,
+    help="use pre-existing combined transcripts with diarization labels (skips stages 1-5)",
+)
+@click.option(
+    "--transcripts-dir",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="directory with pre-combined transcripts (default: outputs/transcripts_with_diarization_labels_postprocessed)",
 )
 # rss metadata options.
 @click.option(
@@ -347,6 +375,9 @@ Speaker Labeled:        {outputs_dir / 'transcripts_with_speaker_labels_postproc
 def run_speaker_labeling_pipeline(
     audio_dir: Path,
     output_dir: Path,
+    # pre-existing transcripts options.
+    use_existing_transcripts: bool,
+    transcripts_dir: Path | None,
     # rss options.
     skip_rss_download: bool,
     rss_force: bool,
@@ -398,7 +429,14 @@ def run_speaker_labeling_pipeline(
         # run with LLM-based speaker classification.
         uv run python scripts/run_speaker_labeling_pipeline.py --audio-dir outputs/downloads --use-llm
 
-        # skip transcription and diarization (use existing files).
+        # use pre-existing combined transcripts (skips stages 1-5).
+        uv run python scripts/run_speaker_labeling_pipeline.py --use-existing-transcripts
+
+        # use pre-existing transcripts from custom directory.
+        uv run python scripts/run_speaker_labeling_pipeline.py --use-existing-transcripts \\
+            --transcripts-dir /path/to/transcripts_with_diarization
+
+        # skip transcription and diarization (use existing intermediate files).
         uv run python scripts/run_speaker_labeling_pipeline.py --audio-dir outputs/downloads \\
             --skip-transcription --skip-diarization
 
@@ -427,11 +465,50 @@ def run_speaker_labeling_pipeline(
 
     # define output directories.
     rss_metadata_dir = output_dir / "rss_metadata"
-    transcripts_dir = output_dir / "transcripts"
+    raw_transcripts_dir = output_dir / "transcripts"
     diarizations_dir = output_dir / "diarizations"
     transcripts_with_diarization_dir = output_dir / "transcripts_with_diarization_labels"
     transcripts_postprocessed_dir = output_dir / "transcripts_with_diarization_labels_postprocessed"
     speaker_labeled_dir = output_dir / "transcripts_with_speaker_labels_postprocessed"
+
+    # handle pre-existing transcripts mode.
+    if use_existing_transcripts:
+        # use provided transcripts_dir or default.
+        if transcripts_dir is None:
+            transcripts_dir = output_dir / "transcripts_with_diarization_labels_postprocessed"
+        transcripts_dir = transcripts_dir.resolve()
+
+        # validate transcripts directory exists.
+        if not transcripts_dir.exists():
+            console.print(
+                f"[bold red]Error: Transcripts directory does not exist: {transcripts_dir}[/bold red]"
+            )
+            console.print(
+                "[yellow]Hint: Use --transcripts-dir to specify a different directory, "
+                "or run the full pipeline without --use-existing-transcripts.[/yellow]"
+            )
+            sys.exit(1)
+
+        # count available transcripts.
+        transcript_count = get_file_count(transcripts_dir)
+        if transcript_count == 0:
+            console.print(
+                f"[bold red]Error: No transcript files found in: {transcripts_dir}[/bold red]"
+            )
+            sys.exit(1)
+
+        console.print(
+            f"[bold green]Using {transcript_count} pre-existing transcripts from: "
+            f"{transcripts_dir}[/bold green]"
+        )
+
+        # override postprocessed dir to use the provided directory.
+        transcripts_postprocessed_dir = transcripts_dir
+
+        # automatically skip stages 1-5.
+        skip_rss_download = True
+        skip_transcription = True
+        skip_diarization = True
 
     # ensure base output directory exists.
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -480,7 +557,7 @@ def run_speaker_labeling_pipeline(
         cmd = [
             "uv", "run", "python", str(script_dir / "transcribe_batch.py"),
             "--audio-dir", str(audio_dir),
-            "--output-dir", str(transcripts_dir),
+            "--output-dir", str(raw_transcripts_dir),
             "--model", whisper_model,
             "--device", transcription_device,
             "--log-level", log_level,
@@ -524,7 +601,7 @@ def run_speaker_labeling_pipeline(
 
         cmd = [
             "uv", "run", "python", str(script_dir / "diarize_batch.py"),
-            "--transcripts-dir", str(transcripts_dir),
+            "--transcripts-dir", str(raw_transcripts_dir),
             "--audio-base-dir", str(audio_dir),
             "--output-dir", str(diarizations_dir),
             "--device", diarization_device,
@@ -558,55 +635,63 @@ def run_speaker_labeling_pipeline(
     # =========================================================================
     # stage 4: combine transcripts with diarization labels
     # =========================================================================
-    console.print("\n" + "=" * 80)
-    console.print("[bold magenta]STAGE 4/6: Combine Transcripts with Diarization[/bold magenta]")
-    console.print("=" * 80)
+    if not use_existing_transcripts:
+        console.print("\n" + "=" * 80)
+        console.print("[bold magenta]STAGE 4/6: Combine Transcripts with Diarization[/bold magenta]")
+        console.print("=" * 80)
 
-    cmd = [
-        "uv", "run", "python", str(script_dir / "combine_transcripts_with_speakers.py"),
-        "--transcripts-dir", str(transcripts_dir),
-        "--diarizations-dir", str(diarizations_dir),
-        "--output-dir", str(transcripts_with_diarization_dir),
-        "--log-level", log_level,
-    ]
-    if force:
-        cmd.append("--force")
+        cmd = [
+            "uv", "run", "python", str(script_dir / "combine_transcripts_with_speakers.py"),
+            "--transcripts-dir", str(raw_transcripts_dir),
+            "--diarizations-dir", str(diarizations_dir),
+            "--output-dir", str(transcripts_with_diarization_dir),
+            "--log-level", log_level,
+        ]
+        if force:
+            cmd.append("--force")
 
-    if run_command(cmd, "Combine Transcripts with Diarization", dry_run):
-        stages_completed.append("4. Combine Transcripts with Diarization")
+        if run_command(cmd, "Combine Transcripts with Diarization", dry_run):
+            stages_completed.append("4. Combine Transcripts with Diarization")
+        else:
+            stages_failed.append("4. Combine Transcripts with Diarization")
+            console.print(
+                "[bold red]Combine transcripts with diarization failed. "
+                "Stopping pipeline.[/bold red]"
+            )
+            sys.exit(1)
     else:
-        stages_failed.append("4. Combine Transcripts with Diarization")
-        console.print(
-            "[bold red]Combine transcripts with diarization failed. "
-            "Stopping pipeline.[/bold red]"
-        )
-        sys.exit(1)
+        console.print("\n[yellow]Skipping Stage 4: Combine Transcripts (using existing)[/yellow]")
+        stages_skipped.append("4. Combine Transcripts with Diarization")
 
     # =========================================================================
     # stage 5: combine consecutive speakers
     # =========================================================================
-    console.print("\n" + "=" * 80)
-    console.print("[bold magenta]STAGE 5/6: Combine Consecutive Speakers[/bold magenta]")
-    console.print("=" * 80)
+    if not use_existing_transcripts:
+        console.print("\n" + "=" * 80)
+        console.print("[bold magenta]STAGE 5/6: Combine Consecutive Speakers[/bold magenta]")
+        console.print("=" * 80)
 
-    cmd = [
-        "uv", "run", "python", str(script_dir / "combine_consecutive_speakers.py"),
-        "--transcripts-dir", str(transcripts_with_diarization_dir),
-        "--output-dir", str(transcripts_postprocessed_dir),
-        "--log-level", log_level,
-    ]
-    if force:
-        cmd.append("--force")
+        cmd = [
+            "uv", "run", "python", str(script_dir / "combine_consecutive_speakers.py"),
+            "--transcripts-dir", str(transcripts_with_diarization_dir),
+            "--output-dir", str(transcripts_postprocessed_dir),
+            "--log-level", log_level,
+        ]
+        if force:
+            cmd.append("--force")
 
-    if run_command(cmd, "Combine Consecutive Speakers", dry_run):
-        stages_completed.append("5. Combine Consecutive Speakers")
+        if run_command(cmd, "Combine Consecutive Speakers", dry_run):
+            stages_completed.append("5. Combine Consecutive Speakers")
+        else:
+            stages_failed.append("5. Combine Consecutive Speakers")
+            console.print(
+                "[bold red]Combine consecutive speakers failed. "
+                "Stopping pipeline.[/bold red]"
+            )
+            sys.exit(1)
     else:
-        stages_failed.append("5. Combine Consecutive Speakers")
-        console.print(
-            "[bold red]Combine consecutive speakers failed. "
-            "Stopping pipeline.[/bold red]"
-        )
-        sys.exit(1)
+        console.print("\n[yellow]Skipping Stage 5: Combine Consecutive Speakers (using existing)[/yellow]")
+        stages_skipped.append("5. Combine Consecutive Speakers")
 
     # =========================================================================
     # stage 6: speaker labeling
@@ -690,6 +775,7 @@ def run_speaker_labeling_pipeline(
         stages_completed=stages_completed,
         stages_failed=stages_failed,
         stages_skipped=stages_skipped,
+        input_transcripts_dir=transcripts_postprocessed_dir if use_existing_transcripts else None,
     )
 
     # save summary to file.
