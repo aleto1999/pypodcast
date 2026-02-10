@@ -20,12 +20,12 @@ if src_dir.exists() and str(src_dir) not in sys.path:
 
 # CRITICAL: apply PyTorch 2.6+ compatibility fix BEFORE importing torch/click/anything else.
 # this registers omegaconf classes as safe globals for torch.load.
-from podcast_conversations.transcription import torchaudio_compat  # noqa: F401, E402
+from src.podcast_conversations.transcription import torchaudio_compat  # noqa: F401, E402
 
 import click
 
-from podcast_conversations.monitoring import ResourceDisplay, print_system_info
-from podcast_conversations.transcription import (
+from src.podcast_conversations.monitoring import ResourceDisplay, print_system_info
+from src.podcast_conversations.transcription import (
     TranscriptionConfig,
     create_transcription_pipeline,
     detect_transcription_device,
