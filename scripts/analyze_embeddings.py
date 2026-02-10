@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """semantic analysis of podcast transcripts using embeddings method."""
+# testing github ?
 
 import sys
 from pathlib import Path
