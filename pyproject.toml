@@ -35,6 +35,9 @@ dev = ["pytest>=8.0.0", "ruff>=0.1.0", "ipython>=8.10.0"]
 # install with: uv sync --extra gpu
 gpu = [
     "nvidia-cudnn-cu12>=9.0.0",  # cuDNN for CUDA 12.x
+    "nvidia-cublas-cu12>=12.0.0",  # CUDA BLAS library
+    "nvidia-cuda-runtime-cu12>=12.0.0",  # CUDA runtime
+    "pynvml>=11.5.0",  # nvidia management library for GPU monitoring
 ]
 # mlx dependencies for optimized Apple Silicon execution.
 # install with: uv sync --extra macos
