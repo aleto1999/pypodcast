@@ -27,6 +27,7 @@ dependencies = [
     "pymupdf>=1.26.7",
     "plotext>=5.3.2",
     "omegaconf>=2.3.0",
+    "huggingface-hub<0.24",
 ]
 
 [project.optional-dependencies]
