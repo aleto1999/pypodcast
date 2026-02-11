@@ -1,0 +1,49 @@
+=== CUDA Linking Diagnostic ===
+
+1. Environment check...
+   ✓ LD_LIBRARY_PATH contains nvidia paths
+
+2. PyTorch CUDA error details...
+   • LD_LIBRARY_PATH set: True
+   • Torch version: 2.5.1+cu124
+   • CUDA compiled version: 12.4
+   • CUDA available: False
+
+   Attempting CUDA initialization...
+   ✗ Error: No CUDA GPUs are available
+
+   Full traceback:
+
+3. Checking PyTorch CUDA library dependencies...
+   Found: .venv/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so
+   Checking library dependencies (first 30 lines)...
+	linux-vdso.so.1 (0x00007fff04fb1000)
+	libc10_cuda.so => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/libc10_cuda.so (0x0000151a95797000)
+	libcudart.so.12 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cuda_runtime/lib/libcudart.so.12 (0x0000151a60462000)
+	libcusparse.so.12 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cusparse/lib/libcusparse.so.12 (0x0000151a4f614000)
+	libcufft.so.11 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cufft/lib/libcufft.so.11 (0x0000151a3da17000)
+	libcusparseLt-294d6944.so.0 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/libcusparseLt-294d6944.so.0 (0x0000151a30b66000)
+	libcurand.so.10 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/curand/lib/libcurand.so.10 (0x0000151a2a720000)
+	libcublas.so.12 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cublas/lib/libcublas.so.12 (0x0000151a23c8e000)
+	libcublasLt.so.12 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cublas/lib/libcublasLt.so.12 (0x0000151a05d32000)
+	libcudnn.so.9 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cudnn/lib/libcudnn.so.9 (0x0000151a05b18000)
+	libnccl.so.2 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/nccl/lib/libnccl.so.2 (0x00001519f732d000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00001519f710d000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00001519f6f09000)
+	librt.so.1 => /lib64/librt.so.1 (0x00001519f6d01000)
+	libc10.so => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/libc10.so (0x0000151a95664000)
+	libtorch_cpu.so => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so (0x00001519e20ce000)
+	libm.so.6 => /lib64/libm.so.6 (0x00001519e1d4c000)
+	libstdc++.so.6 => /lib64/libstdc++.so.6 (0x00001519e19b7000)
+	libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00001519e179f000)
+	libc.so.6 => /lib64/libc.so.6 (0x00001519e13da000)
+	/lib64/ld-linux-x86-64.so.2 (0x0000151a95620000)
+	libnvJitLink.so.12 => .venv/lib/python3.12/site-packages/nvidia/nvjitlink/lib/libnvJitLink.so.12 (0x00001519dde47000)
+	libgomp-a34b3233.so.1 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/libgomp-a34b3233.so.1 (0x00001519ddc1d000)
+	libcupti.so.12 => /gpfs/alpine1/scratch/juva3822/pypodcast/.venv/lib/python3.12/site-packages/torch/lib/../../nvidia/cuda_cupti/lib/libcupti.so.12 (0x00001519dd280000)
+	libutil.so.1 => /lib64/libutil.so.1 (0x00001519dd07c000)
+
+4. Checking for missing CUDA libraries...
+   ✓ All libraries found
+
+=== End Diagnostic ===
