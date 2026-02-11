@@ -84,32 +84,37 @@ def create_resource_panel(snapshot: ResourceSnapshot | None = None) -> Panel:
 
     # gpu rows.
     for gpu in snapshot.gpus:
-        gpu_label = f"GPU {gpu.index}" if len(snapshot.gpus) > 1 else "GPU"
+        gpu_prefix = f"GPU {gpu.index}" if len(snapshot.gpus) > 1 else "GPU"
 
-        # utilization row (compute usage).
-        util_color = get_usage_color(gpu.utilization_percent)
-        util_bar = _create_bar(gpu.utilization_percent, 20)
-        table.add_row(
-            gpu_label,
-            Text.assemble(
-                (util_bar, util_color),
-                f" {gpu.utilization_percent:5.1f}% ",
-            ),
-        )
+        temp_str = f" {gpu.temperature_c}°C" if gpu.temperature_c else ""
+        temp_style = "yellow" if gpu.temperature_c and gpu.temperature_c > 70 else "dim"
+
+        # show utilization row only if pynvml provides data.
+        if gpu.utilization_percent > 0:
+            util_color = get_usage_color(gpu.utilization_percent)
+            util_bar = _create_bar(gpu.utilization_percent, 20)
+            table.add_row(
+                f"{gpu_prefix} Util",
+                Text.assemble(
+                    (util_bar, util_color),
+                    f" {gpu.utilization_percent:5.1f}% ",
+                    (temp_str, temp_style),
+                ),
+            )
 
         # memory row.
         gpu_mem_color = get_usage_color(gpu.memory_percent)
         gpu_bar = _create_bar(gpu.memory_percent, 20)
 
-        temp_str = f" {gpu.temperature_c}°C" if gpu.temperature_c else ""
+        mem_label = f"{gpu_prefix} Mem" if gpu.utilization_percent > 0 else gpu_prefix
 
         table.add_row(
-            "",
+            mem_label,
             Text.assemble(
                 (gpu_bar, gpu_mem_color),
                 f" {gpu.memory_percent:5.1f}% ",
                 (f"({format_memory(gpu.memory_used_gb)}/{format_memory(gpu.memory_total_gb)})", "dim"),
-                (temp_str, "yellow" if gpu.temperature_c and gpu.temperature_c > 70 else "dim"),
+                (temp_str, temp_style) if gpu.utilization_percent == 0 else ("", ""),
             ),
         )
 
