@@ -34,18 +34,21 @@ def filter_episodes(
 
     # filter by date range.
     if episode_filter.start_date:
+        start_date = episode_filter.start_date.replace(tzinfo=None)
         filtered = [
             e for e in filtered
-            if e.published and e.published >= episode_filter.start_date
+            if e.published and e.published.replace(tzinfo=None) >= start_date
         ]
 
     if episode_filter.end_date:
+        end_date = episode_filter.end_date.replace(tzinfo=None)
         filtered = [
             e for e in filtered
-            if e.published and e.published <= episode_filter.end_date
+            if e.published and e.published.replace(tzinfo=None) <= end_date
         ]
 
     # random sample or take newest.
+    random.seed(42)
     if episode_filter.random_sample:
         count = min(episode_filter.random_sample, len(filtered))
         filtered = random.sample(filtered, count)
