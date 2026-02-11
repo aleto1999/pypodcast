@@ -2,6 +2,37 @@
 """diagnostic script to check gpu detection."""
 
 import sys
+import os
+
+# CRITICAL: setup cuda library paths BEFORE importing torch.
+try:
+    from pathlib import Path
+    
+    nvidia_packages = ["nvidia.cuda_runtime", "nvidia.cublas", "nvidia.cudnn"]
+    lib_dirs = []
+    
+    for pkg_name in nvidia_packages:
+        try:
+            parts = pkg_name.split(".")
+            mod = __import__(pkg_name)
+            for part in parts[1:]:
+                mod = getattr(mod, part)
+            
+            pkg_path = Path(mod.__file__).parent
+            for candidate in [pkg_path / "lib", pkg_path]:
+                if candidate.exists() and list(candidate.glob("*.so*")):
+                    lib_dirs.append(str(candidate))
+                    break
+        except (ImportError, AttributeError):
+            continue
+    
+    if lib_dirs:
+        current = os.environ.get("LD_LIBRARY_PATH", "")
+        new_paths = ":".join(lib_dirs)
+        os.environ["LD_LIBRARY_PATH"] = f"{new_paths}:{current}" if current else new_paths
+        print(f"✓ setup: added {len(lib_dirs)} nvidia library paths\n", file=sys.stderr)
+except Exception as e:
+    print(f"✗ setup failed: {e}\n", file=sys.stderr)
 
 print("=== GPU Detection Diagnostic ===\n")
 
