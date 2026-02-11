@@ -1,8 +1,11 @@
 """configuration models for transcription pipeline."""
 
+import logging
 from typing import Literal
 
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
 
 # model size to VRAM multiplier for batch size calculation.
 MODEL_VRAM_FACTORS = {
@@ -58,10 +61,11 @@ class TranscriptionConfig(BaseModel):
         """
         calculate optimal batch size based on gpu memory and model.
 
-        formula: (gpu_gb / 10) * (40 / (model_factor * compute_factor))
+        uses free gpu memory when available for dynamic allocation,
+        falls back to total memory estimate.
 
         args:
-            gpu_memory_gb: available gpu memory in gigabytes.
+            gpu_memory_gb: total gpu memory in gigabytes (used as fallback).
 
         returns:
             optimal batch size for the configuration.
@@ -72,13 +76,36 @@ class TranscriptionConfig(BaseModel):
         if self.device == "cpu":
             return 4  # cpu default.
 
+        available_gb = self._get_free_gpu_memory_gb(gpu_memory_gb)
+
         model_factor = MODEL_VRAM_FACTORS.get(self.model_size, 5.0)
         compute_factor = COMPUTE_TYPE_FACTORS.get(self.compute_type, 1.0)
 
-        optimal = int((gpu_memory_gb / 10) * (40 / (model_factor * compute_factor)))
+        optimal = int((available_gb / 10) * (40 / (model_factor * compute_factor)))
 
         # clamp to reasonable range.
-        return max(4, min(optimal, 128))
+        result = max(4, min(optimal, 128))
+        logger.debug(
+            f"batch size: {result} "
+            f"(available VRAM: {available_gb:.1f}GB, model: {self.model_size})"
+        )
+        return result
+
+    @staticmethod
+    def _get_free_gpu_memory_gb(fallback_gb: float) -> float:
+        """get free gpu memory in GB, falling back to provided value."""
+        try:
+            import torch
+
+            if torch.cuda.is_available():
+                free_bytes, total_bytes = torch.cuda.mem_get_info(0)
+                free_gb = free_bytes / (1024**3)
+                total_gb = total_bytes / (1024**3)
+                logger.debug(f"GPU memory: {free_gb:.1f}GB free / {total_gb:.1f}GB total")
+                return free_gb
+        except Exception:
+            pass
+        return fallback_gb
 
 
 class TranscriptionResult(BaseModel):
