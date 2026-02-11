@@ -5,11 +5,36 @@ batch transcription script using whisperx.
 recursively processes audio files and generates json transcripts.
 """
 
-import json
-import logging
 import os
 import sys
 from pathlib import Path
+
+# setup cuDNN 8.x library path BEFORE any imports that trigger .so loading.
+# ctranslate2 (used by faster-whisper/whisperx) needs libcudnn_ops_infer.so.8
+# which comes from nvidia-cudnn-cu11. the dynamic linker only reads
+# LD_LIBRARY_PATH at process startup, so we must set it and re-exec.
+if not os.environ.get("_CUDNN_PATH_SET"):
+    import site
+
+    site_dirs = site.getsitepackages() + [site.getusersitepackages()]
+    cudnn_dirs = []
+    for site_dir in site_dirs:
+        site_path = Path(site_dir)
+        if not site_path.exists():
+            continue
+        for so_file in site_path.rglob("libcudnn_ops_infer.so.8*"):
+            cudnn_dirs.append(str(so_file.parent))
+            break
+
+    if cudnn_dirs:
+        current = os.environ.get("LD_LIBRARY_PATH", "")
+        new_paths = ":".join(cudnn_dirs)
+        os.environ["LD_LIBRARY_PATH"] = f"{new_paths}:{current}" if current else new_paths
+        os.environ["_CUDNN_PATH_SET"] = "1"
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
+import json
+import logging
 
 # add src to path for imports FIRST.
 script_dir = Path(__file__).resolve().parent
