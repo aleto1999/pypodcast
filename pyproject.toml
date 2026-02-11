@@ -6,8 +6,8 @@ readme = "README.md"
 requires-python = ">=3.11,<3.13"
 dependencies = [
     "pyannote.audio>=3.1.0",
-    "torch>=2.1.0,<2.6",
-    "torchaudio>=2.1.0,<2.6",
+    "torch==2.5.1",
+    "torchaudio==2.5.1",
     "numpy>=1.24.0",
     "ffmpeg-python>=0.2.0",
     "pydantic>=2.0.0",
@@ -74,6 +74,15 @@ ignore = []
 testpaths = ["tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu124" }
+torchaudio = { index = "pytorch-cu124" }
 
 [dependency-groups]
 dev = [
