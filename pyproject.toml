@@ -37,8 +37,7 @@ gpu = [
     "nvidia-cudnn-cu12>=9.1.0",  # cuDNN 9.x (required by PyTorch 2.5.1)
     "nvidia-cublas-cu12>=12.0.0",  # CUDA BLAS library
     "nvidia-cuda-runtime-cu12>=12.1.0,<12.2.0",  # CUDA 12.1 runtime (compatible with driver 12.8)
-    "nvidia-ml-py>=12.560.30",  # nvidia management library for GPU monitoring (replaces pynvml)
-    "nvidia-cudnn-cu11==8.9.7.29",  # cuDNN 8.x for pyannote compatibility
+    "nvidia-ml-py>=12.560.30",  # nvidia management library for GPU monitoring
 ]
 # mlx dependencies for optimized Apple Silicon execution.
 # install with: uv sync --extra macos
