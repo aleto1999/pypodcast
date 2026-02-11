@@ -38,8 +38,8 @@ for pkg in cuda_runtime cublas cudnn cuda_nvrtc nvtx cusparse cusolver cufft cur
     fi
 done
 
-# export with existing LD_LIBRARY_PATH.
-export LD_LIBRARY_PATH="$CUDA_LIB_PATHS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# CRITICAL: /usr/lib64 must come FIRST for driver library (libcuda.so.1)
+export LD_LIBRARY_PATH="/usr/lib64:$CUDA_LIB_PATHS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 echo "✓ CUDA libraries configured"
 echo "  Using GPU: $(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)"
