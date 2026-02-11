@@ -193,4 +193,88 @@ try:
 except Exception as e:
     print(f"   ✗ error: {e}")
 
+print()
+
+# check for specific cuda library files.
+print("8. checking specific cuda library files...")
+try:
+    import pathlib
+    import os
+    
+    ld_paths = os.environ.get("LD_LIBRARY_PATH", "").split(":")
+    
+    required_libs = [
+        "libcudart.so.12",
+        "libcublas.so.12", 
+        "libcublasLt.so.12",
+        "libcudnn.so.9",
+    ]
+    
+    for lib_name in required_libs:
+        found = False
+        for path in ld_paths:
+            if path:
+                lib_path = pathlib.Path(path)
+                if lib_path.exists():
+                    matches = list(lib_path.glob(f"{lib_name}*"))
+                    if matches:
+                        print(f"   ✓ {lib_name}: found in {path}")
+                        found = True
+                        break
+        if not found:
+            print(f"   ✗ {lib_name}: NOT FOUND")
+    
+    # check driver version compatibility
+    print()
+    print("9. checking driver compatibility...")
+    import subprocess
+    result = subprocess.run(
+        ["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"],
+        capture_output=True,
+        text=True,
+        timeout=5,
+    )
+    if result.returncode == 0:
+        driver_version = result.stdout.strip().split("\n")[0]
+        print(f"   • driver version: {driver_version}")
+        
+        # CUDA 12.4 requires driver >= 525.60.13
+        try:
+            major, minor = driver_version.split(".")[:2]
+            driver_num = int(major) * 100 + int(minor)
+            required = 525
+            if driver_num >= required:
+                print(f"   ✓ driver {driver_version} >= {required} (compatible with CUDA 12.4)")
+            else:
+                print(f"   ✗ driver {driver_version} < {required} (incompatible with CUDA 12.4)")
+        except:
+            pass
+    
+    # try loading libcudart directly with ctypes
+    print()
+    print("10. testing direct library loading...")
+    try:
+        import ctypes
+        lib_loaded = False
+        for path in ld_paths:
+            if path:
+                lib_path = pathlib.Path(path)
+                cudart_files = list(lib_path.glob("libcudart.so*"))
+                if cudart_files:
+                    try:
+                        lib = ctypes.CDLL(str(cudart_files[0]))
+                        print(f"   ✓ successfully loaded {cudart_files[0]}")
+                        lib_loaded = True
+                        break
+                    except Exception as e:
+                        print(f"   ✗ failed to load {cudart_files[0]}: {e}")
+        
+        if not lib_loaded:
+            print("   ✗ could not load any cudart library")
+    except Exception as e:
+        print(f"   ✗ error: {e}")
+        
+except Exception as e:
+    print(f"   ✗ error: {e}")
+
 print("\n=== End Diagnostic ===")
