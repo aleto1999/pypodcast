@@ -36,7 +36,7 @@ dev = ["pytest>=8.0.0", "ruff>=0.1.0", "ipython>=8.10.0"]
 gpu = [
     "nvidia-cudnn-cu12>=9.0.0",  # cuDNN for CUDA 12.x
     "nvidia-cublas-cu12>=12.0.0",  # CUDA BLAS library
-    "nvidia-cuda-runtime-cu12>=12.0.0",  # CUDA runtime
+    "nvidia-cuda-runtime-cu12>=12.1.0,<12.2.0",  # CUDA 12.1 runtime (compatible with driver 12.8)
     "nvidia-ml-py>=12.560.30",  # nvidia management library for GPU monitoring (replaces pynvml)
 ]
 # mlx dependencies for optimized Apple Silicon execution.
@@ -76,13 +76,13 @@ python_files = "test_*.py"
 python_functions = "test_*"
 
 [[tool.uv.index]]
-name = "pytorch-cu124"
-url = "https://download.pytorch.org/whl/cu124"
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
 explicit = true
 
 [tool.uv.sources]
-torch = { index = "pytorch-cu124" }
-torchaudio = { index = "pytorch-cu124" }
+torch = { index = "pytorch-cu121" }
+torchaudio = { index = "pytorch-cu121" }
 
 [dependency-groups]
 dev = [
