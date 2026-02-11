@@ -144,18 +144,16 @@ class DiarizationPipeline:
         """load pyannote.audio pipeline from HuggingFace."""
         from pyannote.audio import Pipeline
 
+        # authenticate via huggingface_hub.login() to avoid version-specific
+        # kwarg issues (pyannote 3.x uses 'use_auth_token', 4.x uses 'token',
+        # and newer huggingface_hub removed 'use_auth_token' entirely).
+        if hf_token:
+            from huggingface_hub import login
+
+            login(token=hf_token, add_to_git_credential=False)
+
         try:
-            # pyannote.audio 4.x uses 'token', 3.x uses 'use_auth_token'.
-            try:
-                self.pipeline = Pipeline.from_pretrained(
-                    self.model_name,
-                    token=hf_token,
-                )
-            except TypeError:
-                self.pipeline = Pipeline.from_pretrained(
-                    self.model_name,
-                    use_auth_token=hf_token,
-                )
+            self.pipeline = Pipeline.from_pretrained(self.model_name)
             self.pipeline.to(torch.device(self.device))
             logger.info("pipeline loaded successfully")
         except Exception as e:
