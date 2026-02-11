@@ -145,10 +145,17 @@ class DiarizationPipeline:
         from pyannote.audio import Pipeline
 
         try:
-            self.pipeline = Pipeline.from_pretrained(
-                self.model_name,
-                token=hf_token,
-            )
+            # pyannote.audio 4.x uses 'token', 3.x uses 'use_auth_token'.
+            try:
+                self.pipeline = Pipeline.from_pretrained(
+                    self.model_name,
+                    token=hf_token,
+                )
+            except TypeError:
+                self.pipeline = Pipeline.from_pretrained(
+                    self.model_name,
+                    use_auth_token=hf_token,
+                )
             self.pipeline.to(torch.device(self.device))
             logger.info("pipeline loaded successfully")
         except Exception as e:
