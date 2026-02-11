@@ -50,13 +50,13 @@ except Exception as e:
 
 print()
 
-# check pynvml.
-print("3. checking pynvml...")
+# check pynvml/nvidia-ml-py.
+print("3. checking nvidia management library...")
 try:
     import pynvml
     pynvml.nvmlInit()
     device_count = pynvml.nvmlDeviceGetCount()
-    print(f"   ✓ pynvml initialized")
+    print(f"   ✓ nvidia-ml initialized")
     print(f"   • device count: {device_count}")
     
     for i in range(device_count):
@@ -69,7 +69,7 @@ try:
     
     pynvml.nvmlShutdown()
 except ImportError as e:
-    print(f"   ✗ pynvml not installed: {e}")
+    print(f"   ✗ nvidia-ml not installed: {e}")
 except Exception as e:
     print(f"   ✗ error: {e}")
 
@@ -98,5 +98,68 @@ if ld_path:
         print("   • no cuda/nvidia paths found in LD_LIBRARY_PATH")
 else:
     print("   • LD_LIBRARY_PATH not set")
+
+print()
+
+# check for cuda libraries in python packages.
+print("6. checking bundled cuda libraries...")
+try:
+    import torch
+    import pathlib
+    torch_path = pathlib.Path(torch.__file__).parent
+    
+    # check for cuda libraries in torch package
+    cuda_libs = list(torch_path.rglob("*cudart*.so*"))
+    if cuda_libs:
+        print(f"   ✓ found {len(cuda_libs)} cudart libraries in torch:")
+        for lib in cuda_libs[:3]:
+            print(f"     {lib}")
+    else:
+        print("   ✗ no cudart libraries found in torch package")
+    
+    # check nvidia packages
+    nvidia_packages = [
+        "nvidia.cuda_runtime",
+        "nvidia.cublas", 
+        "nvidia.cudnn",
+    ]
+    
+    for pkg in nvidia_packages:
+        try:
+            mod = __import__(pkg)
+            pkg_path = pathlib.Path(mod.__file__).parent
+            libs = list(pkg_path.rglob("*.so*"))
+            if libs:
+                print(f"   ✓ {pkg}: found {len(libs)} libraries")
+            else:
+                print(f"   • {pkg}: installed but no .so files found")
+        except ImportError:
+            print(f"   ✗ {pkg}: not installed")
+        except Exception as e:
+            print(f"   • {pkg}: error - {e}")
+            
+except Exception as e:
+    print(f"   ✗ error checking packages: {e}")
+
+print()
+
+# check detailed torch cuda initialization.
+print("7. torch cuda initialization details...")
+try:
+    import torch
+    print(f"   • torch.cuda.is_available(): {torch.cuda.is_available()}")
+    print(f"   • torch.version.cuda: {torch.version.cuda}")
+    print(f"   • torch.backends.cudnn.enabled: {torch.backends.cudnn.enabled}")
+    
+    # try to get more error details
+    try:
+        print(f"   • attempting torch.cuda.init()...")
+        torch.cuda.init()
+        print(f"   ✓ torch.cuda.init() succeeded")
+    except Exception as e:
+        print(f"   ✗ torch.cuda.init() failed: {e}")
+        
+except Exception as e:
+    print(f"   ✗ error: {e}")
 
 print("\n=== End Diagnostic ===")
