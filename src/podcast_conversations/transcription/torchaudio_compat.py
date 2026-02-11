@@ -18,8 +18,13 @@ def setup_cuda_library_path():
     PyTorch expects CUDA libraries to be in LD_LIBRARY_PATH or bundled.
     When using nvidia-*-cu12 packages from PyPI, we need to add their
     library directories to LD_LIBRARY_PATH before torch is imported.
+    
+    Also preloads cuDNN 8.x libraries for ctranslate2 compatibility
+    (ctranslate2 dynamically loads libcudnn_ops_infer.so.8).
     """
     try:
+        import ctypes
+        import site
         from pathlib import Path
         
         nvidia_packages = [
@@ -32,16 +37,13 @@ def setup_cuda_library_path():
         
         for pkg_name in nvidia_packages:
             try:
-                # import the package to find its location.
                 parts = pkg_name.split(".")
                 mod = __import__(pkg_name)
                 for part in parts[1:]:
                     mod = getattr(mod, part)
                 
-                # find library directory.
                 pkg_path = Path(mod.__file__).parent
                 
-                # look for lib directory or .so files.
                 lib_candidates = [
                     pkg_path / "lib",
                     pkg_path,
@@ -54,6 +56,27 @@ def setup_cuda_library_path():
                         
             except (ImportError, AttributeError):
                 continue
+        
+        # search site-packages for cuDNN 8.x .so files from nvidia-cudnn-cu11.
+        # nvidia-cudnn-cu11 and nvidia-cudnn-cu12 both use the nvidia.cudnn
+        # namespace, so we scan for libcudnn_ops_infer.so.8 in all nvidia dirs.
+        site_dirs = site.getsitepackages() + [site.getusersitepackages()]
+        for site_dir in site_dirs:
+            site_path = Path(site_dir)
+            if not site_path.exists():
+                continue
+            for cudnn_lib in site_path.rglob("libcudnn_ops_infer.so.8*"):
+                lib_dir = str(cudnn_lib.parent)
+                if lib_dir not in lib_dirs:
+                    lib_dirs.append(lib_dir)
+                    # preload cuDNN 8 .so files so ctranslate2 can find them.
+                    for lib in sorted(cudnn_lib.parent.glob("libcudnn*.so.8*")):
+                        try:
+                            ctypes.cdll.LoadLibrary(str(lib))
+                            logger.debug(f"preloaded {lib.name}")
+                        except OSError:
+                            pass
+                break
         
         if lib_dirs:
             current_ld_path = os.environ.get("LD_LIBRARY_PATH", "")
