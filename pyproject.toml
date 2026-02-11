@@ -75,6 +75,14 @@ testpaths = ["tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
 
+# override nvidia-cudnn-cu12 to 8.x for ctranslate2 compatibility.
+# ctranslate2 (used by faster-whisper/whisperx) dynamically loads libcudnn_ops_infer.so.8
+# which only exists in cuDNN 8.x. torch 2.5.1 works fine with cuDNN 8.x despite pinning 9.x.
+[tool.uv]
+override-dependencies = [
+    "nvidia-cudnn-cu12==8.9.7.29",
+]
+
 [[tool.uv.index]]
 name = "pytorch-cu121"
 url = "https://download.pytorch.org/whl/cu121"
