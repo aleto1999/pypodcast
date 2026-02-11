@@ -84,22 +84,32 @@ def create_resource_panel(snapshot: ResourceSnapshot | None = None) -> Panel:
 
     # gpu rows.
     for gpu in snapshot.gpus:
+        gpu_label = f"GPU {gpu.index}" if len(snapshot.gpus) > 1 else "GPU"
+
+        # utilization row (compute usage).
+        util_color = get_usage_color(gpu.utilization_percent)
+        util_bar = _create_bar(gpu.utilization_percent, 20)
+        table.add_row(
+            gpu_label,
+            Text.assemble(
+                (util_bar, util_color),
+                f" {gpu.utilization_percent:5.1f}% ",
+            ),
+        )
+
+        # memory row.
         gpu_mem_color = get_usage_color(gpu.memory_percent)
         gpu_bar = _create_bar(gpu.memory_percent, 20)
 
-        gpu_label = f"GPU {gpu.index}" if len(snapshot.gpus) > 1 else "GPU"
-
         temp_str = f" {gpu.temperature_c}°C" if gpu.temperature_c else ""
-        util_str = f" {gpu.utilization_percent:.0f}% util" if gpu.utilization_percent > 0 else ""
 
         table.add_row(
-            gpu_label,
+            "",
             Text.assemble(
                 (gpu_bar, gpu_mem_color),
                 f" {gpu.memory_percent:5.1f}% ",
                 (f"({format_memory(gpu.memory_used_gb)}/{format_memory(gpu.memory_total_gb)})", "dim"),
                 (temp_str, "yellow" if gpu.temperature_c and gpu.temperature_c > 70 else "dim"),
-                (util_str, "dim"),
             ),
         )
 
@@ -228,6 +238,9 @@ class ResourceDisplay:
                 self.console.print(f"  • Average CPU: {avg.cpu_percent:.1f}%")
                 self.console.print(f"  • Average Memory: {avg.memory_percent:.1f}%")
                 for gpu in avg.gpus:
+                    self.console.print(
+                        f"  • Average GPU {gpu.index} Utilization: {gpu.utilization_percent:.1f}%"
+                    )
                     self.console.print(
                         f"  • Average GPU {gpu.index} Memory: {gpu.memory_percent:.1f}%"
                     )
