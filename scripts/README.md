@@ -133,19 +133,6 @@ uv run python scripts/analyze_embeddings.py --process-all --threshold 0.35
 ```
 See the [Embeddings Method Package README](src/podcast_conversations/embeddings_method/README.md) for details.
 
-### `analyze_keywords.py`
-
-Searches transcripts for a predefined list of keywords.
-
-**Usage:**
-```bash
-uv run python scripts/analyze_keywords.py \
-  --transcripts-dir outputs/transcripts_postprocessed \
-  --config config/keyword_analysis_config.yaml \
-  --format all
-```
-See the [Analysis Package README](src/podcast_conversations/analysis/README.md) for configuration options.
-
 ### `classify_utterances.py`
 
 Classifies each utterance in a transcript using multiple transformer-based models.
@@ -196,15 +183,18 @@ See the [LLM Annotation Package README](src/podcast_conversations/llm_annotation
 
 ### `run_speaker_labeling_pipeline.py`
 
-Replaces generic speaker IDs (`SPEAKER_00`) with actual speaker names using a 5-stage pipeline.
+Replaces generic speaker IDs (`SPEAKER_00`) with actual speaker names using a 6-stage pipeline.
 
 **Usage:**
 ```bash
-# Basic usage with heuristic classification
-uv run python scripts/run_speaker_labeling_pipeline.py --podcast "the_joe_rogan_experience"
+# Full pipeline from audio files
+uv run python scripts/run_speaker_labeling_pipeline.py --audio-dir outputs/downloads
+
+# Use pre-existing combined transcripts (skip stages 1-5)
+uv run python scripts/run_speaker_labeling_pipeline.py --use-existing-transcripts
 
 # With LLM-based role classification (requires OpenAI API key)
-uv run python scripts/run_speaker_labeling_pipeline.py --all --use-llm
+uv run python scripts/run_speaker_labeling_pipeline.py --audio-dir outputs/downloads --use-llm
 ```
 See the [Speaker Labeling Package README](src/podcast_conversations/speaker_labeling/README.md) for detailed configuration.
 
@@ -242,27 +232,6 @@ This script reads from classification outputs and generates Markdown reports in 
 ## Utility Scripts
 
 These scripts provide additional functionality for data management, diagnostics, and maintenance.
-
-### `download_rss_metadata.py`
-
-Downloads and caches RSS feed metadata for podcasts. This metadata is used by the speaker labeling pipeline to extract host/guest names.
-
-**Usage:**
-```bash
-uv run python scripts/download_rss_metadata.py \
-  --output-dir outputs/rss_metadata
-```
-
-### `download_missing_episodes.py`
-
-Downloads audio files for episodes that already have transcripts but are missing the original audio. Useful for dataset reconstruction.
-
-**Usage:**
-```bash
-uv run python scripts/download_missing_episodes.py \
-  --transcripts-dir outputs/transcripts \
-  --output-dir downloads
-```
 
 ### `generate_speaker_statistics.py`
 
@@ -313,7 +282,7 @@ Alternative full pipeline runner (see `run_full_corpus_pipeline.py` for the main
 
 | Category | Scripts |
 |----------|---------|
-| **Main Pipelines** | `run_full_corpus_pipeline.py`, `run_analysis_pipeline.py` |
-| **Individual Stages** | `transcribe_batch.py`, `diarize_batch.py`, `combine_*.py`, `analyze_*.py`, `classify_utterances.py` |
-| **Standalone Pipelines** | `annotate_with_llm.py`, `run_speaker_labeling_pipeline.py`, `extract_features.py`, `generate_document_labels.py` |
-| **Utilities** | `download_rss_metadata.py`, `download_missing_episodes.py`, `generate_speaker_statistics.py`, `check_classification_coverage.py`, `regenerate_classification_summary.py` |
+| **Main Pipelines** | `run_full_corpus_pipeline.py`, `run_analysis_pipeline.py`, `run_speaker_labeling_pipeline.py` |
+| **Individual Stages** | `transcribe_batch.py`, `diarize_batch.py`, `combine_*.py`, `analyze_embeddings.py`, `classify_utterances.py` |
+| **Standalone Pipelines** | `annotate_with_llm.py`, `extract_features.py`, `generate_document_labels.py` |
+| **Utilities** | `generate_speaker_statistics.py`, `check_classification_coverage.py`, `regenerate_classification_summary.py`, `download_and_process.py` |

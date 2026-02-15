@@ -62,56 +62,25 @@ keyword_analysis:
 
 ## Usage
 
-### Command Line
+### Via Analysis Pipeline (Recommended)
 
-#### Analyze All Transcripts in Directory
+Keyword analysis is integrated into the analysis pipeline. Use `run_analysis_pipeline.py`:
 
 ```bash
-# Process all transcripts with default config
-uv run python scripts/analyze_keywords.py \
+# Run keyword analysis with default settings
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts_with_speakers \
-  --config config/keyword_analysis_config.yaml
-```
+  --keywords-config config/keyword_analysis_config.yaml
 
-#### Analyze Specific Files
-
-```bash
-# Process specific transcript files
-uv run python scripts/analyze_keywords.py \
-  outputs/transcripts/the_ezra_klein_show/*.json
-```
-
-#### Export in Different Formats
-
-```bash
-# Export as JSON (default)
-uv run python scripts/analyze_keywords.py \
+# Export in different formats (json, csv, txt, or all)
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts \
-  --format json
+  --keywords-format all
 
-# Export as CSV
-uv run python scripts/analyze_keywords.py \
+# Run only keyword analysis (skip other stages)
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts \
-  --format csv
-
-# Export as TXT
-uv run python scripts/analyze_keywords.py \
-  --transcripts-dir outputs/transcripts \
-  --format txt
-
-# Export in all formats
-uv run python scripts/analyze_keywords.py \
-  --transcripts-dir outputs/transcripts \
-  --format all
-```
-
-#### Show Statistics
-
-```bash
-# Display summary statistics
-uv run python scripts/analyze_keywords.py \
-  --transcripts-dir outputs/transcripts \
-  --show-stats
+  --skip-features --skip-classification
 ```
 
 ### Python API
@@ -602,18 +571,19 @@ Compare keyword usage across different shows using summary report.
 
 ```bash
 # Process all shows with default settings
-uv run python scripts/analyze_keywords.py \
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts_with_speakers \
-  --config config/keyword_analysis_config.yaml
+  --keywords-config config/keyword_analysis_config.yaml \
+  --skip-features --skip-classification
 ```
 
 ### Export in All Formats
 
 ```bash
 # Generate JSON, CSV, and TXT for each episode
-uv run python scripts/analyze_keywords.py \
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts_with_speakers \
-  --format all
+  --keywords-format all
 ```
 
 ### Custom Keyword List
@@ -639,9 +609,9 @@ keyword_analysis:
 
 Then run:
 ```bash
-uv run python scripts/analyze_keywords.py \
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts \
-  --config config/keyword_analysis_config.yaml
+  --keywords-config config/keyword_analysis_config.yaml
 ```
 
 ### Programmatic Analysis
@@ -686,42 +656,30 @@ for keyword, count in sorted(keyword_counts.items(), key=lambda x: x[1], reverse
 
 ## Integration with Pipeline
 
-### Stage 6: Keyword Analysis
+### Via Analysis Pipeline
 
-Keyword analysis is stage 6 in the full pipeline:
+Keyword analysis is part of the analysis pipeline (`run_analysis_pipeline.py`):
 
 ```bash
-# Stage 1: Transcription
-uv run python scripts/transcribe_batch.py ...
+# Run full analysis pipeline (features + keywords + classification)
+uv run python scripts/run_analysis_pipeline.py \
+  --transcripts-dir outputs/transcripts_postprocessed
 
-# Stage 2: Diarization
-./scripts/diarize_all_podcasts.sh ...
-
-# Stage 3: Combine Transcripts with Speakers
-uv run python scripts/combine_transcripts_with_speakers.py ...
-
-# Stage 4: Combine Consecutive Speakers
-uv run python scripts/combine_consecutive_speakers.py ...
-
-# Stage 5: Embeddings
-uv run python scripts/analyze_embeddings.py
-
-# Stage 6: Keyword Analysis (THIS PACKAGE)
-uv run python scripts/analyze_keywords.py \
+# Run only keyword analysis
+uv run python scripts/run_analysis_pipeline.py \
   --transcripts-dir outputs/transcripts_postprocessed \
-  --config config/keyword_analysis_config.yaml
-
-# Stage 7: Classification
-uv run python scripts/classify_utterances.py ...
+  --skip-features --skip-classification
 ```
 
-### Independent Usage
+### Via Full Corpus Pipeline
 
-Keyword analysis can also run independently on any transcript files:
+Keyword analysis is also integrated into the full corpus pipeline:
+
 ```bash
-# Analyze raw transcripts (without speakers)
-uv run python scripts/analyze_keywords.py \
-  --transcripts-dir outputs/transcripts
+# Run full corpus pipeline (transcription through classification)
+uv run python scripts/run_full_corpus_pipeline.py \
+  --audio-dir outputs/downloads \
+  --keywords-config config/keyword_analysis_config.yaml
 ```
 
 ## Credits

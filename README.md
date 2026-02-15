@@ -796,7 +796,7 @@ uv run ruff format scripts/classify_utterances.py
 │   ├── extract_features.py              # Conversation feature extraction
 │   ├── annotate_with_llm.py             # LLM-based content annotation
 │   ├── generate_document_labels.py      # Document-level label aggregation
-│   └── download_rss_metadata.py         # RSS metadata for speaker labeling
+│   └── generate_speaker_statistics.py   # Speaker statistics generation
 │
 ├── config/                              # Configuration files (see config/README.md)
 │   ├── taxonomy.yml                     # Dehumanization taxonomy for embeddings

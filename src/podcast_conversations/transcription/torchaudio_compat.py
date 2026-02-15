@@ -7,8 +7,95 @@ Import this module BEFORE importing any modules that use pyannote.audio.
 """
 
 import logging
+import os
 
 logger = logging.getLogger(__name__)
+
+
+def setup_cuda_library_path():
+    """Setup CUDA library paths from nvidia python packages.
+    
+    PyTorch expects CUDA libraries to be in LD_LIBRARY_PATH or bundled.
+    When using nvidia-*-cu12 packages from PyPI, we need to add their
+    library directories to LD_LIBRARY_PATH before torch is imported.
+    
+    Also preloads cuDNN 8.x libraries for ctranslate2 compatibility
+    (ctranslate2 dynamically loads libcudnn_ops_infer.so.8).
+    """
+    try:
+        import ctypes
+        import site
+        from pathlib import Path
+        
+        nvidia_packages = [
+            "nvidia.cuda_runtime",
+            "nvidia.cublas",
+            "nvidia.cudnn",
+        ]
+        
+        lib_dirs = []
+        
+        for pkg_name in nvidia_packages:
+            try:
+                parts = pkg_name.split(".")
+                mod = __import__(pkg_name)
+                for part in parts[1:]:
+                    mod = getattr(mod, part)
+                
+                pkg_path = Path(mod.__file__).parent
+                
+                lib_candidates = [
+                    pkg_path / "lib",
+                    pkg_path,
+                ]
+                
+                for candidate in lib_candidates:
+                    if candidate.exists() and list(candidate.glob("*.so*")):
+                        lib_dirs.append(str(candidate))
+                        break
+                        
+            except (ImportError, AttributeError):
+                continue
+        
+        # search site-packages for cuDNN 8.x .so files from nvidia-cudnn-cu11.
+        # nvidia-cudnn-cu11 and nvidia-cudnn-cu12 both use the nvidia.cudnn
+        # namespace, so we scan for libcudnn_ops_infer.so.8 in all nvidia dirs.
+        site_dirs = site.getsitepackages() + [site.getusersitepackages()]
+        for site_dir in site_dirs:
+            site_path = Path(site_dir)
+            if not site_path.exists():
+                continue
+            for cudnn_lib in site_path.rglob("libcudnn_ops_infer.so.8*"):
+                lib_dir = str(cudnn_lib.parent)
+                if lib_dir not in lib_dirs:
+                    lib_dirs.append(lib_dir)
+                    # preload cuDNN 8 .so files so ctranslate2 can find them.
+                    for lib in sorted(cudnn_lib.parent.glob("libcudnn*.so.8*")):
+                        try:
+                            ctypes.cdll.LoadLibrary(str(lib))
+                            logger.debug(f"preloaded {lib.name}")
+                        except OSError:
+                            pass
+                break
+        
+        if lib_dirs:
+            current_ld_path = os.environ.get("LD_LIBRARY_PATH", "")
+            new_paths = ":".join(lib_dirs)
+            
+            if current_ld_path:
+                os.environ["LD_LIBRARY_PATH"] = f"{new_paths}:{current_ld_path}"
+            else:
+                os.environ["LD_LIBRARY_PATH"] = new_paths
+            
+            logger.info(f"added {len(lib_dirs)} nvidia library paths to LD_LIBRARY_PATH")
+            return True
+        else:
+            logger.debug("no nvidia cuda libraries found in python packages")
+            return False
+            
+    except Exception as e:
+        logger.debug(f"failed to setup cuda library path: {e}")
+        return False
 
 def apply_torchaudio_compat_shims():
     """Apply compatibility shims for torchaudio 2.1+ with older pyannote.audio."""
@@ -108,6 +195,7 @@ def apply_torch_weights_only_fix():
         logger.warning(f"failed to apply torch weights_only fix: {e}")
 
 
-# Apply shims immediately on import
+# Apply fixes immediately on import (before torch is imported)
+setup_cuda_library_path()  # must be first - sets up environment
 apply_torchaudio_compat_shims()
 apply_torch_weights_only_fix()

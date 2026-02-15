@@ -64,12 +64,19 @@ def get_gpu_info() -> list[GPUInfo]:
             for i in range(torch.cuda.device_count()):
                 props = torch.cuda.get_device_properties(i)
                 mem_total = props.total_memory / (1024**3)
-                mem_reserved = torch.cuda.memory_reserved(i) / (1024**3)
-                mem_allocated = torch.cuda.memory_allocated(i) / (1024**3)
 
-                # use reserved as "used" for better accuracy.
-                mem_used = mem_reserved
-                mem_free = mem_total - mem_used
+                # use mem_get_info for accurate device-level memory stats.
+                # torch.cuda.memory_reserved() only tracks pytorch's pool,
+                # missing ctranslate2, cuDNN, and CUDA context allocations.
+                try:
+                    mem_free_bytes, mem_total_bytes = torch.cuda.mem_get_info(i)
+                    mem_free = mem_free_bytes / (1024**3)
+                    mem_total = mem_total_bytes / (1024**3)
+                    mem_used = mem_total - mem_free
+                except Exception:
+                    mem_reserved = torch.cuda.memory_reserved(i) / (1024**3)
+                    mem_used = mem_reserved
+                    mem_free = mem_total - mem_used
 
                 gpus.append(
                     GPUInfo(

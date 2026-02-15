@@ -86,8 +86,9 @@ class TranscriptionPipeline:
             self.gpu_memory_gb = 0
             logger.info("using cpu for transcription")
 
-        # calculate optimal batch size.
+        # calculate initial batch size.
         self.batch_size = self.config.calculate_optimal_batch_size(self.gpu_memory_gb)
+        self._user_batch_size = self.config.batch_size  # None if auto.
         logger.info(f"batch size: {self.batch_size}")
 
     def _load_model(self) -> None:
@@ -138,6 +139,13 @@ class TranscriptionPipeline:
         import whisperx
 
         self._load_model()
+
+        # dynamically recalculate batch size based on current free VRAM.
+        if self._user_batch_size is None and self.device == "cuda":
+            new_batch_size = self.config.calculate_optimal_batch_size(self.gpu_memory_gb)
+            if new_batch_size != self.batch_size:
+                logger.info(f"adjusted batch size: {self.batch_size} -> {new_batch_size}")
+                self.batch_size = new_batch_size
 
         start_time = time.time()
         logger.info(f"transcribing: {audio_path.name}")
