@@ -85,10 +85,12 @@ keyword_analysis:
 
 ### Usage
 
+Keyword analysis is integrated into the analysis pipeline:
+
 ```bash
-uv run python scripts/analyze_keywords.py \
-  --config config/keyword_analysis_config.yaml \
-  --transcripts-dir outputs/transcripts_postprocessed
+uv run python scripts/run_analysis_pipeline.py \
+  --transcripts-dir outputs/transcripts_postprocessed \
+  --keywords-config config/keyword_analysis_config.yaml
 ```
 
 ---

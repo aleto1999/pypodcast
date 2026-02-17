@@ -526,7 +526,8 @@ The following features were intentionally excluded as they require data not avai
 - ❌ **Sentiment analysis graphs** - No sentiment data available
 - ❌ **Political orientation charts** - Not applicable
 - ❌ **Speaker profiles** - Data not present
-- ❌ **HTML/PNG/SVG export** - Kept terminal-only for simplicity
+
+> **Note**: SVG/JPG export IS implemented - press `s` on any visualization screen to save.
 
 ## Performance
 
