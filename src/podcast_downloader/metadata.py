@@ -18,6 +18,7 @@ class EpisodeMetadata(BaseModel):
     title: str
     audio_url: str
     file_path: str
+    episode_date: datetime
     downloaded_at: datetime = Field(default_factory=datetime.now)
     file_size: int = 0
     duration: int | None = None
@@ -93,6 +94,7 @@ class MetadataStore:
             file_path=str(file_path),
             file_size=file_size,
             duration=episode.duration,
+            episode_date=episode.published
         )
         metadata.last_updated = datetime.now()
 
