@@ -48,7 +48,7 @@ def filter_episodes(
         ]
 
     # random sample or take newest.
-    random.seed(42)
+    # random.seed(42)
     if episode_filter.random_sample:
         count = min(episode_filter.random_sample, len(filtered))
         filtered = random.sample(filtered, count)
