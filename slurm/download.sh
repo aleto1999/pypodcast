@@ -12,4 +12,4 @@ uv sync
 # uv pip install flash-attn --no-build-isolation
 
 
-uv run python -m podcast_downloader download "The Daily" --max-episodes 10
+# uv run python -m podcast_downloader download "The Daily" --max-episodes 10
