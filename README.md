@@ -219,7 +219,7 @@ Generate word-level transcripts from audio files using WhisperX:
 
 ```bash
 uv run python scripts/transcribe_batch.py \
-    --audio-dir downloads/the_daily \
+    --audio-dir outputs/downloads/the_daily \
     --output-dir outputs/transcripts \
     --model large-v3 \
     --device cuda
