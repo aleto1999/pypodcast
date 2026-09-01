@@ -59,10 +59,6 @@ from src.podcast_conversations.transcription import (
 from utils.rich_utils import console, setup_logging
 
 
-import os
-os.add_dll_directory("/curc/sw/ffmpeg/4.4/bin/ffmpeg")
-
-
 # supported audio formats.
 AUDIO_EXTENSIONS = {".wav", ".mp3", ".flac", ".ogg", ".m4a", ".wma", ".aac", ".mp4"}
 
