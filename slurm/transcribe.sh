@@ -22,6 +22,7 @@ module load ffmpeg/4.4
 export HF_HOME="$SLURM_SCRATCH/cache/HF"
 export TORCH_HOME=/scratch/alpine/alle5715/.cache
 export MPLCONFIGDIR=/scratch/alpine/alle5715/.cache
+export PYTHONPATH=/scratch/alpine/alle5715/pypodcast
 
 uv sync --extra gpu
 
