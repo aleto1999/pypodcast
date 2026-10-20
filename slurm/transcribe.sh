@@ -24,3 +24,9 @@ export TORCH_HOME=/scratch/alpine/alle5715/.cache
 export MPLCONFIGDIR=/scratch/alpine/alle5715/.cache
 
 uv sync --extra gpu
+
+
+uv run scripts/transcribe_batch.py \
+  --audio-dir /pl/active/blast-data/corpora/podcasts_selection/candace/audio \
+  --output-dir outputs/transcripts/candace \
+  --language en
