@@ -2,11 +2,12 @@
 # Add new channels here; submit_weekly.sh processes all of them.
 
 base_paths:
-  # Root for audio downloads on PetaLibrary.
-  audio_root: /pl/active/blast-data/corpora/podcasts_selection
-  # Root for outputs — transcripts and diarizations live under here.
-  # Using scratch for outputs since PetaLibrary is for raw data.
-  outputs_root: /scratch/alpine/alle5715/pypodcast/outputs
+  # Raw audio downloads go to scratch (fast I/O, temporary).
+  # Audio files are deleted after diarization to save space.
+  audio_root: /scratch/alpine/alle5715/pypodcast/downloads
+  # Final outputs (transcripts + diarizations) go to PetaLibrary under a user-namespaced
+  # subdirectory to avoid conflicts with other lab members' data.
+  outputs_root: /pl/active/blast-data/corpora/podcasts_selection/alle5715
 
 channels:
   - slug: candace

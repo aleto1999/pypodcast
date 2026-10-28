@@ -60,6 +60,31 @@ uv sync --extra gpu
     --workers         20 \
     --compile-mode    max-autotune
 
+
+# ── Cleanup: remove audio files that have been successfully diarized ──────
+echo "================================================"
+echo "Cleaning up audio files with completed diarizations…"
+
+deleted=0
+skipped=0
+for audio_file in "$AUDIO_DIR"/*.mp3 "$AUDIO_DIR"/*.m4a; do
+    [[ -e "$audio_file" ]] || continue  # skip glob non-matches
+    base=$(basename "$audio_file")
+    base_noext="${base%.*}"
+    rttm_file="$DIARIZATIONS_DIR/${base_noext}.rttm"
+    if [[ -f "$rttm_file" ]]; then
+        rm "$audio_file"
+        echo "  deleted: $base"
+        ((deleted++)) || true
+    else
+        echo "  kept (no RTTM found): $base"
+        ((skipped++)) || true
+    fi
+done
+
+echo "Deleted $deleted audio file(s), kept $skipped (no matching RTTM)."
+
 echo "================================================"
 echo "Diarization complete: $(date)"
 echo "================================================"
+

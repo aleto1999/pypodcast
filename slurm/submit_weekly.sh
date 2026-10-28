@@ -7,10 +7,10 @@
 # transcription job finishing successfully).
 #
 # Usage:
-#   bash scripts/submit_weekly.sh [--dry-run]
+#   bash slurm/submit_weekly.sh [--dry-run]
 #
-# Cron entry (every Monday at 2:00am Mountain):
-#   0 2 * * 1 cd /scratch/alpine/alle5715/pypodcast && bash scripts/submit_weekly.sh >> logs/weekly_cron.log 2>&1
+# Cron entry (every Monday at 2:00am Mountain) — cron only runs sbatch, not the script directly:
+#   0 2 * * 1 cd /scratch/alpine/alle5715/pypodcast && sbatch slurm/submit_weekly.sh
 #
 # Prerequisites on RC:
 #   - HF_TOKEN env var set (add to ~/.bashrc on RC):
@@ -18,7 +18,22 @@
 #   - Project cloned to /scratch/alpine/alle5715/pypodcast
 #   - uv available (module load uv/0.8.15)
 
-set -euo pipefail
+
+#SBATCH --account=blanca-curc-gpu
+#SBATCH --qos=blanca-curc-gpu
+#SBATCH --partition=blanca-curc-gpu
+
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --mem=8G
+#SBATCH --time=2:00:00
+
+#SBATCH --job-name=weekly_sync
+#SBATCH --output=logs/weekly_sync_%j.log
+#SBATCH --mail-user=alle5715@colorado.edu
+#SBATCH --mail-type=FAIL
+
+set -euo pipefail  # exit on error (-e), undefined vars (-u), pipe failures (-o pipefail)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -67,7 +82,7 @@ for ch in cfg['channels']:
     print(f\"{ch['slug']}|{ch['feed_url']}|{ch.get('language','en')}\")
 ")
 
-while IFS='|' read -r SLUG FEED_URL LANGUAGE; do
+while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|language" line into three variables
     echo "──────────────────────────────────────"
     echo "Channel: $SLUG ($FEED_URL)"
 
