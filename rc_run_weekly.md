@@ -15,7 +15,7 @@ slurm/diarize_channel.sh      — SLURM job: pyannote diarization + audio cleanu
 
 | Data | Location |
 |---|---|
-| Raw audio (temporary) | `/scratch/alpine/alle5715/pypodcast/downloads/<slug>/audio` |
+| Raw audio (temporary) | `/projects/alle5715/pypodcast/downloads/<slug>/audio` |
 | Transcripts (permanent) | `/pl/active/blast-data/corpora/podcasts_selection/<slug>/transcripts` |
 | Diarizations (permanent) | `/pl/active/blast-data/corpora/podcasts_selection/<slug>/diarizations` |
 
@@ -33,13 +33,13 @@ source ~/.bashrc
 **2. Make sure the project is cloned to scratch:**
 
 ```bash
-ls /scratch/alpine/alle5715/pypodcast
+ls /projects/alle5715/pypodcast
 ```
 
 **3. Create the log directory:**
 
 ```bash
-mkdir -p /scratch/alpine/alle5715/pypodcast/logs
+mkdir -p /projects/alle5715/pypodcast/logs
 ```
 
 **4. Do a dry run** to verify the config and paths without downloading or submitting anything.
@@ -53,7 +53,7 @@ sinteractive --partition=blanca-curc-gpu --account=blanca-curc-gpu --qos=blanca-
 Then from inside the interactive job:
 
 ```bash
-cd /scratch/alpine/alle5715/pypodcast
+cd /projects/alle5715/pypodcast
 bash slurm/submit_weekly.sh --dry-run
 ```
 
@@ -68,7 +68,7 @@ crontab -e
 Add this line (runs every Monday at 2:00am Mountain time). The cron entry only calls `sbatch` — which is allowed on a login node — and the actual work runs inside a compute node:
 
 ```
-0 2 * * 1 cd /scratch/alpine/alle5715/pypodcast && sbatch slurm/submit_weekly.sh
+0 2 * * 1 cd /projects/alle5715/pypodcast && sbatch slurm/submit_weekly.sh
 ```
 
 Verify it was saved:
@@ -130,7 +130,7 @@ The `slug` is used as the directory name under both the scratch downloads path a
 To trigger a sync outside the cron schedule, submit it as a job from the login node:
 
 ```bash
-cd /scratch/alpine/alle5715/pypodcast
+cd /projects/alle5715/pypodcast
 sbatch slurm/submit_weekly.sh
 ```
 
@@ -138,7 +138,7 @@ To reprocess a specific channel from scratch (bypassing skip logic), submit the 
 
 ```bash
 # transcription only, force reprocess
-sbatch --export="CHANNEL=candace,AUDIO_DIR=/scratch/alpine/alle5715/pypodcast/downloads/candace/audio,TRANSCRIPTS_DIR=/pl/active/blast-data/corpora/podcasts_selection/candace/transcripts,LANGUAGE=en" \
+sbatch --export="CHANNEL=candace,AUDIO_DIR=/projects/alle5715/pypodcast/downloads/candace/audio,TRANSCRIPTS_DIR=/pl/active/blast-data/corpora/podcasts_selection/candace/transcripts,LANGUAGE=en" \
     slurm/transcribe_channel.sh
 ```
 

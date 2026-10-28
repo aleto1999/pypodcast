@@ -28,7 +28,7 @@ echo "Started:          $(date)"
 echo "Node:             $SLURMD_NODENAME"
 echo "================================================"
 
-PROJECT_ROOT=/scratch/alpine/alle5715/pypodcast
+PROJECT_ROOT=/projects/alle5715/pypodcast
 
 module load cuda/12.1.1
 module load uv/0.8.15

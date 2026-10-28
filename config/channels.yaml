@@ -4,7 +4,7 @@
 base_paths:
   # Raw audio downloads go to scratch (fast I/O, temporary).
   # Audio files are deleted after diarization to save space.
-  audio_root: /scratch/alpine/alle5715/pypodcast/downloads
+  audio_root: /projects/alle5715/pypodcast/downloads
   # Final outputs (transcripts + diarizations) go to PetaLibrary under a user-namespaced
   # subdirectory to avoid conflicts with other lab members' data.
   outputs_root: /pl/active/blast-data/corpora/podcasts_selection/alle5715

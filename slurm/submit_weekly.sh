@@ -10,12 +10,12 @@
 #   bash slurm/submit_weekly.sh [--dry-run]
 #
 # Cron entry (every Monday at 2:00am Mountain) — cron only runs sbatch, not the script directly:
-#   0 2 * * 1 cd /scratch/alpine/alle5715/pypodcast && sbatch slurm/submit_weekly.sh
+#   0 2 * * 1 cd /projects/alle5715/pypodcast && sbatch slurm/submit_weekly.sh
 #
 # Prerequisites on RC:
 #   - HF_TOKEN env var set (add to ~/.bashrc on RC):
 #       export HF_TOKEN="your_huggingface_token"
-#   - Project cloned to /scratch/alpine/alle5715/pypodcast
+#   - Project cloned to /projects/alle5715/pypodcast
 #   - uv available (module load uv/0.8.15)
 
 
