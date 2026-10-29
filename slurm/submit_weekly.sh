@@ -35,8 +35,9 @@
 
 set -euo pipefail  # exit on error (-e), undefined vars (-u), pipe failures (-o pipefail)
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+# BASH_SOURCE[0] resolves to /var/spool/slurmd/logs when run via sbatch on CURC,
+# so derive PROJECT_ROOT from the hardcoded path instead.
+PROJECT_ROOT=/projects/alle5715/pypodcast
 LOGS_DIR="$PROJECT_ROOT/logs"
 CONFIG_FILE="$PROJECT_ROOT/config/channels.yaml"
 
