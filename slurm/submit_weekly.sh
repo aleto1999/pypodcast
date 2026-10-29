@@ -112,37 +112,37 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
         fi
     fi
 
-    # ── 2. Submit transcription job ───────────────────────────────
-    TRANSCRIBE_ARGS=(
-        --parsable
-        --export "CHANNEL=$SLUG,AUDIO_DIR=$AUDIO_DIR,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,LANGUAGE=$LANGUAGE"
-        --job-name "transcribe_${SLUG}"
-        --output "$LOGS_DIR/transcribe_${SLUG}_%j.log"
-    )
+    # # ── 2. Submit transcription job ───────────────────────────────
+    # TRANSCRIBE_ARGS=(
+    #     --parsable
+    #     --export "CHANNEL=$SLUG,AUDIO_DIR=$AUDIO_DIR,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,LANGUAGE=$LANGUAGE"
+    #     --job-name "transcribe_${SLUG}"
+    #     --output "$LOGS_DIR/transcribe_${SLUG}_%j.log"
+    # )
 
-    if [[ "$DRY_RUN" == true ]]; then
-        echo "  [DRY RUN] sbatch ${TRANSCRIBE_ARGS[*]} slurm/transcribe_channel.sh"
-        TRANSCRIBE_JID=99999
-    else
-        TRANSCRIBE_JID=$(sbatch "${TRANSCRIBE_ARGS[@]}" "$PROJECT_ROOT/slurm/transcribe_channel.sh")
-        echo "  ✓ Transcription submitted: job $TRANSCRIBE_JID"
-    fi
+    # if [[ "$DRY_RUN" == true ]]; then
+    #     echo "  [DRY RUN] sbatch ${TRANSCRIBE_ARGS[*]} slurm/transcribe_channel.sh"
+    #     TRANSCRIBE_JID=99999
+    # else
+    #     TRANSCRIBE_JID=$(sbatch "${TRANSCRIBE_ARGS[@]}" "$PROJECT_ROOT/slurm/transcribe_channel.sh")
+    #     echo "  ✓ Transcription submitted: job $TRANSCRIBE_JID"
+    # fi
 
-    # ── 3. Submit diarization job (waits for transcription) ───────
-    DIARIZE_ARGS=(
-        --parsable
-        --dependency "afterok:$TRANSCRIBE_JID"
-        --export "CHANNEL=$SLUG,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,AUDIO_DIR=$AUDIO_DIR,DIARIZATIONS_DIR=$DIARIZATIONS_DIR"
-        --job-name "diarize_${SLUG}"
-        --output "$LOGS_DIR/diarize_${SLUG}_%j.log"
-    )
+    # # ── 3. Submit diarization job (waits for transcription) ───────
+    # DIARIZE_ARGS=(
+    #     --parsable
+    #     --dependency "afterok:$TRANSCRIBE_JID"
+    #     --export "CHANNEL=$SLUG,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,AUDIO_DIR=$AUDIO_DIR,DIARIZATIONS_DIR=$DIARIZATIONS_DIR"
+    #     --job-name "diarize_${SLUG}"
+    #     --output "$LOGS_DIR/diarize_${SLUG}_%j.log"
+    # )
 
-    if [[ "$DRY_RUN" == true ]]; then
-        echo "  [DRY RUN] sbatch ${DIARIZE_ARGS[*]} slurm/diarize_channel.sh"
-    else
-        DIARIZE_JID=$(sbatch "${DIARIZE_ARGS[@]}" "$PROJECT_ROOT/slurm/diarize_channel.sh")
-        echo "  ✓ Diarization submitted: job $DIARIZE_JID (waits on $TRANSCRIBE_JID)"
-    fi
+    # if [[ "$DRY_RUN" == true ]]; then
+    #     echo "  [DRY RUN] sbatch ${DIARIZE_ARGS[*]} slurm/diarize_channel.sh"
+    # else
+    #     DIARIZE_JID=$(sbatch "${DIARIZE_ARGS[@]}" "$PROJECT_ROOT/slurm/diarize_channel.sh")
+    #     echo "  ✓ Diarization submitted: job $DIARIZE_JID (waits on $TRANSCRIBE_JID)"
+    # fi
 
     echo ""
 done <<< "$CHANNELS"
