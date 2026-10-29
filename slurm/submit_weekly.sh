@@ -89,8 +89,8 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     echo "Channel: $SLUG ($FEED_URL)"
 
     AUDIO_DIR="$AUDIO_ROOT/$SLUG/audio"
-    TRANSCRIPTS_DIR="$OUTPUTS_ROOT/transcripts/$SLUG"
-    DIARIZATIONS_DIR="$OUTPUTS_ROOT/diarizations/$SLUG"
+    TRANSCRIPTS_DIR="$OUTPUTS_ROOT/$SLUG/transcripts"
+    DIARIZATIONS_DIR="$OUTPUTS_ROOT/$SLUG/diarizations"
 
     CHANNEL_LOGS_DIR="$LOGS_DIR/$SLUG"
     mkdir -p "$AUDIO_DIR" "$TRANSCRIPTS_DIR" "$DIARIZATIONS_DIR" "$CHANNEL_LOGS_DIR"
