@@ -67,20 +67,23 @@ echo "Cleaning up audio files with completed diarizations…"
 
 deleted=0
 skipped=0
-for audio_file in "$AUDIO_DIR"/*.mp3 "$AUDIO_DIR"/*.m4a; do
-    [[ -e "$audio_file" ]] || continue  # skip glob non-matches
+# Audio files sit one level below AUDIO_DIR in a subdir podcast-dl creates
+# (e.g. AUDIO_DIR/candace/episode.mp3). RTTMs mirror that subdir under
+# DIARIZATIONS_DIR (e.g. DIARIZATIONS_DIR/candace/episode.rttm).
+while IFS= read -r -d '' audio_file; do
     base=$(basename "$audio_file")
     base_noext="${base%.*}"
-    rttm_file="$DIARIZATIONS_DIR/${base_noext}.rttm"
+    subdir=$(basename "$(dirname "$audio_file")")
+    rttm_file="$DIARIZATIONS_DIR/$subdir/${base_noext}.rttm"
     if [[ -f "$rttm_file" ]]; then
         rm "$audio_file"
-        echo "  deleted: $base"
+        echo "  deleted: $subdir/$base"
         ((deleted++)) || true
     else
-        echo "  kept (no RTTM found): $base"
+        echo "  kept (no RTTM found): $subdir/$base"
         ((skipped++)) || true
     fi
-done
+done < <(find "$AUDIO_DIR" -maxdepth 2 \( -name "*.mp3" -o -name "*.m4a" \) -print0)
 
 echo "Deleted $deleted audio file(s), kept $skipped (no matching RTTM)."
 
