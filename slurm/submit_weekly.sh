@@ -95,25 +95,25 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     CHANNEL_LOGS_DIR="$LOGS_DIR/$SLUG"
     mkdir -p "$AUDIO_DIR" "$TRANSCRIPTS_DIR" "$DIARIZATIONS_DIR" "$CHANNEL_LOGS_DIR"
 
-    # # ── 1. Download new episodes ──────────────────────────────────
-    # DOWNLOAD_CMD=(
-    #     uv run podcast-dl download
-    #     --feed-url "$FEED_URL"
-    #     --output-dir "$AUDIO_DIR"
-    #     --start-date "$START_DATE"
-    #     --skip-existing
-    #     --no-confirm
-    # )
+    # ── 1. Download new episodes ──────────────────────────────────
+    DOWNLOAD_CMD=(
+        uv run podcast-dl download
+        --feed-url "$FEED_URL"
+        --output-dir "$AUDIO_DIR"
+        --start-date "$START_DATE"
+        --skip-existing
+        --no-confirm
+    )
 
-    # if [[ "$DRY_RUN" == true ]]; then
-    #     echo "  [DRY RUN] ${DOWNLOAD_CMD[*]}"
-    # else
-    #     echo "  Downloading…"
-    #     if ! "${DOWNLOAD_CMD[@]}"; then
-    #         echo "  ⚠️  Download failed for $SLUG — skipping GPU jobs."
-    #         continue
-    #     fi
-    # fi
+    if [[ "$DRY_RUN" == true ]]; then
+        echo "  [DRY RUN] ${DOWNLOAD_CMD[*]}"
+    else
+        echo "  Downloading…"
+        if ! "${DOWNLOAD_CMD[@]}"; then
+            echo "  ⚠️  Download failed for $SLUG — skipping GPU jobs."
+            continue
+        fi
+    fi
 
     # ── 2. Submit transcription job ───────────────────────────────
     TRANSCRIBE_ARGS=(
