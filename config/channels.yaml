@@ -4,7 +4,7 @@
 base_paths:
   # Raw audio downloads go to the project outputs dir on scratch (temporary).
   # Audio files are deleted after diarization to save space.
-  audio_root: /projects/alle5715/pypodcast/outputs
+  audio_root: /projects/alle5715/pypodcast/outputs/audio
   # Final outputs (transcripts + diarizations) go to PetaLibrary under a user-namespaced
   # subdirectory to avoid conflicts with other lab members' data.
   outputs_root: /pl/active/blast-data/corpora/podcasts_selection/alle5715

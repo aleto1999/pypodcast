@@ -88,9 +88,9 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     echo "──────────────────────────────────────"
     echo "Channel: $SLUG ($FEED_URL)"
 
-    AUDIO_DIR="$AUDIO_ROOT/$SLUG/audio"
-    TRANSCRIPTS_DIR="$OUTPUTS_ROOT/$SLUG/transcripts"
-    DIARIZATIONS_DIR="$OUTPUTS_ROOT/$SLUG/diarizations"
+    AUDIO_DIR="$AUDIO_ROOT/$SLUG"
+    TRANSCRIPTS_DIR="$OUTPUTS_ROOT/transcripts/$SLUG"
+    DIARIZATIONS_DIR="$OUTPUTS_ROOT/diarizations/$SLUG"
 
     CHANNEL_LOGS_DIR="$LOGS_DIR/$SLUG"
     mkdir -p "$AUDIO_DIR" "$TRANSCRIPTS_DIR" "$DIARIZATIONS_DIR" "$CHANNEL_LOGS_DIR"
@@ -99,7 +99,7 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     DOWNLOAD_CMD=(
         uv run podcast-dl download
         --feed-url "$FEED_URL"
-        --output-dir "$AUDIO_DIR"
+        --output-dir "$AUDIO_ROOT"
         --start-date "$START_DATE"
         --skip-existing
         --no-confirm
