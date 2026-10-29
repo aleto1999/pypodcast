@@ -93,41 +93,41 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
 
     mkdir -p "$AUDIO_DIR" "$TRANSCRIPTS_DIR" "$DIARIZATIONS_DIR"
 
-    # ── 1. Download new episodes ──────────────────────────────────
-    DOWNLOAD_CMD=(
-        uv run podcast-dl download
-        --feed-url "$FEED_URL"
-        --output-dir "$AUDIO_DIR"
-        --start-date "$START_DATE"
-        --skip-existing
-        --no-confirm
-    )
-
-    if [[ "$DRY_RUN" == true ]]; then
-        echo "  [DRY RUN] ${DOWNLOAD_CMD[*]}"
-    else
-        echo "  Downloading…"
-        if ! "${DOWNLOAD_CMD[@]}"; then
-            echo "  ⚠️  Download failed for $SLUG — skipping GPU jobs."
-            continue
-        fi
-    fi
-
-    # # ── 2. Submit transcription job ───────────────────────────────
-    # TRANSCRIBE_ARGS=(
-    #     --parsable
-    #     --export "CHANNEL=$SLUG,AUDIO_DIR=$AUDIO_DIR,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,LANGUAGE=$LANGUAGE"
-    #     --job-name "transcribe_${SLUG}"
-    #     --output "$LOGS_DIR/transcribe_${SLUG}_%j.log"
+    # # ── 1. Download new episodes ──────────────────────────────────
+    # DOWNLOAD_CMD=(
+    #     uv run podcast-dl download
+    #     --feed-url "$FEED_URL"
+    #     --output-dir "$AUDIO_DIR"
+    #     --start-date "$START_DATE"
+    #     --skip-existing
+    #     --no-confirm
     # )
 
     # if [[ "$DRY_RUN" == true ]]; then
-    #     echo "  [DRY RUN] sbatch ${TRANSCRIBE_ARGS[*]} slurm/transcribe_channel.sh"
-    #     TRANSCRIBE_JID=99999
+    #     echo "  [DRY RUN] ${DOWNLOAD_CMD[*]}"
     # else
-    #     TRANSCRIBE_JID=$(sbatch "${TRANSCRIBE_ARGS[@]}" "$PROJECT_ROOT/slurm/transcribe_channel.sh")
-    #     echo "  ✓ Transcription submitted: job $TRANSCRIBE_JID"
+    #     echo "  Downloading…"
+    #     if ! "${DOWNLOAD_CMD[@]}"; then
+    #         echo "  ⚠️  Download failed for $SLUG — skipping GPU jobs."
+    #         continue
+    #     fi
     # fi
+
+    # ── 2. Submit transcription job ───────────────────────────────
+    TRANSCRIBE_ARGS=(
+        --parsable
+        --export "CHANNEL=$SLUG,AUDIO_DIR=$AUDIO_DIR,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,LANGUAGE=$LANGUAGE"
+        --job-name "transcribe_${SLUG}"
+        --output "$LOGS_DIR/transcribe_${SLUG}_%j.log"
+    )
+
+    if [[ "$DRY_RUN" == true ]]; then
+        echo "  [DRY RUN] sbatch ${TRANSCRIBE_ARGS[*]} slurm/transcribe_channel.sh"
+        TRANSCRIBE_JID=99999
+    else
+        TRANSCRIBE_JID=$(sbatch "${TRANSCRIBE_ARGS[@]}" "$PROJECT_ROOT/slurm/transcribe_channel.sh")
+        echo "  ✓ Transcription submitted: job $TRANSCRIBE_JID"
+    fi
 
     # # ── 3. Submit diarization job (waits for transcription) ───────
     # DIARIZE_ARGS=(

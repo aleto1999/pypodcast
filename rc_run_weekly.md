@@ -15,7 +15,7 @@ slurm/diarize_channel.sh      — SLURM job: pyannote diarization + audio cleanu
 
 | Data | Location |
 |---|---|
-| Raw audio (temporary) | `/projects/alle5715/pypodcast/downloads/<slug>/audio` |
+| Raw audio (temporary) | `/projects/alle5715/pypodcast/outputs/downloads/<slug>/audio` |
 | Transcripts (permanent) | `/pl/active/blast-data/corpora/podcasts_selection/<slug>/transcripts` |
 | Diarizations (permanent) | `/pl/active/blast-data/corpora/podcasts_selection/<slug>/diarizations` |
 
@@ -138,7 +138,7 @@ To reprocess a specific channel from scratch (bypassing skip logic), submit the 
 
 ```bash
 # transcription only, force reprocess
-sbatch --export="CHANNEL=candace,AUDIO_DIR=/projects/alle5715/pypodcast/downloads/candace/audio,TRANSCRIPTS_DIR=/pl/active/blast-data/corpora/podcasts_selection/candace/transcripts,LANGUAGE=en" \
+sbatch --export="CHANNEL=candace,AUDIO_DIR=/projects/alle5715/pypodcast/outputs/downloads/candace/audio,TRANSCRIPTS_DIR=/pl/active/blast-data/corpora/podcasts_selection/candace/transcripts,LANGUAGE=en" \
     slurm/transcribe_channel.sh
 ```
 
