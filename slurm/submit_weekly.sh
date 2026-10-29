@@ -55,9 +55,18 @@ echo "============================================================"
 module load uv/0.8.15 2>/dev/null || true
 module load ffmpeg/4.4 2>/dev/null || true
 
-# lookback 8 days so a late run never misses an episode.
-START_DATE=$(date -d '8 days ago' '+%Y-%m-%d')
-echo "Downloading episodes published since: $START_DATE"
+# FULL_SYNC=true  → download every episode in the RSS feed (no date filter).
+# FULL_SYNC=false → only fetch the last 8 days (normal weekly mode).
+FULL_SYNC=${FULL_SYNC:-false}
+
+if [[ "$FULL_SYNC" == true ]]; then
+    echo "Mode: FULL SYNC (all episodes in RSS feed)"
+    START_DATE_ARGS=()
+else
+    START_DATE=$(date -d '8 days ago' '+%Y-%m-%d')
+    echo "Mode: incremental (episodes since $START_DATE)"
+    START_DATE_ARGS=(--start-date "$START_DATE")
+fi
 echo ""
 
 # read config using python (available via uv).
@@ -88,7 +97,7 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     echo "──────────────────────────────────────"
     echo "Channel: $SLUG ($FEED_URL)"
 
-    AUDIO_DIR="$AUDIO_ROOT/$SLUG"
+    AUDIO_DIR="$AUDIO_ROOT/$SLUG/audio"
     TRANSCRIPTS_DIR="$OUTPUTS_ROOT/transcripts/$SLUG"
     DIARIZATIONS_DIR="$OUTPUTS_ROOT/diarizations/$SLUG"
 
@@ -99,8 +108,8 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     DOWNLOAD_CMD=(
         uv run podcast-dl download
         --feed-url "$FEED_URL"
-        --output-dir "$AUDIO_ROOT"
-        --start-date "$START_DATE"
+        --output-dir "$AUDIO_DIR"
+        "${START_DATE_ARGS[@]+"${START_DATE_ARGS[@]}"}"
         --skip-existing
         --no-confirm
     )
