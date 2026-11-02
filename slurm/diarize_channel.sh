@@ -53,9 +53,9 @@ cd "$PROJECT_ROOT"
 uv sync --extra gpu
 
 ./scripts/diarize_all_podcasts.sh \
-    --transcripts-root "$TRANSCRIPTS_DIR" \
+    --transcripts-root "$TRANSCRIPTS_DIR/$CHANNEL" \
     --audio-base-dir  "$AUDIO_DIR" \
-    --output-dir      "$DIARIZATIONS_DIR" \
+    --output-dir      "$DIARIZATIONS_DIR/$CHANNEL" \
     --hf-token        "$HF_TOKEN" \
     --workers         20 \
     --compile-mode    max-autotune
