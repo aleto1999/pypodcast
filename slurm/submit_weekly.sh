@@ -63,7 +63,7 @@ if [[ "$FULL_SYNC" == true ]]; then
     echo "Mode: FULL SYNC (all episodes in RSS feed)"
     START_DATE_ARGS=()
 else
-    START_DATE=$(date -d '8 days ago' '+%Y-%m-%d')
+    START_DATE=$(date -d '15 days ago' '+%Y-%m-%d')
     echo "Mode: incremental (episodes since $START_DATE)"
     START_DATE_ARGS=(--start-date "$START_DATE")
 fi
