@@ -229,6 +229,7 @@ def cli(ctx: click.Context, verbose: bool, debug: bool, log_file: Optional[str])
 @click.option("--output-dir", "-o", type=click.Path(), default="outputs/downloads", help="output directory")
 @click.option("--transcripts-dir", type=click.Path(), default="outputs/transcripts", help="transcripts output directory")
 @click.option("--skip-existing/--overwrite", default=True, help="skip already downloaded")
+@click.option("--no-subdir", is_flag=True, default=False, help="save files directly in output-dir without a podcast-named subdirectory")
 @click.option("--concurrent", "-c", type=int, default=4, help="concurrent downloads")
 @click.option("--parallel", "-p", is_flag=True, help="enable parallel processing (same as default)")
 @click.option("--no-confirm", "-y", is_flag=True, help="skip interactive selection, use best match")
@@ -249,6 +250,7 @@ def download(
     output_dir: str,
     transcripts_dir: str,
     skip_existing: bool,
+    no_subdir: bool,
     concurrent: int,
     parallel: bool,
     no_confirm: bool,
@@ -295,6 +297,7 @@ def download(
         output_dir=Path(output_dir),
         transcripts_dir=Path(transcripts_dir),
         skip_existing=skip_existing,
+        use_podcast_subdir=not no_subdir,
         max_concurrent_downloads=concurrent,
     )
 

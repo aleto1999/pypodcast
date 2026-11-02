@@ -24,7 +24,7 @@
 set -euo pipefail
 
 echo "================================================"
-echo "Diarization job: $CHANNEL"
+echo "Diarization job:  $CHANNEL"
 echo "Transcripts dir:  $TRANSCRIPTS_DIR"
 echo "Audio dir:        $AUDIO_DIR"
 echo "Diarizations dir: $DIARIZATIONS_DIR"

@@ -43,6 +43,7 @@ class DownloadConfig(BaseModel):
 
     # file handling.
     skip_existing: bool = Field(default=True, description="skip already downloaded files")
+    use_podcast_subdir: bool = Field(default=True, description="create a subdirectory named after the podcast inside output_dir")
     audio_format: Literal["mp3", "m4a", "wav", "ogg", "flac"] = Field(default="mp3")
     validate_audio: bool = Field(default=True, description="validate downloaded audio files")
 

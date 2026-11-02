@@ -344,10 +344,10 @@ async def download_podcast(
         return stats, results
 
     # create output directories for both audio files and transcripts.
-    audio_dir = config.output_dir / podcast.safe_dirname
+    audio_dir = config.output_dir / podcast.safe_dirname if config.use_podcast_subdir else config.output_dir
     audio_dir.mkdir(parents=True, exist_ok=True)
-    
-    transcripts_dir = config.transcripts_dir / podcast.safe_dirname
+
+    transcripts_dir = config.transcripts_dir / podcast.safe_dirname if config.use_podcast_subdir else config.transcripts_dir
     transcripts_dir.mkdir(parents=True, exist_ok=True)
 
     # setup progress tracking.
