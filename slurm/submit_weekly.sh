@@ -55,9 +55,9 @@ echo "============================================================"
 module load uv/0.8.15 2>/dev/null || true
 module load ffmpeg/4.4 2>/dev/null || true
 
-# FULL_SYNC=true  → download every episode in the RSS feed (no date filter).
-# FULL_SYNC=false → only fetch the last 8 days (normal weekly mode).
-FULL_SYNC=${FULL_SYNC:-false}
+# Set to true to download every episode in the RSS feed (no date filter).
+# Set to false for normal weekly mode (last 8 days only).
+FULL_SYNC=true
 
 if [[ "$FULL_SYNC" == true ]]; then
     echo "Mode: FULL SYNC (all episodes in RSS feed)"

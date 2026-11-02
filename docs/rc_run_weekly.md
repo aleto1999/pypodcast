@@ -138,7 +138,8 @@ sbatch slurm/submit_weekly.sh
 To download and process **every episode in the RSS feed** (not just the last 8 days), set `FULL_SYNC=true`:
 
 ```bash
-FULL_SYNC=true sbatch slurm/submit_weekly.sh
+# Edit submit_weekly.sh and set FULL_SYNC=true, then:
+sbatch slurm/submit_weekly.sh
 ```
 
 This passes no `--start-date` flag to `podcast-dl`, so it fetches the full feed. `--skip-existing` still applies, so already-downloaded episodes are not re-downloaded. Use this for initial ingestion of a new channel or to backfill missing episodes.
