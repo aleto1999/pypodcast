@@ -57,7 +57,7 @@ module load ffmpeg/4.4 2>/dev/null || true
 
 # Set to true to download every episode in the RSS feed (no date filter).
 # Set to false for normal weekly mode (last 8 days only).
-FULL_SYNC=false
+FULL_SYNC=true
 
 if [[ "$FULL_SYNC" == true ]]; then
     echo "Mode: FULL SYNC (all episodes in RSS feed)"
