@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=32
 #SBATCH --mem=80G
 #SBATCH --gres=gpu:1
-#SBATCH --time=1-00:00:00
+#SBATCH --time=12:00:00
 
 #SBATCH --mail-user=alle5715@colorado.edu
 #SBATCH --mail-type=END,FAIL
