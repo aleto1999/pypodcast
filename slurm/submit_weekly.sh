@@ -145,7 +145,7 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     DIARIZE_ARGS=(
         --parsable
         --dependency "afterok:$TRANSCRIBE_JID"
-        --export "CHANNEL=$SLUG,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,AUDIO_DIR=$AUDIO_DIR,DIARIZATIONS_DIR=$DIARIZATIONS_DIR"
+        --export "CHANNEL=$SLUG,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,AUDIO_DIR=$AUDIO_DIR,DIARIZATIONS_DIR=$DIARIZATIONS_DIR,SEGMENTATION_BATCH_SIZE=$SEGMENTATION_BATCH_SIZE"
         --job-name "diarize_${SLUG}"
         --output "$CHANNEL_LOGS_DIR/diarize_%j.log"
     )

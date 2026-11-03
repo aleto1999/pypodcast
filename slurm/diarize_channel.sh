@@ -2,7 +2,7 @@
 # diarize_channel.sh — SLURM GPU job for speaker diarization (pyannote).
 # Submitted by submit_weekly.sh with --dependency afterok:<transcribe_job_id>.
 # Receives variables via --export:
-#   CHANNEL, TRANSCRIPTS_DIR, AUDIO_DIR, DIARIZATIONS_DIR
+#   CHANNEL, TRANSCRIPTS_DIR, AUDIO_DIR, DIARIZATIONS_DIR, SEGMENTATION_BATCH_SIZE (optional)
 #
 # Requires HF_TOKEN to be set in the environment (add to ~/.bashrc on RC):
 #   export HF_TOKEN="your_huggingface_token"
@@ -57,8 +57,9 @@ uv sync --extra gpu
     --audio-base-dir  "$AUDIO_DIR" \
     --output-dir      "$DIARIZATIONS_DIR/$CHANNEL" \
     --hf-token        "$HF_TOKEN" \
-    --workers         20 \
-    --compile-mode    max-autotune
+    --workers         8 \
+    --compile-mode    reduce-overhead \
+    ${SEGMENTATION_BATCH_SIZE:+--segmentation-batch-size "$SEGMENTATION_BATCH_SIZE"}
 
 
 # ── Cleanup: remove audio files that have been successfully diarized ──────

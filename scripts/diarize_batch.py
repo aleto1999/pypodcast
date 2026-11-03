@@ -195,6 +195,7 @@ def process_single_file(
     compile_mode: str,
     min_speakers: int | None = None,
     max_speakers: int | None = None,
+    segmentation_batch_size: int | None = None,
 ) -> tuple[FileMapping, bool, Optional[str]]:
     """
     worker function to process a single file (for multiprocessing).
@@ -241,6 +242,7 @@ def process_single_file(
                 use_bf16=use_bf16,
                 use_compile=False,  # always disabled in workers (TORCH_COMPILE_DISABLE=1)
                 compile_mode=compile_mode,
+                segmentation_batch_size=segmentation_batch_size,
             )
 
             # process file with speaker constraints.
@@ -374,6 +376,12 @@ def process_single_file(
     default=None,
     help="maximum number of speakers (optional hint for pyannote)",
 )
+@click.option(
+    "--segmentation-batch-size",
+    type=int,
+    default=None,
+    help="pyannote internal segmentation batch size (auto-detected from GPU memory if not set)",
+)
 def diarize_batch(
     transcripts_dir: Path,
     audio_base_dir: Path,
@@ -391,6 +399,7 @@ def diarize_batch(
     force: bool,
     min_speakers: int | None,
     max_speakers: int | None,
+    segmentation_batch_size: int | None,
 ) -> None:
     """
     batch process podcast transcripts for speaker diarization.
@@ -541,6 +550,7 @@ def diarize_batch(
                     compile_mode,
                     min_speakers,
                     max_speakers,
+                    segmentation_batch_size,
                 ): mapping
                 for mapping in files_to_process_ordered
             }

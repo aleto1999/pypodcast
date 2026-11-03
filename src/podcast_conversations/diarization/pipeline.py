@@ -74,6 +74,18 @@ def get_diarization_device_info() -> dict[str, Any]:
     return info
 
 
+def get_optimal_segmentation_batch_size(gpu_memory_gb: float) -> int:
+    """auto-detect a safe pyannote segmentation batch size based on GPU memory."""
+    if gpu_memory_gb >= 40:
+        return 16
+    elif gpu_memory_gb >= 24:
+        return 8
+    elif gpu_memory_gb >= 16:
+        return 4
+    else:
+        return 2
+
+
 class DiarizationPipeline:
     """wrapper for pyannote.audio diarization with GPU optimizations.
 
@@ -88,6 +100,7 @@ class DiarizationPipeline:
         use_bf16: bool = True,
         use_compile: bool = False,
         compile_mode: str = "reduce-overhead",
+        segmentation_batch_size: int | None = None,
     ):
         """
         initialize diarization pipeline with optimizations.
@@ -99,6 +112,7 @@ class DiarizationPipeline:
             use_bf16: enable BFloat16 mixed precision (CUDA only, H100/A100).
             use_compile: enable torch.compile optimization (CUDA only).
             compile_mode: compilation mode (default, reduce-overhead, max-autotune).
+            segmentation_batch_size: pyannote internal segmentation batch size. None = auto-detect from GPU memory.
         """
         self.model_name = model_name
 
@@ -124,6 +138,7 @@ class DiarizationPipeline:
         self.use_bf16 = use_bf16
         self.use_compile = use_compile
         self.compile_mode = compile_mode
+        self.segmentation_batch_size = segmentation_batch_size
 
         logger.info(f"initializing diarization pipeline: {model_name}")
         logger.info(f"device: {self.device}, bf16: {use_bf16}, compile: {use_compile}")
@@ -155,6 +170,15 @@ class DiarizationPipeline:
         try:
             self.pipeline = Pipeline.from_pretrained(self.model_name)
             self.pipeline.to(torch.device(self.device))
+            # set pyannote internal segmentation batch size.
+            if self.segmentation_batch_size is None and self.device_type == "cuda" and torch.cuda.is_available():
+                gpu_memory_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
+                self.segmentation_batch_size = get_optimal_segmentation_batch_size(gpu_memory_gb)
+                logger.info(f"gpu memory: {gpu_memory_gb:.1f}GB → segmentation batch size: {self.segmentation_batch_size}")
+            elif self.segmentation_batch_size is None:
+                self.segmentation_batch_size = 4  # safe fallback for CPU/MPS
+                logger.info(f"non-CUDA device → segmentation batch size: {self.segmentation_batch_size}")
+            self.pipeline._segmentation.batch_size = self.segmentation_batch_size
             logger.info("pipeline loaded successfully")
         except Exception as e:
             raise RuntimeError(f"failed to load pipeline {self.model_name}: {e}") from e

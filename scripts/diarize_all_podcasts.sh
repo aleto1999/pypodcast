@@ -12,6 +12,7 @@ OUTPUT_DIR=""
 HF_TOKEN="${HF_TOKEN:-}"
 WORKERS=4
 COMPILE_MODE="reduce-overhead"
+SEGMENTATION_BATCH_SIZE=""
 DRY_RUN=false
 PROCESS_ALL=false
 
@@ -37,6 +38,7 @@ Optional:
   --compile-mode MODE       torch.compile mode (default: reduce-overhead)
                             Options: default, reduce-overhead, max-autotune
                             Note: max-autotune requires H100/A100 GPUs
+  --segmentation-batch-size N  pyannote internal segmentation batch size (auto-detected if not set)
   --dry-run                 Show what would be processed without running
   -h, --help                Show this help message
 
@@ -112,6 +114,10 @@ while [[ $# -gt 0 ]]; do
         --dry-run)
             DRY_RUN=true
             shift
+            ;;
+        --segmentation-batch-size)
+            SEGMENTATION_BATCH_SIZE="$2"
+            shift 2
             ;;
         --process-all)
             PROCESS_ALL=true
@@ -231,6 +237,7 @@ if [[ "$DRY_RUN" == "true" ]]; then
     echo "  --hf-token \"<token>\" \\"
     echo "  --workers $WORKERS \\"
     echo "  --compile-mode $COMPILE_MODE"
+  [[ -n "$SEGMENTATION_BATCH_SIZE" ]] && echo "  --segmentation-batch-size $SEGMENTATION_BATCH_SIZE"
     echo ""
     if [[ "$SINGLE_PODCAST_MODE" == "true" ]]; then
         echo "This will process the single podcast directory."
@@ -258,7 +265,8 @@ start_time=$(date +%s)
     --output-dir "$OUTPUT_DIR" \
     --hf-token "$HF_TOKEN" \
     --workers "$WORKERS" \
-    --compile-mode "$COMPILE_MODE"
+    --compile-mode "$COMPILE_MODE" \
+    ${SEGMENTATION_BATCH_SIZE:+--segmentation-batch-size "$SEGMENTATION_BATCH_SIZE"}
 
 exit_code=$?
 

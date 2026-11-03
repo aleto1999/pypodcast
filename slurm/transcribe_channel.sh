@@ -14,7 +14,7 @@
 #SBATCH --time=12:00:00
 
 #SBATCH --mail-user=alle5715@colorado.edu
-#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END,FAIL
 # job-name and output are set by submit_weekly.sh via sbatch --job-name / --output
 
 set -euo pipefail
