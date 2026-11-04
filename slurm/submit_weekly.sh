@@ -137,7 +137,7 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
         echo "  [DRY RUN] sbatch ${TRANSCRIBE_ARGS[*]} slurm/transcribe_channel.sh"
         TRANSCRIBE_JID=99999
     else
-        TRANSCRIBE_JID=$(sbatch "${TRANSCRIBE_ARGS[@]}" "$PROJECT_ROOT/slurm/transcribe_channel.sh")
+        TRANSCRIBE_JID=$(sbatch "${TRANSCRIBE_ARGS[@]}" "$PROJECT_ROOT/slurm/transcribe_channel.sh" | cut -d';' -f1)
         echo "  ✓ Transcription submitted: job $TRANSCRIBE_JID"
     fi
 
@@ -145,7 +145,7 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     DIARIZE_ARGS=(
         --parsable
         --dependency "afterok:$TRANSCRIBE_JID"
-        --export "CHANNEL=$SLUG,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,AUDIO_DIR=$AUDIO_DIR,DIARIZATIONS_DIR=$DIARIZATIONS_DIR,SEGMENTATION_BATCH_SIZE=$SEGMENTATION_BATCH_SIZE"
+        --export "CHANNEL=$SLUG,TRANSCRIPTS_DIR=$TRANSCRIPTS_DIR,AUDIO_DIR=$AUDIO_DIR,DIARIZATIONS_DIR=$DIARIZATIONS_DIR"
         --job-name "diarize_${SLUG}"
         --output "$CHANNEL_LOGS_DIR/diarize_%j.log"
     )
@@ -153,7 +153,7 @@ while IFS='|' read -r SLUG FEED_URL LANGUAGE; do  # split each "slug|feed_url|la
     if [[ "$DRY_RUN" == true ]]; then
         echo "  [DRY RUN] sbatch ${DIARIZE_ARGS[*]} slurm/diarize_channel.sh"
     else
-        DIARIZE_JID=$(sbatch "${DIARIZE_ARGS[@]}" "$PROJECT_ROOT/slurm/diarize_channel.sh")
+        DIARIZE_JID=$(sbatch "${DIARIZE_ARGS[@]}" "$PROJECT_ROOT/slurm/diarize_channel.sh" | cut -d';' -f1)
         echo "  ✓ Diarization submitted: job $DIARIZE_JID (waits on $TRANSCRIBE_JID)"
     fi
 

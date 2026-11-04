@@ -2,7 +2,7 @@
 # diarize_channel.sh — SLURM GPU job for speaker diarization (pyannote).
 # Submitted by submit_weekly.sh with --dependency afterok:<transcribe_job_id>.
 # Receives variables via --export:
-#   CHANNEL, TRANSCRIPTS_DIR, AUDIO_DIR, DIARIZATIONS_DIR, SEGMENTATION_BATCH_SIZE (optional)
+#   CHANNEL, TRANSCRIPTS_DIR, AUDIO_DIR, DIARIZATIONS_DIR
 #
 # Requires HF_TOKEN to be set in the environment (add to ~/.bashrc on RC):
 #   export HF_TOKEN="your_huggingface_token"
@@ -38,6 +38,10 @@ if [[ -z "${HF_TOKEN:-}" ]]; then
 fi
 
 PROJECT_ROOT=/projects/alle5715/pypodcast
+
+# Pyannote internal segmentation batch size.
+# Set to "" to auto-detect from GPU memory.
+SEGMENTATION_BATCH_SIZE=16
 
 module load cuda/12.1.1
 module load uv/0.8.15
